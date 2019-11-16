@@ -48,4 +48,5 @@ class BasicsTestCase(unittest.TestCase):
         self.assertTrue(u.password_hash != u2.password_hash)
 
     def test_send_email(self):
-        send_email('3422290299@qq.com', 'Confirm your account', 'auth/email/confirm')
+        user = User.query.filter_by(username='memeshe').first()
+        send_email('3422290299@qq.com', 'Confirm your account', 'auth/email/confirm', user=user)
