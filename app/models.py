@@ -61,7 +61,7 @@ class Role(db.Model):
             'Teacher': [Permission.FOLLOW, Permission.WRITE, Permission.COMMENT, Permission.CREATECLASS],
             'Administrator': [Permission.COMMENT, Permission.FOLLOW, Permission.WRITE, Permission.MODERATE, Permission.ADMIN],
         }
-        default_role = 'Student'
+        default_role = 'Student' #默认角色是学生
         for r in roles:
             role = Role.query.filter_by(name=r).first()
             if role is None:
@@ -106,18 +106,18 @@ class Follow(db.Model):
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64)) #姓名(不同于用户名)
+    name = db.Column(db.String(64)) #真实姓名(不同于用户名)
     location = db.Column(db.String(64)) #位置
     about_me = db.Column(db.Text()) #个人介绍
     member_since = db.Column(db.DateTime(), default=datetime.utcnow)    #注册时间
     last_seen = db.Column(db.DateTime(), default=datetime.utcnow)   #最后一次访问的时间
     email = db.Column(db.String(64), unique=True, index=True)   #电子邮箱
-    username = db.Column(db.String(64), unique=True, index=True)    #用户名
+    nickname = db.Column(db.String(64))    #昵称
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))  #角色id
     password_hash = db.Column(db.String(128))   #密码hash
     confirmed = db.Column(db.Boolean, default=False)    #是否已经确认账户
     headicon_url = db.Column(db.String(64)) #头像图标的url
-    posts = db.relationship('Post', backref='author', lazy='dynamic')
+    posts = db.relationship('Post', backref='author', lazy='dynamic') #该用户发布的动态
     followed = db.relationship('Follow',
                                foreign_keys=[Follow.follower_id],
                                backref=db.backref('follower', lazy='joined'),
@@ -128,7 +128,7 @@ class User(UserMixin, db.Model):
                                backref=db.backref('followed', lazy='joined'),
                                lazy='dynamic',
                                cascade='all, delete-orphan')
-    comments = db.relationship('Comment', backref='author', lazy='dynamic')
+    comments = db.relationship('Comment', backref='author', lazy='dynamic') #该用户发表的评论
 
 
     #关注的人的动态
@@ -249,7 +249,7 @@ class User(UserMixin, db.Model):
         return True
 
     def __repr__(self):
-        return '<User  %r>' % self.username
+        return '<User  %r>' % self.nickname
 
     #password字段是不可以读的
     @property

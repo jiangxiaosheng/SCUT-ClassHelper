@@ -9,7 +9,7 @@ def users(count=100):
     i = 0
     while i < count:
         u = User(email=fake.email(),
-                 username=fake.user_name(),
+                 nickname=fake.user_name(),
                  password='password',
                  confirmed=True,
                  name=fake.name(),
@@ -33,3 +33,4 @@ def posts(count=100):
                  author=u)
         db.session.add(p)
         db.session.commit()
+
