@@ -1,75 +1,74 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>{% block title %}Flasky{% endblock %}</title>
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body>
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <!-- navbar -->
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <!-- Head portrait -->
-                <div class="navbar-brand" style="padding:1%">
-                    <a href="/">
-                        <img src="{{ url_for('static', filename='img/suki.jpg') }}" class="img-circle" style="height:100%;" />
-                    </a>
-                </div>
+{% extends "bootstrap/base.html" %}
 
+{% block title %}SCUT-ClassHeper{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <!-- navbar -->
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- Head portrait -->
+            <div class="navbar-brand" style="padding:1%">
+                <a href="/">
+                    <img src="{{ url_for('static', filename='img/suki.jpg') }}" class="img-circle" style="height:100%;" />
+                </a>
             </div>
 
-            <div class="navbar-collapse collapse">
-                <!--0:unlogin|1:logined -->
-                {% if 1 %}
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('course.index') }}"><span class="glyphicon glyphicon-home"></span>&nbspMy Course</a></li>
-                    <li><a href="{{ url_for('forum.index') }}"><span class="glyphicon glyphicon-list-alt"></span>&nbspForum</a></li>
-                    <li><a href="{{ url_for('course.join') }}"><span class="glyphicon glyphicon-plus"></span>&nbspJoin Course</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{4}}"><span class="glyphicon glyphicon-off"></span>&nbspExit</a></li>
-                </ul>
-                {% else%}
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{5}}"><span class="glyphicon glyphicon-user"></span>&nbspLogin</a></li>
-                    <li><a href="{{6}}"><span class="glyphicon glyphicon-pencil"></span>&nbspRegister</a></li>
-                </ul>
-                {% endif %}
-            </div>
         </div>
-    </div> 
-    <div class="row" style="padding:60px">
-        <div class="col-xs-11 container">
-            <!--0:unlogin|1:logined -->
-            {% if 1 %}
-            <div>{% block content%}{% endblock %}</div>
-            {% else%}
-            <div class="jumbotron">
-                <div class="container">
-                    <h1>Welcome!</h1>
-                    <p>This is SCUT Leaning Helper</p>
-                    <p>
-                        <a class="btn btn-primary btn-lg" role="button">
-                            Login
-                        </a>
-                        <a class="btn btn-primary btn-lg" role="button">
-                            Register
-                        </a>
-                    </p>
-                </div>
-            </div>
-            {% endif %}
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url_for('course.index') }}"><span class="glyphicon glyphicon-home"></span>&nbspMy Course</a></li>
+                <li><a href="{{ url_for('forum.index') }}"><span class="glyphicon glyphicon-list-alt"></span>&nbspForum</a></li>
+                <li><a href="{{ url_for('course.join_course') }}"><span class="glyphicon glyphicon-plus"></span>&nbspJoin Course</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ url_for('auth.logout') }}"><span class="glyphicon glyphicon-off"></span>&nbspExit</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ url_for('auth.login') }}"><span class="glyphicon glyphicon-user"></span>&nbspLogin</a></li>
+                <li><a href="{{ url_for('auth.register') }}"><span class="glyphicon glyphicon-pencil"></span>&nbspRegister</a></li>
+            </ul>
         </div>
     </div>
-    {% extends "bootstrap/base.html" %}
-</body>
-</html>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row" style="padding:60px">
+    <div class="col-xs-11 container">
+        <!--0:unlogin|1:logined -->
+        <div class="jumbotron">
+            <div class="container">
+                <h1>Welcome!</h1>
+                <p>This is SCUT Leaning Helper</p>
+                <p>
+                    <a class="btn btn-primary btn-lg" role="button" href="{{ url_for('auth.login') }}">
+                        Login
+                    </a>
+                    <a class="btn btn-primary btn-lg" role="button" href="{{ url_for('auth.register') }}">
+                        Register
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{% endblock %}

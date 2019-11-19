@@ -1,6 +1,7 @@
 from app.email import send_email
 from . import auth
-from .forms import LoginForm, ChangePasswordForm, PasswordResetRequestForm, PasswordResetForm, ChangeEmailForm
+from .forms import LoginForm, ChangePasswordForm, PasswordResetRequestForm, PasswordResetForm, ChangeEmailForm, \
+    RegistrationForm
 from ..models import User
 from .. import db
 from flask_login import login_user, current_user, logout_user, login_required
@@ -29,6 +30,23 @@ def logout():
     logout_user()
     flash('你已经登出！')
     return redirect(url_for('main.index'))
+
+
+@auth.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(email=form.email.data.lower(),
+                    nickname=form.nickname.data,
+                    password=form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        token = user.generate_confirmation_token()
+        send_email(user.email, 'Confirm Your Account',
+                   'auth/email/confirm', user=user, token=token)
+        flash('A confirmation email has been sent to you by email.')
+        return redirect(url_for('auth.login'))
+    return render_template('auth/register.html', form=form)
 
 
 #请求钩子，在发送request前做预处理，包括调用ping函数更新最后访问时间，审核是否通过认证

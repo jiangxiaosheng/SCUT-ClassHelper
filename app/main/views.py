@@ -11,7 +11,7 @@ from .. import db
 def index():
     if current_user.is_anonymous:
         pass
-    return render_template('index.html')
+    return render_template('index.html', is_login=False)
 
 
 #用户资料页面

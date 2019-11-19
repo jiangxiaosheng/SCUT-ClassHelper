@@ -6,13 +6,13 @@ from ..models import User
 class LoginForm(FlaskForm):
     email = StringField('电子邮箱', validators=[DataRequired(), Length(1, 64), Email()])
     password = PasswordField('密码', validators=[DataRequired()])
-    remember_me = BooleanField('保持登录状态')
+    remember_me = BooleanField('记住我')
     submit = SubmitField('登录')
 
 class RegistrationForm(FlaskForm):
     email = StringField('电子邮箱', validators=[DataRequired(), Length(1, 64), Email()])
-    username = StringField('用户名', validators=[DataRequired(), Length(1, 64),
-        Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0, '用户名只能由字母、数字、.和_组成')])
+    name = StringField('姓名', validators=[DataRequired(), Length(1, 64)])
+    nickname = StringField('昵称', validators=[DataRequired(), Length(1, 64)])
     password = PasswordField('密码', validators=[DataRequired(), EqualTo('password2', message='两次输入的密码必须一致')])
     password2 = PasswordField('确认密码', validators=[DataRequired()])
     submit = SubmitField('注册')
@@ -21,9 +21,6 @@ class RegistrationForm(FlaskForm):
         if User.query.filter_by(email=field.data).first():
             raise ValidationError('该邮箱已被使用!')
 
-    def validate_username(self, field):
-        if User.query.filter_by(username=field.data).first():
-            raise ValidationError('该用户名已被占用!')
 
 class ChangePasswordForm(FlaskForm):
     old_password = PasswordField('旧密码', validators=[DataRequired()])
