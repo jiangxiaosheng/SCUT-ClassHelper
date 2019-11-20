@@ -1,3 +1,24 @@
-{% extends "base.html" %}
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+SCUT-ClassHelper
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+    <div class="container " style="padding:13% 30% 13% 30%">
+        <h1>Welcome!</h1>
+        <p>This is SCUT Leaning Helper</p >
+        <p>
+            <a class="btn btn-primary btn-lg" role="button" href="{{ url_for('auth.login') }}">
+                Login
+            </a>
+            <a class="btn btn-primary btn-lg" role="button" href="{{ url_for('auth.register') }}">
+                Register
+            </a>
+        </p>
+    </div>
+</div>
+{% endblock %}
 
 

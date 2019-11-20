@@ -8,17 +8,14 @@ from flask_login import login_user, current_user, logout_user, login_required
 from flask import request, url_for, redirect, render_template, flash
 
 #登录路由
-@auth.route('/login')
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data.lower()).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user, form.remember_me.data)
-            next = request.args.get('next')
-            if next is None or not next.startswith('/'):
-                next = url_for('main.index') #登录成功返回主页
-            return redirect(next)
+            return redirect(url_for('main.index'))
         flash('邮箱地址或密码错误')
     return render_template('auth/login.html', form=form)
 
