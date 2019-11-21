@@ -10,6 +10,64 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from . import db, login_manager
 
+#学生-课程关联表
+#TODO:还没有实现多对多关系
+class StudentCourse(db.Model):
+    __tablename__ = 'studentcourses'
+    student_id = db.Column(db.String, db.ForeignKey('students.student_id'), primary_key=True)
+    course_id = db.Column(db.String, db.ForeignKey('courses.course_id'), primary_key=True)
+
+
+#课程表
+class Course(db.Model):
+    __tablename__ = 'courses'
+    course_id = db.Column(db.String, primary_key=True) #课程id
+    name = db.Column(db.String) #课程名
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.teacher_id')) #该课程对应的老师
+    since = db.Column(db.DateTime, default=datetime.utcnow) #开课时间
+    about_course = db.Column(db.Text) #课程介绍
+    college = db.Column(db.String) #课程所属学院
+    students = db.relationship('StudentCourse',
+                               foreign_keys=[StudentCourse.course_id],
+                               backref=db.backref('course', lazy='joined'),
+                               lazy='dynamic',
+                               cascade='all, delete-orphan'
+                               )
+
+    def __repr__(self):
+        return '<Course %r,%r>' % (self.course_id, self.name)
+
+
+#学生表
+class Student(db.Model):
+    __tablename__ = 'students'
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True) #用户id
+    student_id = db.Column(db.String, unique=True, index=True) #学号
+    college = db.Column(db.String) #学生所在学院
+    major = db.Column(db.String) #学生专业
+    grade = db.Column(db.String) #学生年级
+    courses = db.relationship('StudentCourse',
+                               foreign_keys=[StudentCourse.student_id],
+                               backref=db.backref('student', lazy='joined'),
+                               lazy='dynamic',
+                               cascade='all, delete-orphan')
+
+    def __repr__(self):
+        return '<Student %r,%r>' % (self.student_id, self.user.name)
+
+
+#老师表
+class Teacher(db.Model):
+    __tablename__ = 'teachers'
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True) #用户id
+    teacher_id = db.Column(db.String, unique=True, index=True) #教师编号
+    college = db.Column(db.String) #老师所在学院
+    position = db.Column(db.String) #老师职务
+    courses = db.relationship('Course', backref='teacher', lazy='dynamic') #通过Course的teacher字段拿到teacher信息
+
+    def __repr__(self):
+        return '<Teacher %r,%r>' % (self.teacher_id, self.user.name)
+
 class Permission:
     FOLLOW = 1  # 关注
     COMMENT = 2  # 评论
@@ -117,8 +175,8 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))   #密码hash
     confirmed = db.Column(db.Boolean, default=False)    #是否已经确认账户
     headicon_url = db.Column(db.String(64)) #头像图标的url
-    student = db.relationship('Student', backref='user', lazy='dynamic') #通过Student的user字段拿到用户信息
-    teacher = db.relationship('Teacher', backref='user', lazy='dynamic') #通过Teacher的user字段拿到用户信息
+    student = db.relationship('Student', backref='user', uselist=False) #通过Student的user字段拿到用户信息
+    teacher = db.relationship('Teacher', backref='user', uselist=False) #通过Teacher的user字段拿到用户信息
     posts = db.relationship('Post', backref='author', lazy='dynamic') #该用户发布的动态
     followed = db.relationship('Follow',
                                foreign_keys=[Follow.follower_id],
@@ -288,64 +346,6 @@ class User(UserMixin, db.Model):
         db.session.commit()
 
 
-
-#学生-课程关联表
-#TODO:还没有实现多对多关系
-class StudentCourse(db.Model):
-    __tablename__ = 'studentcourses'
-    student_id = db.Column(db.String, db.ForeignKey('students.student_id'), primary_key=True)
-    course_id = db.Column(db.String, db.ForeignKey('courses.course_id'), primary_key=True)
-
-
-#课程表
-class Course(db.Model):
-    __tablename__ = 'courses'
-    course_id = db.Column(db.String, primary_key=True) #课程id
-    name = db.Column(db.String) #课程名
-    teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.teacher_id')) #该课程对应的老师
-    since = db.Column(db.DateTime, default=datetime.utcnow) #开课时间
-    about_course = db.Column(db.Text) #课程介绍
-    college = db.Column(db.String) #课程所属学院
-    students = db.relationship('StudentCourse',
-                               foreign_keys=[StudentCourse.course_id],
-                               backref=db.backref('course', lazy='joined'),
-                               lazy='dynamic',
-                               cascade='all, delete-orphan'
-                               )
-
-    def __repr__(self):
-        return '<Course %r,%r>' % (self.course_id, self.name)
-
-
-#学生表
-class Student(db.Model):
-    __tablename__ = 'students'
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True) #用户id
-    student_id = db.Column(db.String, unique=True, index=True) #学号
-    college = db.Column(db.String) #学生所在学院
-    major = db.Column(db.String) #学生专业
-    grade = db.Column(db.String) #学生年级
-    courses = db.relationship('StudentCourse',
-                               foreign_keys=[StudentCourse.student_id],
-                               backref=db.backref('student', lazy='joined'),
-                               lazy='dynamic',
-                               cascade='all, delete-orphan')
-
-    def __repr__(self):
-        return '<Student %r,%r>' % (self.student_id, self.user.name)
-
-
-#老师表
-class Teacher(db.Model):
-    __tablename__ = 'teachers'
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True) #用户id
-    teacher_id = db.Column(db.String, unique=True, index=True) #教师编号
-    college = db.Column(db.String) #老师所在学院
-    position = db.Column(db.String) #老师职务
-    courses = db.relationship('Course', backref='teacher', lazy='dynamic') #通过Course的teacher字段拿到teacher信息
-
-    def __repr__(self):
-        return '<Teacher %r,%r>' % (self.teacher_id, self.user.name)
 
 #动态
 class Post(db.Model):
