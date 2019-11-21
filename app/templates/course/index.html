@@ -1,3 +1,7 @@
+{% extends "bootstrap/base.html" %}
+
+{% block content %}
 {% for course in courses %}
-<li>course</li>
+<li>{{ course.name }}</li>
 {% endfor %}
+{% endblock %}
