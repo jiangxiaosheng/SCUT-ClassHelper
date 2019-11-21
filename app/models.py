@@ -368,3 +368,16 @@ class Post(db.Model):
 
 #监听动态body更改
 db.event.listen(Post.body, 'set', Post.on_changed_body)
+
+
+'''
+#消息表，用于聊天室使用
+class Message(db.Model):
+    __tablename__ = 'messages'
+'''
+
+'''
+#资源表，用于记录每个课程对应资源的url
+class Resource(db.Model):
+    pass
+'''
