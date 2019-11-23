@@ -1,7 +1,32 @@
-{% extends "bootstrap/base.html" %}
+{% extends "/base.html" %}
+{% import "/_macros.html" as macros %}
+{% block title %}My Class{% endblock %}
 
-{% block content %}
-{% for course in courses %}
-<li>{{ course.name }}</li>
+{% block show %}
+{% for each in courses %}
+    {% if loop.index0 %9==0 %}
+        <div id="id_{{each.course_id}}" class="col-xs-4 section" style="padding-top:60px;padding-bottom:30px">
+    {% else %}
+        <div class="col-xs-4 section" style="padding-top:60px;padding-bottom:30px">
+    {% endif %}
+            <div class="media-left">
+                <a href="#"><img src="{{ url_for('static', filename='img/suki.jpg') }}" class="media-object" style="width:150px"></a>
+            </div>
+            <div class="media-body">
+                <a href="#"><h4 class="media-heading">{{ loop.index }}:{{ each.name }}({{ each.course_id }})</h4></a>
+                <a href="#"><p>Teacher:{{ each.teacher.user.name }}</p></a>
+                <p>Class Size:{{ each.students.count() }}</p>
+                <p>Abstract:{{ each.about_course }}</p>
+                <a href="#"><button type="button" class="btn btn-default" style="position:absolute;right:15px;bottom:30px">Drop</button></a>
+            </div>
+        </div>
 {% endfor %}
+<div class="pagination">
+{{ macros.pagination_widget(pagination, 'course.index') }}
+</div>
 {% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{% endblock %}
+

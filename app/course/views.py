@@ -1,4 +1,6 @@
-from flask import url_for, render_template, redirect
+from flask import url_for, render_template, redirect, request, current_app
+import math
+from app.models import Teacher, User
 from . import course
 from flask_login import login_required, current_user
 
@@ -7,8 +9,13 @@ from flask_login import login_required, current_user
 @login_required
 def index():
     if current_user.role.name == 'Student':
-        courses = current_user.student.courses #学生加入的课程
-        return render_template('course/index.html', courses=[c.course for c in courses])
+        page = request.args.get('page', 1, type=int)
+        pagination = current_user.student.courses.paginate(
+            page, per_page=current_app.config['FLASKY_COURSE_PER_PAGE'],
+        error_out=False)
+        courses = [item.course for item in pagination.items]
+        print(courses)
+        return render_template('course/index.html', courses=courses, pagination=pagination)
     elif current_user.role.name == 'Teacher':
         courses = current_user.teacher.courses #老师创建的课程
         return render_template('course/index.html', courses=[c.course for c in courses])

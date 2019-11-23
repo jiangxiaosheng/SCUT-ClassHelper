@@ -1,0 +1,25 @@
+{% extends "/base.html" %}
+{% block title %}Join Course{% endblock %}
+{% block show %}
+<div class="container">
+    <form class="bs-example bs-example-form" role="form">
+        <div class="row">
+            <div class="input-group col-xs-4 col-xs-offset-4 " style="padding-top:30%">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default" tabindex="-1">menu</button>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+                        <span class="caret"></span>
+                        <span class="sr-only">change_menu</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">a</a></li>
+                        <li><a href="#">b</a></li>
+                        <li><a href="#">c</a></li>
+                    </ul>
+                </div>
+                <div><input type="text" class="form-control"></div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
