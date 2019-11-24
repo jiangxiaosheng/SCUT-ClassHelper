@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import url_for, render_template, redirect, request, current_app, session
-import math
-from app.models import Teacher, User, Course
+from .. import db
+from app.models import Teacher, User, Course, StudentCourse
 from . import course
 from flask_login import login_required, current_user
 from .forms import JoinCourseForm
@@ -16,7 +16,6 @@ def index():
             page, per_page=current_app.config['FLASKY_COURSE_PER_PAGE'],
         error_out=False)
         courses = [item.course for item in pagination.items]
-        print(courses)
         return render_template('course/index.html', courses=courses, pagination=pagination)
     elif current_user.role.name == 'Teacher':
         courses = current_user.teacher.courses #老师创建的课程
@@ -38,11 +37,21 @@ def join_course():
 @login_required
 def courses():
     courses = Course.query.filter_by(course_id=session['course_id']).all()
+    print(courses)
+    print(1)
     return render_template('course/courses.html', courses=courses)
 
 
+#删除课程路由，删除完之后重定位到index，相当于刷新了页面
+@course.route('/drop-course', methods=['POST', 'GET'])
+@login_required
 def drop_course():
-    print('drop')
+    course_id = request.values.get('course_id')
+    record = StudentCourse.query.filter_by(course_id=course_id, student_id=current_user.student.student_id).first()
+    print(record)
+    db.session.delete(record)
+    db.session.commit()
+    return redirect(url_for('.index'))
 
 
 #TODO：课程资源
@@ -60,9 +69,12 @@ def tests():
 
 
 #TODO:聊天室
-@course.route('/chatroom')
+@course.route('/chatroom/<int:course_id>')
 @login_required
-def chatroom():
-    pass
+def chatroom(course_id):
+    #courses = Course.query.filter_by().all()
+    courses = StudentCourse.query.filter_by(student_id=current_user.student.student_id).all()
+    course = Course.query.filter_by(course_id=course_id).first()
+    return render_template('course/chatroom.html', courses=[c.course for c in courses], course=course)
 
 

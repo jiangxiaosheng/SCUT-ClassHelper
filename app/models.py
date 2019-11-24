@@ -321,6 +321,9 @@ class StudentCourse(db.Model):
     #course
     #student
 
+    def __repr__(self):
+        return '<StudentCourse %r%r>' % (self.course_id, self.student_id)
+
 #课程表
 class Course(db.Model):
     __tablename__ = 'courses'
