@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask import url_for, render_template, redirect, request, current_app, session
 import math
 from app.models import Teacher, User, Course

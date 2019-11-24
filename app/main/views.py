@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask import *
 from flask_login import current_user, login_required
 from app.models import User, Post
@@ -34,6 +35,9 @@ def edit_profile():
         db.session.commit()
         flash('你的个人资料已经更新成功!')
         return redirect(url_for('.user', email=current_user.email))
-
+    form.nickname.data = current_user.nickname
+    form.location.data = current_user.location
+    form.about_me.data = current_user.about_me
+    return render_template('edit_profile.html', form=form)
 
 

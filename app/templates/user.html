@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %} User {% endblock %}
+
+{% block page_content %}
+<div style="padding-top:120px;">
+    <div style="margin-left:30%;background-color:#ff0000;height:100%;width:200px;float:left;">
+        <img src="1.jpg" style="width:200px">
+        <p align="center">
+            {% if user.role.name == 'Teacher' %}
+            teacher
+            {% else %}
+            student
+            {% endif %}
+        </p>
+    </div>
+    <div style="padding-left:5%;background-color:#FFD700;height:100%;width:30%;float:left;">
+        <p>nickname:{{ user.nickname }}</p>
+        <P>Location:{{ user.location }}</P>
+        <P>
+            about_me:{{ user.about_me }}
+        </P>
+        <p>email:{{ user.email }}</p>
+        <a href="{{ url_for('main.edit_profile') }}" class="btn btn-default">change</a>
+    </div>
+</div>
+{% endblock %}

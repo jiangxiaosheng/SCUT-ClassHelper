@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from app import create_app, db
 from app.models import Role, Permission, User, Student, Teacher, StudentCourse, Course
 from flask_migrate import Migrate

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from random import randint
 from sqlalchemy.exc import IntegrityError
 from faker import Faker

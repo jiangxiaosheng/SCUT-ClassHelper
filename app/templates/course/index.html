@@ -15,7 +15,7 @@
             <p>Abstract:{{ each.about_course }}</p>
             <!--<a id="drop" href="#"><button type="button" class="btn btn-default" style="position:absolute;right:15px;bottom:30px">Drop</button></a>
             -->
-            <input class="btn btn-default" id="submit" name="submit" type="submit" value="取消选课">
+            <input class="btn btn-default" id="{{ each.course_id}}" name="submit" type="submit" value="取消选课">
         </div>
     </div>
 {% endfor %}
@@ -26,10 +26,4 @@
 
 {% block scripts %}
 {{ super() }}
-<script>
-    $.ajax(
-
-    )
-</script>
 {% endblock %}
-

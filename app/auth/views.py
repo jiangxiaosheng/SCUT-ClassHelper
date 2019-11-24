@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from app.email import send_email
 from . import auth
 from .forms import LoginForm, ChangePasswordForm, PasswordResetRequestForm, PasswordResetForm, ChangeEmailForm, \

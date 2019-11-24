@@ -1,7 +1,7 @@
+from flask import request, jsonify
+from .. import db
 from . import api
 
 @api.route('/drop-course', methods=['POST'])
-def index():
-    print('1')
-    return None
-
+def drop_course():
+    course_id = request.values.get('course_id')
