@@ -1,6 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField
-from wtforms.validators import DataRequired
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired, Length
+
 
 class JoinCourseForm(FlaskForm):
-    pass
+    id = StringField("课程id", validators=[DataRequired(), Length(1, 12)])
+    submit = SubmitField("查询")

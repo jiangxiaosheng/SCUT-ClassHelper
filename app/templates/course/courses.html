@@ -1,0 +1,9 @@
+{% extends "/base.html" %}
+
+{% block title %}Courses{% endblock %}
+
+{% block content %}
+{% for c in courses %}
+<p>{{ c.name }}</p>
+{% endfor %}
+{% endblock %}
