@@ -3,8 +3,10 @@
 {% block title %}My Class{% endblock %}
 
 {% block content %}
-{% for each in courses %}
-    <div class="col-xs-4 section" style="padding-top:60px;padding-bottom:30px">
+
+<div class="container navbar-default" style="height:100%;padding-top:30px;">
+    {% for each in courses %}
+    <div class="col-xs-4" style="padding-top:60px;padding-bottom:30px">
         <div class="media-left">
             <a href="#"><img src="{{ url_for('static', filename='img/suki.jpg') }}" class="media-object" style="width:150px"></a>
         </div>
@@ -13,13 +15,14 @@
             <a href="#"><p>授课老师:{{ each.teacher.user.name }}</p></a>
             <p>班级人数:{{ each.students.count() }}</p>
             <p>课程介绍:{{ each.about_course }}</p>
-            <a id="drop" href="#"><button id="{{ each.course_id }}" type="button" onclick="f(id)" class="btn btn-default" style="position:absolute;right:15px;bottom:30px">Drop</button></a>
+            <button id="{{ each.course_id }}" type="button" onclick="f(id)" class="btn btn-default" style="position:absolute;right:15px;bottom:30px">Drop</button>
 
         </div>
     </div>
-{% endfor %}
-<div class="pagination" style="position:absolute;left:50%;bottom:0">
-{{ macros.pagination_widget(pagination, 'course.index') }}
+    {% endfor %}
+    <div class="pagination" style="padding-left:45%">
+        {{ macros.pagination_widget(pagination, 'course.index') }}
+    </div>
 </div>
 {% endblock %}
 

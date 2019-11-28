@@ -1,0 +1,45 @@
+{% extends "/base.html" %}
+{% import "/_macros.html" as macros %}
+{% block title %}Forum{% endblock %}
+
+{% block content %}
+<div class="container navbar-default" style="height:100%;padding-top:30px;">
+    <div class="container">
+        {% for each in posts %}
+        <div style="padding-top:60px;padding-bottom:30px">
+            <div class="media-left">
+                <a href="#"><img src="{{ url_for('static', filename='img/suki.jpg') }}" class="media-object" style="width:55px"></a>
+            </div>
+            <div class="media-body">
+                <a href="#"><h5 class="media-heading">{{ each.author.nickname }}</h5></a>
+                {% if each.body_html %}
+                    {{ each.body_html | safe }}
+                {% else %}
+                    {{ each.body }}
+                {% endif %}<!--time-->
+                <p>{{ each.timestamp }}</p><!--neirong-->
+
+            </div>
+            <button  type="button" class="btn btn-default btn-sm col-xs-6">like</button>
+            <button  type="button" class="btn btn-default btn-sm col-xs-6">comment</button>
+        </div>
+        {% endfor %}
+    </div>
+        <div class="pagination" style="padding-left:45%">
+            {{ macros.pagination_widget(pagination, 'forum.index') }}
+        </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript">function f(id) {
+        $.ajax({
+            url:"../api/drop-course",
+            type:"POST",
+            dataType:"json",
+            data:{"course_id":id},
+            success:function(data){alert("success" + JSON.stringify(data));}
+        });
+    }</script>
+{% endblock %} 

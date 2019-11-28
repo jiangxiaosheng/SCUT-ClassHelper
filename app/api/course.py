@@ -12,3 +12,4 @@ def drop_course():
     print(111)
     ptr = {"f": "d"}
     return jsonify(ptr)
+
