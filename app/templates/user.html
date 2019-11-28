@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-
+{% import "/_macros.html" as macros %}
 {% block title %} User {% endblock %}
 
 {% block page_content %}
-<div style="padding-top:120px;">
+<div class="container navbar-default"style="height:100%;padding-top:120px;">
     <div style="margin-left:30%;background-color:#ff0000;height:100%;width:200px;float:left;">
         <img src="1.jpg" style="width:200px">
         <p align="center">
@@ -22,6 +22,24 @@
         </P>
         <p>email:{{ user.email }}</p>
         <a href="{{ url_for('main.edit_profile') }}" class="btn btn-default">change</a>
+    </div>
+    {% for each in courses %}
+        <div style="padding-top:60px;padding-bottom:30px">
+            <div class="media-left">
+                <a href="#"><img src="{{ url_for('static', filename='img/suki.jpg') }}" class="media-object" style="width:55px"></a>
+            </div>
+            <div class="media-body">
+                <a href="{{ url_for('course.chatroom', course_id=each.course_id) }}"><h5 class="media-heading">{{ each.name }}</h5></a>
+                <p>{{ each.teacher.user.name }}</p><!--time-->
+                <p>{{ each.about_course }}</p><!--neirong-->
+
+            </div>
+            <button id="{{ each.course_id }}" type="button" class="btn btn-default btn-sm col-xs-6">like</button>
+            <button id="{{ each.course_id }}" type="button" class="btn btn-default btn-sm col-xs-6">comment</button>
+        </div>
+    {% endfor %}
+    <div class="pagination" style="padding-left:45%">
+        {{ macros.pagination_widget(pagination, 'course.index') }}
     </div>
 </div>
 {% endblock %}
