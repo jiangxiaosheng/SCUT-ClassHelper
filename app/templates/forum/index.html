@@ -8,7 +8,7 @@
         {% for each in posts %}
         <div style="padding-top:60px;padding-bottom:30px">
             <div class="media-left">
-                <a href="#"><img src="{{ url_for('static', filename='img/suki.jpg') }}" class="media-object" style="width:55px"></a>
+                <a href="#"><img src="{{ url_for('static', filename=('headicon/'+each.author.headicon_url)) }}" class="media-object" style="width:55px"></a>
             </div>
             <div class="media-body">
                 <a href="#"><h5 class="media-heading">{{ each.author.nickname }}</h5></a>
@@ -25,7 +25,7 @@
         </div>
         {% endfor %}
     </div>
-        <div class="pagination" style="padding-left:45%">
+        <div class="pagination" style="margin-left:43%">
             {{ macros.pagination_widget(pagination, 'forum.index') }}
         </div>
 </div>
@@ -33,13 +33,4 @@
 
 {% block scripts %}
 {{ super() }}
-<script type="text/javascript">function f(id) {
-        $.ajax({
-            url:"../api/drop-course",
-            type:"POST",
-            dataType:"json",
-            data:{"course_id":id},
-            success:function(data){alert("success" + JSON.stringify(data));}
-        });
-    }</script>
 {% endblock %} 
