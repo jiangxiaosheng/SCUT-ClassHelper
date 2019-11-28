@@ -318,6 +318,7 @@ class Post(db.Model):
     body_html = db.Column(db.Text) #内容的html富文本形式
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow) #动态发布的时间戳
     author_id = db.Column(db.Integer, db.ForeignKey('users.id')) #作者id
+    liked = db.Column(db.Integer) #点赞数
     comments = db.relationship('Comment', backref='post', lazy='dynamic') #该动态对应的评论
 
     #每次动态内容更改，相应的body_html也要更改

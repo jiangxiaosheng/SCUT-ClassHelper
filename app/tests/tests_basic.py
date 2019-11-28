@@ -50,3 +50,12 @@ class BasicsTestCase(unittest.TestCase):
     def test_send_email(self):
         user = User.query.filter_by(username='memeshe').first()
         send_email('3422290299@qq.com', 'Confirm your account', 'auth/email/confirm', user=user)
+
+    def test_common(self):
+        colleges_majors = {
+            '计算机学院': '信息安全',
+            '软件学院': '软件工程',
+            '数学学院': '应用数学',
+            '物理学院': '理论物理'
+        }
+        print((colleges_majors.keys()))
