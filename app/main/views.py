@@ -19,7 +19,13 @@ def index():
 @main.route('/user/<email>')
 def user(email):
     user = User.query.filter_by(email=email).first_or_404()
-    return render_template('user.html', user=user)
+    page = request.args.get('page', 1, type=int)
+    pagination = Post.query.filter_by(author_id=user.id).order_by(Post.timestamp.desc()).paginate(
+        page, per_page=current_app.config['FLASKY_COURSE_PER_PAGE'],
+        error_out=False
+    )
+    posts = [item for item in pagination.items]
+    return render_template('user.html', user=user, posts=posts, pagination=pagination)
 
 
 #修改个人资料路由

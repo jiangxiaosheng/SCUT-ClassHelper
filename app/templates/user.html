@@ -23,23 +23,27 @@
         <p>email:{{ user.email }}</p>
         <a href="{{ url_for('main.edit_profile') }}" class="btn btn-default">change</a>
     </div>
-    {% for each in courses %}
+    {% for each in posts %}
         <div style="padding-top:60px;padding-bottom:30px">
             <div class="media-left">
-                <a href="#"><img src="{{ url_for('static', filename='img/suki.jpg') }}" class="media-object" style="width:55px"></a>
+                <a href="#"><img src="{{ url_for('static', filename=('headicon/'+each.author.headicon_url)) }}" class="media-object" style="width:55px"></a>
             </div>
             <div class="media-body">
-                <a href="{{ url_for('course.chatroom', course_id=each.course_id) }}"><h5 class="media-heading">{{ each.name }}</h5></a>
-                <p>{{ each.teacher.user.name }}</p><!--time-->
-                <p>{{ each.about_course }}</p><!--neirong-->
+                <a href="#"><h5 class="media-heading">{{ each.author.nickname }}</h5></a>
+                {% if each.body_html %}
+                    {{ each.body_html | safe }}
+                {% else %}
+                    {{ each.body }}
+                {% endif %}<!--time-->
+                <p>{{ each.timestamp }}</p><!--neirong-->
 
             </div>
-            <button id="{{ each.course_id }}" type="button" class="btn btn-default btn-sm col-xs-6">like</button>
-            <button id="{{ each.course_id }}" type="button" class="btn btn-default btn-sm col-xs-6">comment</button>
+            <button type="button" class="btn btn-default btn-sm col-xs-6">like</button>
+            <button type="button" class="btn btn-default btn-sm col-xs-6">comment</button>
         </div>
     {% endfor %}
     <div class="pagination" style="padding-left:45%">
-        {{ macros.pagination_widget(pagination, 'course.index') }}
+        {{ macros.pagination_widget(pagination, 'main.user', email=user.email) }}
     </div>
 </div>
 {% endblock %}

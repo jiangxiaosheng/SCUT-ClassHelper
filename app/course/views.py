@@ -38,7 +38,6 @@ def join_course():
 def courses():
     courses = Course.query.filter_by(course_id=session['course_id']).all()
     print(courses)
-    print(1)
     return render_template('course/courses.html', courses=courses)
 
 
