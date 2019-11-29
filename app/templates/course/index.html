@@ -15,7 +15,11 @@
             <a href="#"><p>授课老师:{{ each.teacher.user.name }}</p></a>
             <p>班级人数:{{ each.students.count() }}</p>
             <p>课程介绍:{{ each.about_course }}</p>
+            {% if 1 %}
             <button id="{{ each.course_id }}" type="button" onclick="f(id)" class="btn btn-default" style="position:absolute;right:15px;bottom:30px">Drop</button>
+            {% else %}
+            <button id="{{ each.course_id }}" type="button" onclick="f(id)" class="btn btn-default" style="position:absolute;right:15px;bottom:30px">解散</button>
+            {% endif %}
 
         </div>
     </div>
