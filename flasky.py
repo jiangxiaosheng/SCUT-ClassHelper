@@ -12,14 +12,5 @@ def make_shell_context():
     return dict(db=db, Role=Role, Permission=Permission, User=User, Student=Student, Teacher=Teacher,
                 StudentCourse=StudentCourse, Course=Course, Post=Post, Comment=Comment)
 
-def page_filter(class_list):
-    l = class_list
-    out = []
-    for i in range(len(l)):
-        if i % 9 == 0:
-            out.append(l[i])
-    return out
-
 if __name__ == '__main__':
-    app.add_template_filter(page_filter, 'page_filter')
     app.run(debug=True)

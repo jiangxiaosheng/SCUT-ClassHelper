@@ -3,17 +3,16 @@
 {% block title %} Chat {% endblock %}
 
 {% block page_content %}
-    <div id="container" style="height:100%;padding-top:30px;">
-
-        <div id="header" style="height:40px;background-color:#FFA500;">
-            <h1 style="margin-bottom:0;">Course name</h1>
+    <div class="navbar-default" style="height:100%;padding-top:30px;">
+        <div id="header"  style="padding-left:10%">
+            <h1>{{ course.name }}</h1>
         </div>
         <div style="width: 100%; position: absolute; top:90px ; left: 0 ; bottom: 0; ">
-            <div id="classes_menu" style="overflow-y:auto;background-color:#ff0000;height:100%;width:20%;float:left;">
+            <div id="classes_menu" style="overflow-y:auto;background-color:#d1f1ef;height:100%;width:20%;float:left;">
                 <!--classes list-->
                 {% for course in courses %}
                 <a href="{{ url_for('course.chatroom', course_id=course.course_id) }}">
-                    <button>
+                    <button type="button" class="btn btn-primary dropdown-toggle">
                         <div class="media-left">
                             <img src="{{ url_for('static', filename='img/suki.jpg') }}" class="media-object" style="width:80px">
                         </div>
@@ -27,50 +26,54 @@
                 {% endfor %}
             </div>
 
-            <div id="users_menu" style="overflow-y:auto;background-color:#FFD700;height:100%;width:20%;float:left;">
+            <div id="users_menu" style="overflow-y:auto;background-color:#a3fef8;height:100%;width:20%;float:left;">
                 <!--users list-->
                 {% for student in course.students %}
-                <button>
-                    <div class="media-left">
-                        <img src="{{ url_for('static', filename='img/suki.jpg') }}" class="media-object" style="width:80px">
-                    </div>
-                    <div class="media-body">
-                        <p class="media-heading">{{ student.student.user.nickname }}</p>
-                        <p>{{ student.student.student_id }}</p>
-                    </div>
-                </button>
+                <a href="{{ url_for('main.user', email=student.student.user.email) }}">
+                    <button type="button" class="btn btn-default dropdown-toggle">
+                        <div class="media-left">
+                            <img src="{{ url_for('static', filename='img/suki.jpg') }}" class="media-object" style="width:80px">
+                        </div>
+                        <div class="media-body">
+                            <p class="media-heading">{{ student.student.user.nickname }}</p>
+                            <p>{{ student.student.student_id }}</p>
+                        </div>
+                    </button>
+                </a>
                 {% endfor %}
             </div>
 
             <!--chat list-->
-            <div id="content" style="overflow-y:auto;background-color:#EEEEEE;height:70%;width:60%;float:left;">
-                <!--other chat list-->
+            <div style="overflow-y:auto;background-color:#EEEEEE;height:70%;width:60%;float:left;">
                 <br />
-                <div style="width:100%">
-                    <div style="width:7%;float:left;background-color:#ff0000">
+                <!--other chat list-->
+                <div>
+                    <div style="width:7%;float:left">
                         <a href="#"><img src="{{ url_for('static', filename='img/suki.jpg') }}" style="width:100%"></a>
                     </div>
-                    <div style="float:left;width:90%;background-color:#FFD700">
-                        <h4>name (2019.11.24/13:46)</h4>
-                        <p style="width:40%; word-wrap:break-word;background-color:#FF2700">neirodafasssssasdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddssssssdassssssaddddddddddddddddddddddddddddddddddddddddsssssssssssssssssssssswwwwwwswadasdassn</p>
+                    <div style="float:left;width:90%">
+                        <div style="border-radius:15px;float:left;width:40%;background-color:#00dcf2">
+                            <h4>name (2019.11.24/13:46)</h4>
+                            <p style="padding:0 5% 0 5%;word-wrap:break-word">neirodafasssssasdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddssssssdassssssaddddddddddddddddddddddddddddddddddddddddsssssssssssssssssssssswwwwwwswadasdassn</p>
+                        </div>
                     </div>
                 </div>
 
                 <!--self chat list-->
-                <br />
-                <div style="width:100%">
-                    <div style="width:7%;float:right;background-color:#ff0000">
+                <div>
+                    <div style="width:7%;float:right">
                         <a href="#"><img src="{{ url_for('static', filename='img/suki.jpg') }}" style="width:100%"></a>
                     </div>
-                    <div style="float:right;width:90%;background-color:#FFD700">
-                        <h4 style="padding-left:50%;float:right">name (2019.11.24/13:46)</h4>
-                        <p style="float:right;width:40%; word-wrap:break-word;background-color:#FF2700">neirodafasasdasdasdssssasdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddssssssdassssssaddddddddddddddddddddddddddddddddddddddddsssssssssssssssssssssswwwwwwswadasdassn</p>
+                    <div style="float:right;width:90%">
+                        <div style="float:right;width:40%;border-radius:15px;background-color:#23ddaf">
+                            <h4 style="padding-left:35%;float:right">name (2019.11.24/13:46)</h4>
+                            <p style="padding:0 5% 0 5%; word-wrap:break-word;">neirodafasasdasdasdssssasdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddssssssdassssssaddddddddddddddddddddddddddddddddddddddddsssssssssssssssssssssswwwwwwswadasdassn</p>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <!--button -->
-            <div id="footer" style="background-color:#986565;height:4%;width:60%;float:left;">
+            <div id="footer" style="height:30%;width:60%;float:left;">
+                <!-- button -->
                 <div class="btn-group btn-group-sm">
                     <button type="button" class="btn btn-default" style="height:50%;">公告</button>
                     <button type="button" class="btn btn-default">课程资源</button>
@@ -78,14 +81,9 @@
                 </div>
                 <div class="btn-group btn-group-sm " style="float:right;">
                     <button type="button" class="btn btn-default">历史记录</button>
-                    <button type="button" class="btn btn-default"> button5</button>
-                    <button type="button" class="btn btn-default">button 6</button>
                 </div>
-            </div>
-
-            <!-- input -->
-            <div id="footer" style="background-color:#FFA500;height:26%;width:60%;float:left;">
-                <textarea style="height:100%;width:100%;padding-top:20px"></textarea>
+                <!-- input -->
+                <textarea style="height:85%;width:100%;padding-top:20px"></textarea>
                 <!-- send button -->
                 <button type="button" class="btn btn-default" style="position: fixed;bottom: 10px;right:10px">发送</button>
             </div>

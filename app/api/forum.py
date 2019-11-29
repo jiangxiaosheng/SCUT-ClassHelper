@@ -5,20 +5,20 @@ from ..models import Comment, Post, Permission
 from flask import request, current_app, url_for, jsonify, g
 
 
+#获取所有评论
 @api.route('/comments/')
 def get_comments():
-    #page = request.args.get('page', 1, type=int)
-    page = 1
+    page = request.args.get('page', 1, type=int)
     pagination = Comment.query.order_by(Comment.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASKY_COMMENTS_PER_PAGE'],
         error_out=False)
     comments = pagination.items
     prev = None
-    '''if pagination.has_prev:
-        prev = url_for('api.get_comments', page=page-1)'''
+    if pagination.has_prev:
+        prev = url_for('api.get_comments', page=page-1)
     next = None
-    '''if pagination.has_next:
-        next = url_for('api.get_comments', page=page+1)'''
+    if pagination.has_next:
+        next = url_for('api.get_comments', page=page+1)
     return jsonify({
         'comments': [comment.to_json() for comment in comments],
         'prev': prev,
@@ -26,13 +26,16 @@ def get_comments():
         'count': pagination.total
     })
 
-'''
+
+
+#获取对应某一id的评论
 @api.route('/comments/<int:id>')
 def get_comment(id):
     comment = Comment.query.get_or_404(id)
     return jsonify(comment.to_json())
 
 
+#获取某一条动态的所有评论
 @api.route('/posts/<int:id>/comments/')
 def get_post_comments(id):
     post = Post.query.get_or_404(id)
@@ -54,7 +57,24 @@ def get_post_comments(id):
         'count': pagination.total
     })
 
+#点赞
+@api.route('/posts/<int:id>/like')
+def like_post(id):
+    post = Post.query.get_or_404(id)
+    post.liked += 1
+    db.session.add(post)
+    db.session.commit()
 
+
+#取消点赞
+@api.route('/posts/<int:id>/unlike')
+def unlike_post(id):
+    post = Post.query.get_or_404(id)
+    post.liked -= 1
+    db.session.add(post)
+    db.session.commit()
+
+'''
 @api.route('/posts/<int:id>/comments/', methods=['POST'])
 def new_post_comment(id):
     post = Post.query.get_or_404(id)

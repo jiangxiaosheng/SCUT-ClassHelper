@@ -22,7 +22,6 @@ def index():
         return render_template('course/index.html', courses=[c.course for c in courses])
 
 
-#TODO：加入课程
 @course.route('/join-course', methods=['GET', 'POST'])
 @login_required
 def join_course():
@@ -41,16 +40,27 @@ def courses():
     return render_template('course/courses.html', courses=courses)
 
 
-#删除课程路由，删除完之后重定位到index，相当于刷新了页面
+#TODO:删除课程路由，删除完之后重定位到index，相当于刷新了页面
 @course.route('/drop-course', methods=['POST', 'GET'])
 @login_required
 def drop_course():
-    course_id = request.values.get('course_id')
-    record = StudentCourse.query.filter_by(course_id=course_id, student_id=current_user.student.student_id).first()
-    print(record)
-    db.session.delete(record)
-    db.session.commit()
-    return redirect(url_for('.index'))
+    if current_user.role.name is not None:
+        if current_user.role.name == 'Student':
+            course_id = request.values.get('course_id')
+            record = StudentCourse.query.filter_by(course_id=course_id, student_id=current_user.student.student_id).first()
+            print(record)
+            db.session.delete(record)
+            db.session.commit()
+        #TODO
+        else:
+            course_id = request.values.get('course_id')
+            record = Course.query.filter_by(course_id=course_id).first()
+            print(record)
+            db.session.delete(record)
+            db.session.commit()
+        return redirect(url_for('.index'))
+    else:
+        return render_template('500.html')
 
 
 #TODO：课程资源
@@ -71,7 +81,6 @@ def tests():
 @course.route('/chatroom/<int:course_id>')
 @login_required
 def chatroom(course_id):
-    #courses = Course.query.filter_by().all()
     courses = StudentCourse.query.filter_by(student_id=current_user.student.student_id).all()
     course = Course.query.filter_by(course_id=course_id).first()
     return render_template('course/chatroom.html', courses=[c.course for c in courses], course=course)

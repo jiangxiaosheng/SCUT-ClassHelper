@@ -96,12 +96,11 @@ class Comment(db.Model):
     #序列化
     def to_json(self):
         json_comment = {
-            #'url': url_for('api.get_comment', id=self.id),
-            #'post_url': url_for('api.get_post', id=self.post_id),
             'body': self.body,
             'body_html': self.body_html,
             'timestamp': self.timestamp,
-            #'author_url': url_for('api.get_user', id=self.author_id),
+            'author_name': self.author.nickname,
+            'author_url': url_for('main.user', email=self.author.email),
         }
         return json_comment
 
