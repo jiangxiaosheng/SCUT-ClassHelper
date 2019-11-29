@@ -30,21 +30,21 @@
 
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav" >
-                <li><a href="{{ url_for('course.index') }}"><span class="glyphicon glyphicon-home"></span>&nbspMy Course</a></li>
-                <li><a href="{{ url_for('forum.index') }}"><span class="glyphicon glyphicon-list-alt"></span>&nbspForum</a></li>
-                <li><a href="{{ url_for('course.join_course') }}"><span class="glyphicon glyphicon-plus"></span>&nbspJoin Course</a></li>
+                <li><a href="{{ url_for('course.index') }}"><span class="glyphicon glyphicon-home"></span>&nbsp;我的课程</a></li>
+                <li><a href="{{ url_for('forum.index') }}"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;广场</a></li>
+                <li><a href="{{ url_for('course.join_course') }}"><span class="glyphicon glyphicon-plus"></span>&nbsp;加入课程</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right ">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span class="glyphicon glyphicon-cog"></span>&nbspOption
+                        <span class="glyphicon glyphicon-cog"></span>&nbsp;设置
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Change Password</a></li>
-                        <li><a href="#">Change Email</a></li>
+                        <li><a href="#">修改密码</a></li>
+                        <li><a href="#">修改邮箱</a></li>
                         <li class="divider"></li>
-                        <li><a href="{{ url_for('auth.logout') }}">Exit</a></li>
+                        <li><a href="{{ url_for('auth.logout') }}">注销</a></li>
                     </ul>
                 </li>
             </ul>
