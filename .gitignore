@@ -1,0 +1,9 @@
+/.vs
+/__pycache__
+/migrations/__pycache__
+/app/__pycache__
+/api/__pycache__
+/auth/__pycache__
+/course/__pycache__
+/forum/__pycache__
+/main/__pycache__
