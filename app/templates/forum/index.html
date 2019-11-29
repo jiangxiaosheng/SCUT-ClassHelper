@@ -8,10 +8,10 @@
         {% for each in posts %}
         <div style="padding-top:60px;padding-bottom:30px">
             <div class="media-left">
-                <a href="#"><img src="{{ url_for('static', filename=('headicon/'+each.author.headicon_url)) }}" class="media-object" style="width:55px"></a>
+                <a href="{{ url_for('main.user', email=each.author.email) }}"><img src="{{ url_for('static', filename=('headicon/'+each.author.headicon_url)) }}" class="media-object" style="width:55px"></a>
             </div>
             <div class="media-body">
-                <a href="#"><h5 class="media-heading">{{ each.author.nickname }}</h5></a>
+                <a href="{{ url_for('main.user', email=each.author.email) }}"><h5 class="media-heading">{{ each.author.nickname }}</h5></a>
                 {% if each.body_html %}
                     {{ each.body_html | safe }}
                 {% else %}
@@ -20,7 +20,14 @@
                 <p>{{ each.timestamp }}</p><!--neirong-->
 
             </div>
-            <button type="button" class="btn btn-default btn-sm col-xs-6">like</button>
+            <button type="button" class="btn btn-default btn-sm col-xs-6">
+                {% if not each.liked %}
+                0
+                {% else %}
+                {{ each.liked }}
+                {% endif %}
+                like
+            </button>
             <button type="button" class="btn btn-default btn-sm col-xs-6">comment</button>
         </div>
         {% endfor %}

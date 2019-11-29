@@ -10,7 +10,7 @@ from .forms import JoinCourseForm
 @course.route('/')
 @login_required
 def index():
-    if current_user.role.name == 'Student':
+    if current_user.role is not None and current_user.role.name == 'Student':
         page = request.args.get('page', 1, type=int)
         pagination = current_user.student.courses.paginate(
             page, per_page=current_app.config['FLASKY_COURSE_PER_PAGE'],

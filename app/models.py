@@ -166,12 +166,14 @@ class User(UserMixin, db.Model):
             #如果注册邮箱为指定的管理员邮箱，则角色确定为管理员
             if self.email == current_app.config['FLASKY_ADMIN']:
                 self.role = Role.query.filter_by(name='Administrator').first()
+            '''
             #如果不是，那么角色就是默认角色（学生）
             if self.role is None:
                 self.role = Role.query.filter_by(default=True).first()
+            '''
         #如果没有指定头像，则使用默认头像
         if self.headicon_url is None:
-            self.headicon_url = 'resources/headicon/default.jpg'
+            self.headicon_url = 'default.jpg'
         #自己关注自己，这是为了后续逻辑处理的方便
         self.follow(self)
 
