@@ -55,6 +55,14 @@ def memeshe():
             i += 1
         except IntegrityError:
             db.session.rollback()
+    for i in range(20):
+        p = Post(
+            body=fake.text(),
+            timestamp=fake.past_date(),
+            author=user
+        )
+        db.session.add(p)
+    db.session.commit()
 
 
 
