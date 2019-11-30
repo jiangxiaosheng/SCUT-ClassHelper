@@ -20,7 +20,7 @@
                 <p>{{ each.timestamp }}</p><!--neirong-->
 
             </div>
-            <button type="button" class="btn btn-default btn-sm col-xs-6">
+            <button id="like{{ each.id }}" onclick="like(id)" type="button" class="btn btn-default btn-sm col-xs-6">
                 {% if not each.liked %}
                 0
                 {% else %}
@@ -28,7 +28,7 @@
                 {% endif %}
                 like
             </button>
-            <button type="button" class="btn btn-default btn-sm col-xs-6">comment</button>
+            <button id="comments{{ each.id }}" onclick="comments(id)" type="button" class="btn btn-default btn-sm col-xs-6">comment</button>
         </div>
         {% endfor %}
     </div>
@@ -39,7 +39,32 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
+<script type="text/javascript">
+    var flag = 0;
+    function like(id) {
+        var post_id = id.substr(4);
+        if (flag == 0) {
+            $.ajax({
+                url: "../../api/posts/like",
+                type: "POST",
+                dataType: "json",
+                data: {"id": post_id},
+                success: function(data) {alert(JSON.stringify(data));}
+            });
+        } else {
+            $.ajax({
+                url: ('../../api/posts/unlike'),
+                type: "POST",
+                dataType: "json",
+                data: {"id": post_id},
+                success: function(data) {alert(JSON.stringify(data));}
+            });
+        }
+        flag = 1 - flag;
+    }
 
+    function comments() {
+
+    }
 </script>
-{% endblock %} 
+{% endblock %}

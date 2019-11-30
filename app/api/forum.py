@@ -58,17 +58,22 @@ def get_post_comments(id):
     })
 
 #点赞
-@api.route('/posts/<int:id>/like')
-def like_post(id):
+@api.route('/posts/like', methods=['POST'])
+def like_post():
+    id = request.values.get('id')
+    print(id)
     post = Post.query.get_or_404(id)
     post.liked += 1
     db.session.add(post)
     db.session.commit()
+    return jsonify({"count": post.liked})
 
 
 #取消点赞
-@api.route('/posts/<int:id>/unlike')
-def unlike_post(id):
+@api.route('/posts/unlike', methods=['POST'])
+def unlike_post():
+    id = request.values.get('id')
+    print(id)
     post = Post.query.get_or_404(id)
     post.liked -= 1
     db.session.add(post)
