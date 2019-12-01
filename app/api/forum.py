@@ -39,6 +39,7 @@ def get_comment(id):
 @api.route('/posts/comments')
 def get_post_comments():
     id = request.args.get('id')
+    print(id)
     if id is None:
         return internal_error('Please check your url.')
     post = Post.query.get_or_404(id)

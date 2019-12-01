@@ -1,0 +1,27 @@
+{% extends "/base.html" %}
+{% import "/_macros.html" as macros %}
+
+{% block title %} gonggao {% endblock %}
+
+{% block page_content %}
+<div class="container navbar-default" style="height:100%;padding-top:30px;">
+    <div class="container">
+        {% for each in resources %}
+        <div style="padding-top:30px">
+            <h4>biaoti</h4>
+            <p style="width:100%;word-wrap:break-word">
+                neirong
+            </p>
+            <p style="float:right">2019.3.10</p>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+</script>
+{% endblock %} 

@@ -63,8 +63,21 @@
         flag = 1 - flag;
     }
 
-    function comments() {
-
+    function comments(id) {
+        var get_id = id.substr(8);
+        var value;
+        $.ajax({
+            url:"../../api/posts/comments",
+            type:"GET",
+            dataType:"json",
+            data:{"id":get_id, "page":1},
+            success:function(data){
+                alert(JSON.stringify(data));
+                value = JSON.stringify(data);
+                var obj = JSON.parse(value);
+                alert(obj.count);
+            }
+        });
     }
 </script>
 {% endblock %}
