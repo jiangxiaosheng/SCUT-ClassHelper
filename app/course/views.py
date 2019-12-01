@@ -68,10 +68,11 @@ def drop_course():
 
 
 #TODO：课程资源
-@course.route('/resources/<int:id>')
+@course.route('/resources')
 @login_required
 def resources(id):
-    return url_for('static/course_resources/email.py')
+    if request.method == 'GET':
+
 
 
 #TODO:在线考试

@@ -1,4 +1,4 @@
-from .errors import forbidden
+from .errors import forbidden, internal_error
 from .. import db
 from . import api
 from ..models import Comment, Post, Permission
@@ -36,8 +36,11 @@ def get_comment(id):
 
 
 #获取某一条动态的所有评论
-@api.route('/posts/<int:id>/comments/')
-def get_post_comments(id):
+@api.route('/posts/comments')
+def get_post_comments():
+    id = request.args.get('id')
+    if id is None:
+        return internal_error('Please check your url.')
     post = Post.query.get_or_404(id)
     page = request.args.get('page', 1, type=int)
     pagination = post.comments.order_by(Comment.timestamp.asc()).paginate(

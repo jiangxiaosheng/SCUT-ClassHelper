@@ -21,6 +21,11 @@ def forbidden(message):
     return response
 
 
+def internal_error(message):
+    response = jsonify({'error': 'internal error', 'message': message})
+    response.status_code = 500
+    return response
+
 @api.errorhandler(ValidationError)
 def validation_error(e):
     return bad_request(e.args[0])
