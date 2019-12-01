@@ -3,7 +3,7 @@ from random import randint
 from sqlalchemy.exc import IntegrityError
 from faker import Faker
 from . import db
-from .models import User, Post, Comment, Teacher, Role, Student, Course, StudentCourse
+from .models import *
 
 
 def generate():
@@ -15,6 +15,9 @@ def generate():
     teachers()
     courses()
     studentcourses()
+    announcements()
+    post_like()
+    memeshe()
 
 
 #测试用户
@@ -209,3 +212,35 @@ def courses(count=20):
             db.session.rollback()
 
 
+def announcements():
+    fake = Faker()
+    courses = Course.query.all()
+    for c in courses:
+        for i in range(randint(2, 4)):
+            a = Announcement(
+                course_id=c.course_id,
+                title='标题',
+                body=fake.text(),
+                timestamp=fake.past_date()
+            )
+            db.session.add(a)
+            try:
+                db.session.commit()
+            except IntegrityError:
+                db.session.rollback()
+                continue
+
+
+def post_like():
+    posts = Post.query.all()
+    user_count = User.query.count()
+    for p in posts:
+        for _ in range(randint(2, 7)):
+            u = User.query.offset(randint(0, user_count - 1)).first()
+            r = PostLike(post_id=p.id, user_id=u.id, like=1)
+            db.session.add(r)
+            try:
+                db.session.commit()
+            except IntegrityError:
+                db.session.rollback()
+                continue

@@ -74,6 +74,16 @@ class Role(db.Model):
         db.session.commit()
 
 
+# 评论点赞关联表
+class PostLike(db.Model):
+    __tablename__ = 'post_like'
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    like = db.Column(db.Boolean, default=False)
+    #user
+    #post
+
+
 #评论
 class Comment(db.Model):
     __tablename__ = 'comments'
@@ -115,6 +125,8 @@ class Comment(db.Model):
 db.event.listen(Comment.body, 'set', Comment.on_changed_body)
 
 
+
+
 #关注
 class Follow(db.Model):
     __tablename__ = 'follows'
@@ -150,6 +162,11 @@ class User(UserMixin, db.Model):
                                lazy='dynamic',
                                cascade='all, delete-orphan')
     comments = db.relationship('Comment', backref='author', lazy='dynamic') #该用户发表的评论
+    like_posts = db.relationship('PostLike',
+                                  foreign_keys=[PostLike.user_id],
+                                  backref=db.backref('user', lazy='joined'),
+                                  lazy='dynamic',
+                                  cascade='all, delete-orphan')
 
 
     #关注的人的动态
@@ -318,8 +335,12 @@ class Post(db.Model):
     body_html = db.Column(db.Text) #内容的html富文本形式
     timestamp = db.Column(db.DateTime, index=True, default=localtime) #动态发布的时间戳
     author_id = db.Column(db.Integer, db.ForeignKey('users.id')) #作者id
-    liked = db.Column(db.Integer) #点赞数
     comments = db.relationship('Comment', backref='post', lazy='dynamic') #该动态对应的评论
+    like_people = db.relationship('PostLike',
+                                  foreign_keys=[PostLike.post_id],
+                                  backref=db.backref('post', lazy='joined'),
+                                  lazy='dynamic',
+                                  cascade='all, delete-orphan')
 
     #每次动态内容更改，相应的body_html也要更改
     @staticmethod
@@ -417,6 +438,9 @@ class Teacher(db.Model):
 
     def __repr__(self):
         return '<Teacher %r,%r>' % (self.teacher_id, self.user.name)
+
+
+
 '''
 #消息表，用于聊天室使用
 class Message(db.Model):

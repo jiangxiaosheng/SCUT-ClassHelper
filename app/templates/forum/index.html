@@ -40,27 +40,15 @@
 
 {% block scripts %}
 <script type="text/javascript">
-    var flag = 0;
     function like(id) {
         var post_id = id.substr(4);
-        if (flag == 0) {
-            $.ajax({
-                url: "../../api/posts/like",
-                type: "POST",
-                dataType: "json",
-                data: {"id": post_id},
-                success: function(data) {alert(JSON.stringify(data));}
-            });
-        } else {
-            $.ajax({
-                url: ('../../api/posts/unlike'),
-                type: "POST",
-                dataType: "json",
-                data: {"id": post_id},
-                success: function(data) {alert(JSON.stringify(data));}
-            });
-        }
-        flag = 1 - flag;
+        $.ajax({
+            url: "../../api/posts/like",
+            type: "POST",
+            dataType: "json",
+            data: {"post_id": post_id, "user_id": {{ current_user.id }}},
+            success: function(data) {alert(JSON.stringify(data));}
+        });
     }
 
     function comments(id) {

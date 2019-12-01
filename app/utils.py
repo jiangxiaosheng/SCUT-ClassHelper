@@ -52,6 +52,7 @@ def localtime():
 if __name__ == '__main__':
     from config import *
     import datetime
+    import re
     # dir = resources_base_dir + '201700'
     # file_dict = zip(os.listdir(dir), [resources_base_dir + filename for filename in os.listdir(dir)])
     # for k,v in file_dict:
@@ -64,3 +65,5 @@ if __name__ == '__main__':
     print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     print(datetime.datetime.utcnow)
     print(type(localtime()))
+    if re.match(r'^\d\d*\d$', '123'):
+        print('Match')

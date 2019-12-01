@@ -8,6 +8,7 @@ from .forms import JoinCourseForm
 from config import basedir, resources_base_dir
 import os
 from ..utils import *
+import re
 
 #TODO:显示所有课程，学生显示选课，老师显示开设的课
 @course.route('/')
@@ -29,13 +30,13 @@ def index():
         return render_template('course/index.html', courses=courses, pagination=pagination)
 
 
-#加入课程
+#TODO:加入课程
 @course.route('/join-course', methods=['GET', 'POST'])
 @login_required
 def join_course():
     form = JoinCourseForm()
     if form.validate_on_submit():
-        session['course_id'] = form.id.data #存到session里
+        session['course_id_or_name'] = form.id_or_name.data #存到session里
         return redirect(url_for('.courses')) #重定向到courses路由，交给courses函数处理
     return render_template('course/join_course.html', form=form)
 
@@ -44,7 +45,11 @@ def join_course():
 @course.route('/courses', methods=['POST', 'GET'])
 @login_required
 def courses():
-    courses = Course.query.filter_by(course_id=session['course_id']).all()
+    id_or_name = session['course_id_or_name']
+    if re.match(r'^\d\d*\d$', id_or_name):
+        courses = Course.query.filter_by(course_id=id_or_name).all()
+    else:
+        courses = Course.query.filter_by(name=id_or_name).all()
     return render_template('course/courses.html', courses=courses)
 
 

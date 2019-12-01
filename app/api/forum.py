@@ -1,7 +1,7 @@
 from .errors import forbidden, internal_error
 from .. import db
 from . import api
-from ..models import Comment, Post, Permission
+from ..models import Comment, Post, Permission, PostLike
 from flask import request, current_app, url_for, jsonify, g
 
 
@@ -64,24 +64,21 @@ def get_post_comments():
 #点赞
 @api.route('/posts/like', methods=['POST'])
 def like_post():
-    id = request.values.get('id')
-    print(id)
-    post = Post.query.get_or_404(id)
-    post.liked += 1
-    db.session.add(post)
-    db.session.commit()
-    return jsonify({"count": post.liked})
+    # id = request.values.get('id')
+    # print(id)
+    # post = Post.query.get_or_404(id)
+    # post.liked += 1
+    # db.session.add(post)
+    # db.session.commit()
+    # return jsonify({"count": post.liked})
+    print(request.values.get('post_id'))
+    print(request.values.get('user_id'))
+    post_id = request.values.get('post_id')
+    user_id = request.values.get('user_id')
+    record = PostLike.query.filter_by(post_id=post_id, user_id=user_id).first()
+    if record.like == True:
+        return jsonify({"count": record.post.liked})
 
-
-#取消点赞
-@api.route('/posts/unlike', methods=['POST'])
-def unlike_post():
-    id = request.values.get('id')
-    print(id)
-    post = Post.query.get_or_404(id)
-    post.liked -= 1
-    db.session.add(post)
-    db.session.commit()
 
 '''
 @api.route('/posts/<int:id>/comments/', methods=['POST'])
