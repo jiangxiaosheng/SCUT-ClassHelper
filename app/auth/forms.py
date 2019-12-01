@@ -16,6 +16,7 @@ class RegistrationForm(FlaskForm):
     nickname = StringField('昵称', validators=[DataRequired(), Length(1, 64)])
     password = PasswordField('密码', validators=[DataRequired(), EqualTo('password2', message='两次输入的密码必须一致')])
     password2 = PasswordField('确认密码', validators=[DataRequired()])
+
     submit = SubmitField('注册')
 
     def validate_email(self, field):

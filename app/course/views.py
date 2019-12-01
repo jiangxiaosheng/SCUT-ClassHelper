@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-from flask import url_for, render_template, redirect, request, current_app, session, send_from_directory
+from flask import url_for, render_template, redirect, request, current_app, session, send_from_directory, Response
 from .. import db
 from app.models import Teacher, User, Course, StudentCourse
 from . import course
 from flask_login import login_required, current_user
 from .forms import JoinCourseForm
+from config import basedir
+import os
 
 #TODO:显示所有课程，学生显示选课，老师显示开设的课
 @course.route('/')
@@ -68,10 +70,26 @@ def drop_course():
 
 
 #TODO：课程资源
-@course.route('/resources')
+@course.route('/resources/<int:course_id>', methods=['GET'])
 @login_required
-def resources(id):
-    if request.method == 'GET':
+def resources(course_id):
+    filename = request.args.get('filename')
+    resources_base_dir = basedir + '\\app\\static\\resources\\'
+    #先判断要找的资源在不在服务器中，如果不在就404，这样也可以防止注入攻击
+    if filename not in os.listdir(resources_base_dir):
+        return render_template('404.html', message='您要找的资源不存在')
+    def send_file():
+        store_path = resources_base_dir + filename
+        with open(store_path, 'rb') as targetfile:
+            while 1:
+                data = targetfile.read(20 * 1024 * 1024)  # 每次读取20M
+                if not data:
+                    break
+                yield data
+
+    response = Response(send_file(), content_type='application/octet-stream')
+    response.headers["Content-disposition"] = 'attachment; filename=%s' % filename #这行代码是为了下载时显示文件名
+    return response
 
 
 
