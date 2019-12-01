@@ -72,7 +72,7 @@ def drop_course():
 @login_required
 def resources(id):
     if request.method == 'GET':
-
+        pass
 
 
 #TODO:在线考试
