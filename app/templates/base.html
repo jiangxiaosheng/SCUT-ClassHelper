@@ -22,7 +22,7 @@
             <!-- Head portrait -->
             <div class="navbar-brand" style="padding:1%">
                 <a href="{{ url_for('main.user', email=current_user.email) }}">
-                    <img src="{{ url_for('static', filename='img/suki.jpg') }}" class="img-circle" style="height:100%;" />
+                    <img src="{{ url_for('static', filename='headicon/'+current_user.headicon_url) }}" class="img-circle" style="height:100%;" />
                 </a>
             </div>
 

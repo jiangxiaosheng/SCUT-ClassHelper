@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
-import hashlib
-from datetime import datetime
-
 import bleach
 from flask import current_app, request, url_for
 from flask_login import UserMixin
 from itsdangerous import Serializer
 from markdown import markdown
 from werkzeug.security import generate_password_hash, check_password_hash
+
+from app.utils import localtime
 from .exceptions import ValidationError
 from . import db, login_manager
 
@@ -81,7 +80,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.Text) #评论的原内容
     body_html = db.Column(db.Text) #经过富文本处理的评论内容，保存为HTML格式
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow) #发表评论的时间戳
+    timestamp = db.Column(db.DateTime, index=True, default=localtime) #发表评论的时间戳
     disabled = db.Column(db.Boolean) #该评论是否被管理员禁止的标志位
     author_id = db.Column(db.Integer, db.ForeignKey('users.id')) #发表该评论的作者id
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id')) #该评论的动态id
@@ -121,7 +120,7 @@ class Follow(db.Model):
     __tablename__ = 'follows'
     follower_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True) #关注者id
     followed_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True) #被关注者id
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow) #时间戳
+    timestamp = db.Column(db.DateTime, default=localtime) #时间戳
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -129,8 +128,8 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(64)) #真实姓名(不同于用户名)
     location = db.Column(db.String(64)) #位置
     about_me = db.Column(db.Text()) #个人介绍
-    member_since = db.Column(db.DateTime(), default=datetime.utcnow)    #注册时间
-    last_seen = db.Column(db.DateTime(), default=datetime.utcnow)   #最后一次访问的时间
+    member_since = db.Column(db.DateTime(), default=localtime)    #注册时间
+    last_seen = db.Column(db.DateTime(), default=localtime)   #最后一次访问的时间
     email = db.Column(db.String(64), unique=True, index=True)   #电子邮箱
     nickname = db.Column(db.String(64))    #昵称
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))  #角色id
@@ -305,7 +304,7 @@ class User(UserMixin, db.Model):
 
     #刷新最后访问时间
     def ping(self):
-        self.last_seen = datetime.utcnow()
+        self.last_seen = localtime()
         db.session.add(self)
         db.session.commit()
 
@@ -317,7 +316,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.Text) #动态内容
     body_html = db.Column(db.Text) #内容的html富文本形式
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow) #动态发布的时间戳
+    timestamp = db.Column(db.DateTime, index=True, default=localtime) #动态发布的时间戳
     author_id = db.Column(db.Integer, db.ForeignKey('users.id')) #作者id
     liked = db.Column(db.Integer) #点赞数
     comments = db.relationship('Comment', backref='post', lazy='dynamic') #该动态对应的评论
@@ -335,7 +334,6 @@ class Post(db.Model):
 db.event.listen(Post.body, 'set', Post.on_changed_body)
 
 #学生-课程关联表
-#TODO:还没有实现多对多关系
 class StudentCourse(db.Model):
     __tablename__ = 'studentcourses'
     student_id = db.Column(db.String, db.ForeignKey('students.student_id'), primary_key=True)
@@ -346,15 +344,39 @@ class StudentCourse(db.Model):
     def __repr__(self):
         return '<StudentCourse %r%r>' % (self.course_id, self.student_id)
 
+
+#课程公告
+class Announcement(db.Model):
+    __tablename__ = 'announcements'
+    course_id = db.Column(db.Integer, db.ForeignKey('courses.course_id'), primary_key=True)
+    timestamp = db.Column(db.DateTime, default=localtime, primary_key=True)
+    title = db.Column(db.Text) #公告标题
+    body = db.Column(db.Text) #原公告内容
+    body_html = db.Column(db.Text) #富文本形式
+
+    # 每次标题内容更改，相应的body_html也要更改
+    @staticmethod
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+                        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+                        'h1', 'h2', 'h3', 'p']
+        target.body_html = bleach.linkify(
+            bleach.clean(markdown(value, output_format='html'), tags=allowed_tags, strip=True))
+
+#监听公告body更改
+db.event.listen(Announcement.body, 'set', Announcement.on_changed_body)
+
+
 #课程表
 class Course(db.Model):
     __tablename__ = 'courses'
     course_id = db.Column(db.String, primary_key=True) #课程id
     name = db.Column(db.String) #课程名
     teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.teacher_id')) #该课程对应的老师
-    since = db.Column(db.DateTime, default=datetime.utcnow) #开课时间
+    since = db.Column(db.DateTime, default=localtime) #开课时间
     about_course = db.Column(db.Text) #课程介绍
     college = db.Column(db.String) #课程所属学院
+    announcements = db.relationship('Announcement', backref='course') #课程的公告
     students = db.relationship('StudentCourse',
                                foreign_keys=[StudentCourse.course_id],
                                backref=db.backref('course', lazy='joined'),

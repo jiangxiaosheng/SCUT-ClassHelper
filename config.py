@@ -2,6 +2,8 @@
 import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
+resources_base_dir = os.path.join(basedir, 'app', 'static', 'resources')
+headicon_base_dir = os.path.join(basedir, 'app', 'static', 'headicon')
 
 class Config():
     SECRET_KEY = "scutse" #密钥

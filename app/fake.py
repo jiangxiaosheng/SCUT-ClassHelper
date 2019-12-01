@@ -188,6 +188,7 @@ def studentcourses(count=50):
 
 
 def courses(count=20):
+    fake = Faker()
     names = ['计算机网络', '操作系统', '分析力学', '电动力学', '数学分析', '实分析',
              '软件测试', '计算机图形学']
     teacher_count = Teacher.query.count()
@@ -197,7 +198,8 @@ def courses(count=20):
         c = Course(
             course_id=str(201700 + i),
             name=names[randint(0, len(names) - 1)],
-            teacher_id=t.teacher_id
+            teacher_id=t.teacher_id,
+            about_course=fake.text()
         )
         db.session.add(c)
         try:

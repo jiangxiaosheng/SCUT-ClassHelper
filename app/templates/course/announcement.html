@@ -1,22 +1,24 @@
 {% extends "/base.html" %}
 {% import "/_macros.html" as macros %}
 
-{% block title %} gonggao {% endblock %}
+{% block title %} 公告 {% endblock %}
 
 {% block page_content %}
 <div class="container navbar-default" style="height:100%;padding-top:30px;">
     <div class="container">
-        {% for each in resources %}
+        {% for each in announcements %}
         <div style="padding-top:30px">
-            <h4>biaoti</h4>
-            <p style="width:100%;word-wrap:break-word">
-                neirong
-            </p>
-            <p style="float:right">2019.3.10</p>
+            <h4>{{ each.title }}</h4>
+            <div style="width:100%;word-wrap:break-word">
+                {{ each.body_html | safe }}
+            </div>
+            <p style="float:right">{{ each.timestamp }}</p>
         </div>
         {% endfor %}
     </div>
-
+    <div class="pagination" style="margin-left:37%">
+        {{ macros.pagination_widget(pagination, 'course.announcement', course_id=course_id) }}
+    </div>
 </div>
 {% endblock %}
 

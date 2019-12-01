@@ -5,7 +5,7 @@
 {% block page_content %}
 <div class="container navbar-default"style="height:100%;padding-top:120px;">
     <div style="margin-left:30%;background-color:#ff0000;height:100%;width:200px;float:left;">
-        <img src="{{ url_for('static', filename='headicon/default.jpg') }}" style="width:200px">
+        <img src="{{ url_for('static', filename='headicon/'+user.headicon_url) }}" style="width:200px">
         <p align="center">
             {% if user.role.name == 'Teacher' %}
             teacher

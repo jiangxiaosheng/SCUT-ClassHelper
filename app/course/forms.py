@@ -6,5 +6,5 @@ from wtforms.validators import DataRequired, Length
 
 
 class JoinCourseForm(FlaskForm):
-    id = StringField("课程id", validators=[DataRequired(), Length(1, 12)])
+    id_or_name = StringField("课程id或课程名", validators=[DataRequired(), Length(1, 12)])
     submit = SubmitField("查询")

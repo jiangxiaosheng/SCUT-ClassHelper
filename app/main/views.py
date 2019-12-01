@@ -5,6 +5,9 @@ from app.models import User, Post
 from . import main
 from .forms import EditProfileForm
 from .. import db
+import os
+from ..utils import md5, file_extension
+from config import headicon_base_dir
 
 
 #TODO:页面主页，对于不用用户应该有不同的设计
@@ -34,6 +37,13 @@ def user(email):
 def edit_profile():
     form = EditProfileForm()
     if form.validate_on_submit():
+        headicon = form.headicon.data #拿到表单中用户提交的头像文件
+        headicon_name = current_user.email
+        suffix = file_extension(headicon.filename) #后缀名，只能为jpg,gif等
+        #存放头像文件的路径
+        headicon_save_path = os.path.join(headicon_base_dir, md5(headicon_name)) + suffix #文件名用用户邮箱的md5重命名，并保存
+        headicon.save(headicon_save_path) #保存
+        current_user.headicon_url = md5(headicon_name) + suffix #修改user数据表的headicon_url字段
         current_user.about_me = form.about_me.data #修改个人介绍
         current_user.location = form.location.data #修改位置
         current_user.nickname = form.nickname.data #修改昵称

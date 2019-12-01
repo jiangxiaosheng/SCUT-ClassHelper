@@ -1,24 +1,54 @@
 {% extends "/base.html" %}
 {% import "/_macros.html" as macros %}
+
 {% block title %} Source {% endblock %}
+
 {% block head %}
 {{ super() }}
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 {% endblock %}
-{% block content %}
+
+{% block page_content %}
 <div class="container navbar-default" style="height:100%;padding-top:30px;">
     <div class="container">
-        {% for each in sources %}
-        <div style="padding-top:60px;padding-bottom:30px">
-            <div>
-                <a class="fa fa-camera-retro" href="{{ url_for('main.user', email=each.author.email) }}"><h5>{{ each.source.name }}</h5></a>
-            </div>
+        {% for each in resources %}
+        <div style="padding-top:30px">
+            <!-- excel -->
+            {% if each[2] | lower == '.xlsx' %}
+            <a class="fa fa-file-excel-o" href="{{ url_for('course.download_resources', course_id=course_id, filename=each[0]) }}">&nbsp;&nbsp;&nbsp;&nbsp;{{ each[0] }}&nbsp;&nbsp;&nbsp;&nbsp;  </a>
+            <!-- pdf -->
+            {% elif each[2] | lower == '.pdf' %}
+            <a class="fa fa-file-pdf-o" href="{{ url_for('course.download_resources', course_id=course_id, filename=each[0]) }}">&nbsp;&nbsp;&nbsp;&nbsp;{{ each[0] }}&nbsp;&nbsp;&nbsp;&nbsp; </a>
+            <!-- docx/doc -->
+            {% elif each[2] | lower == '.docx' or each[2] | lower == '.doc'%}
+            <a class="fa fa-file-word-o" href="{{ url_for('course.download_resources', course_id=course_id, filename=each[0]) }}">&nbsp;&nbsp;&nbsp;&nbsp;{{ each[0] }}&nbsp;&nbsp;&nbsp;&nbsp;  </a>
+            <!-- rar/zip -->
+            {% elif each[2] | lower == '.rar' or each[2] | lower == '.zip' %}
+            <a class="fa fa-file-archive-o" href="{{ url_for('course.download_resources', course_id=course_id, filename=each[0]) }}">&nbsp;&nbsp;&nbsp;&nbsp;{{ each[0] }}&nbsp;&nbsp;&nbsp;&nbsp;  </a>
+            <!-- jpg/png -->
+            {% elif each[2] | lower == '.jpg' or each[2] | lower == '.png' %}
+            <a class="fa fa-file-image-o" href="{{ url_for('course.download_resources', course_id=course_id, filename=each[0]) }}">&nbsp;&nbsp;&nbsp;&nbsp;{{ each[0] }}&nbsp;&nbsp;&nbsp;&nbsp;  </a>
+            <!-- video:mp4/avi -->
+            {% elif each[2] | lower == '.mp4' or each[2] | lower == '.png' %}
+            <a class="fa fa-file-movie-o" href="{{ url_for('course.download_resources', course_id=course_id, filename=each[0]) }}">&nbsp;&nbsp;&nbsp;&nbsp;{{ each[0] }}&nbsp;&nbsp;&nbsp;&nbsp;  </a>
+            <!-- pptx/ppt -->
+            {% elif each[2] | lower == '.pptx' or each[2] | lower == '.ppt' %}
+            <a class="fa fa-file-powerpoint-o" href="{{ url_for('course.download_resources', course_id=course_id, filename=each[0]) }}">&nbsp;&nbsp;&nbsp;&nbsp;{{ each[0] }}&nbsp;&nbsp;&nbsp;&nbsp;  </a>
+            <!-- code:cpp/html/py -->
+            {% elif each[2] | lower == '.cpp' or each[2] | lower == '.html' or each[2] | lower == '.py' %}
+            <a class="fa fa-file-code-o" href="{{ url_for('course.download_resources', course_id=course_id, filename=each[0]) }}">&nbsp;&nbsp;&nbsp;&nbsp;{{ each[0] }}&nbsp;&nbsp;&nbsp;&nbsp;  </a>
+            <!-- txt -->
+            {% elif each[2] | lower == '.txt' %}
+            <a class="fa fa-file-text-o" href="{{ url_for('course.download_resources', course_id=course_id, filename=each[0]) }}">&nbsp;&nbsp;&nbsp;&nbsp;{{ each[0] }}&nbsp;&nbsp;&nbsp;&nbsp;  </a>
+            <!-- default -->
+            {% else %}
+            <a class="fa fa-file-o" href="{{ url_for('course.download_resources', course_id=course_id, filename=each[0]) }}">&nbsp;&nbsp;&nbsp;&nbsp;{{ each[0] }}&nbsp;&nbsp;&nbsp;&nbsp;  </a>
+            {% endif %}
+            <p style="float:right;padding-right:30%">{{ each[3] }}</p>
         </div>
         {% endfor %}
     </div>
-    <div class="pagination" style="margin-left:37%">
-        {{ macros.pagination_widget(pagination, 'forum.index') }}
-    </div>
+
 </div>
 {% endblock %}
 

@@ -12,9 +12,9 @@
             </div>
             <div class="media-body">
                 <a href="{{ url_for('course.chatroom', course_id=each.course_id) }}"><h4 class="media-heading">{{ loop.index }}:{{ each.name }}({{ each.course_id }})</h4></a>
-                <a href="{{ url_for('main.user', email=each.teacher.user.email) }}"><p>teacher:{{ each.teacher.user.name }}</p></a>
-                <p>count:{{ each.students.count() }}</p>
-                <p>introduce:{{ each.about_course }}</p>
+                <a href="{{ url_for('main.user', email=each.teacher.user.email) }}"><p>授课老师:{{ each.teacher.user.name }}</p></a>
+                <p>人数:{{ each.students.count() }}</p>
+                <p>课程介绍:{{ each.about_course }}</p>
                 <button id="{{ each.course_id }}" type="button" class="btn btn-default btn-lg">加入</button>
             </div>
         </div>
