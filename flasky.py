@@ -33,9 +33,15 @@ def send_message(msg):
 #有新的客户端连接进来
 @socketio.on('connected')
 def connected(msg):
+    room = msg['room']
+    join_room(room)
     emit('accept_connection', {
         'user_id': msg['user_id']
-    }, broadcast=True)
+    }, room=room)
+    open('YES.txt', 'w').write(','.join(rooms()))
+
+
+
 
 
 @app.shell_context_processor
