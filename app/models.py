@@ -342,6 +342,15 @@ class Post(db.Model):
                                   backref=db.backref('post', lazy='joined'),
                                   lazy='dynamic',
                                   cascade='all, delete-orphan')
+
+    #是否被某个用户点过赞
+    def is_liked(self, user):
+        p = PostLike.query.filter_by(post_id=self.id, user_id=user.id).first()
+        if p is not None:
+            return p.like
+        else:
+            return False
+
     #点赞数目
     @property
     def liked_count(self):

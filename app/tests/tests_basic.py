@@ -62,12 +62,13 @@ class BasicsTestCase(unittest.TestCase):
         print((colleges_majors.keys()))
 
     def test_mysql(self):
-        #create_message_table(201702)
-        insert_message(201701, {
-            'content': 'asd1',
-            'user_id': '201',
-            'course_id': '201701'
-        })
+        for i in range(201700, 201720):
+            create_message_table(i)
+        # insert_message(201701, {
+        #     'content': 'asd1',
+        #     'user_id': '201',
+        #     'course_id': '201701'
+        # })
 
 
     def test_localtime(self):

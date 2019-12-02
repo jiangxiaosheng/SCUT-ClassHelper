@@ -39,7 +39,6 @@ def get_comment(id):
 @api.route('/posts/comments')
 def get_post_comments():
     id = request.args.get('id')
-    print(id)
     if id is None:
         return internal_error('Please check your url.')
     post = Post.query.get_or_404(id)
@@ -64,15 +63,6 @@ def get_post_comments():
 #点赞
 @api.route('/posts/like', methods=['POST'])
 def like_post():
-    # id = request.values.get('id')
-    # print(id)
-    # post = Post.query.get_or_404(id)
-    # post.liked += 1
-    # db.session.add(post)
-    # db.session.commit()
-    # return jsonify({"count": post.liked})
-    print(request.values.get('post_id'))
-    print(request.values.get('user_id'))
     post_id = request.values.get('post_id')
     user_id = request.values.get('user_id')
     post = Post.query.filter_by(id=post_id).first()
@@ -81,7 +71,6 @@ def like_post():
         record = PostLike(user_id=user_id, post_id=post_id, like=1)
     else:
         record.like = not record.like
-    print(record)
     db.session.add(record)
     db.session.commit()
     return jsonify({"count": post.liked_count})
