@@ -27,6 +27,8 @@ class Config():
 
 class DevelopmentConfig(Config):
     DEBUG = True
+    MYSQL_USERNAME = 'root'
+    MYSQL_PASSWORD = 'root'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
                               'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
 
@@ -38,6 +40,8 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
+    MYSQL_USERNAME = 'root'
+    MYSQL_PASSWORD = 'd3R5ha9C7aXl'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
                               'sqlite:///' + os.path.join(basedir, 'data.sqlite')
 

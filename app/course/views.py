@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-from flask import url_for, render_template, redirect, request, current_app, session, send_from_directory, Response
+from flask import url_for, render_template, redirect, request, current_app, session, Response
 from .. import db
 from app.models import Teacher, User, Course, StudentCourse, Announcement
 from . import course
 from flask_login import login_required, current_user
 from .forms import JoinCourseForm
 from config import basedir, resources_base_dir
-import os
 from ..utils import *
 import re
 

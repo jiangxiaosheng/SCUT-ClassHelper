@@ -2,6 +2,11 @@ import os
 import time
 import hashlib
 import datetime
+import pymysql
+
+from . import message_db
+from config import *
+
 
 #判断path下是否存在指定文件file，目前不支持递归判断
 def file_exists(file, dir):
@@ -49,21 +54,41 @@ def localtime():
     return datetime.datetime.strptime(time_str,"%Y-%m-%d %H:%M:%S")
 
 
+#在mysql数据库中创建一个课程聊天室的聊天记录表
+#course_id：课程id
+def create_message_table(course_id):
+    table_name = 'course' + str(course_id) + '_message'
+    cursor = message_db.cursor()
+
+    sql = """CREATE TABLE IF NOT EXISTS %s (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+             user_id  VARCHAR(10) NOT NULL,
+             body TEXT,
+             type ENUM("text", "image") DEFAULT "text",
+             url VARCHAR(25),
+             timestamp DATETIME)""" % table_name
+
+    cursor.execute(sql)
+
+
+#添加数据库记录
+#message为json格式，有content和user_id字段
+#TODO:目前还不支持发送图片
+def insert_message(course_id, message):
+    table_name = 'course' + str(course_id) + '_message'
+    cursor = message_db.cursor()
+
+    sql = """INSERT INTO %s(user_id, body, timestamp)
+        VALUES 
+        (%s, '%s', '%s')""" % (table_name, message['user_id'], message['content'], localtime())
+
+    try:
+        cursor.execute(sql)
+        message_db.commit()
+    except:
+        message_db.rollback()
+
+
 if __name__ == '__main__':
-    from config import *
-    import datetime
-    import re
-    # dir = resources_base_dir + '201700'
-    # file_dict = zip(os.listdir(dir), [resources_base_dir + filename for filename in os.listdir(dir)])
-    # for k,v in file_dict:
-    #     print(k, v)
-    # print(os.path.join(dir, '123'))
-    # print(file_extension('123.jpg'))
-    # print(fileTime('D:\\test.txt'))
-    time1 = time.localtime()
-    #print(datetime.datetime.fromtimestamp(time1))
-    print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-    print(datetime.datetime.utcnow)
-    print(type(localtime()))
-    if re.match(r'^\d\d*\d$', '123'):
-        print('Match')
+    #create_message_table(201701)
+    localtime()

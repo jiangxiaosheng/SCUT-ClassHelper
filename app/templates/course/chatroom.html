@@ -83,10 +83,39 @@
                     <button type="button" class="btn btn-default">历史记录</button>
                 </div>
                 <!-- input -->
-                <textarea style="height:85%;width:100%;padding-top:20px"></textarea>
+                <textarea id="message" style="height:85%;width:100%;padding-top:20px"></textarea>
                 <!-- send button -->
-                <button type="button" class="btn btn-default" style="position: fixed;bottom: 10px;right:10px">发送</button>
+                <button id="send_message" type="button" class="btn btn-default" style="position: fixed;bottom: 10px;right:10px">发送</button>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+<script>
+    $(document).ready(function() {
+
+        socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        //接受广播
+        socket.on('accept_connection', function (msg) {
+            alert(msg['user_id']);
+        });
+
+        //打开页面时发送连接请求
+        socket.emit('connected', {
+            'user_id': {{ current_user.id }}
+        });
+
+        //点击发送按钮，发送消息
+        $('button#send_message').click(function() {
+           socket.emit('send_message', {
+               'content': $('textarea#message').val(),
+               'user_id': '{{ current_user.id }}',
+               'course_id': '{{ course.course_id }}'
+           });
+         });
+    });
+</script>
 {% endblock %}

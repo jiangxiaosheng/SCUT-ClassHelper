@@ -75,9 +75,16 @@ def like_post():
     print(request.values.get('user_id'))
     post_id = request.values.get('post_id')
     user_id = request.values.get('user_id')
-    record = PostLike.query.filter_by(post_id=post_id, user_id=user_id).first()
-    if record.like == True:
-        return jsonify({"count": record.post.liked})
+    post = Post.query.filter_by(id=post_id).first()
+    record = PostLike.query.filter_by(user_id=user_id, post_id=post_id).first()
+    if record is None: #如果没有点过赞，则新建一条记录
+        record = PostLike(user_id=user_id, post_id=post_id, like=1)
+    else:
+        record.like = not record.like
+    print(record)
+    db.session.add(record)
+    db.session.commit()
+    return jsonify({"count": post.liked_count})
 
 
 '''

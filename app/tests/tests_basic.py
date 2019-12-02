@@ -3,6 +3,7 @@ from flask import current_app
 from app import create_app, db
 from app.models import User, Role
 from app.email import send_email
+from app.utils import *
 
 class BasicsTestCase(unittest.TestCase):
     def setUp(self):
@@ -59,3 +60,15 @@ class BasicsTestCase(unittest.TestCase):
             '物理学院': '理论物理'
         }
         print((colleges_majors.keys()))
+
+    def test_mysql(self):
+        #create_message_table(201702)
+        insert_message(201701, {
+            'content': 'asd1',
+            'user_id': '201',
+            'course_id': '201701'
+        })
+
+
+    def test_localtime(self):
+        print(localtime())

@@ -35,7 +35,7 @@
 <script type="text/javascript">
     function f(id) {
         $.ajax({
-            url:{{ url_for('course.drop_course') }},
+            url:"{{ url_for('course.drop_course') }}",
             type:"POST",
             dataType:"json",
             data:{"course_id":id},

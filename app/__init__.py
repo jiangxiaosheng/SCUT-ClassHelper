@@ -6,15 +6,20 @@ from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_pagedown import PageDown
-from config import config
+from config import config, DevelopmentConfig
+import pymysql
+
 
 bootstrap = Bootstrap()
 mail = Mail()
 moment = Moment()
 db = SQLAlchemy()
+#开发用数据库
+message_db = pymysql.connect("localhost", DevelopmentConfig.MYSQL_USERNAME, DevelopmentConfig.MYSQL_PASSWORD, 'SCUT_ClassHelper')
 pagedown = PageDown()
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
+
 
 def create_app(config_name):
     app = Flask(__name__)
@@ -41,4 +46,5 @@ def create_app(config_name):
 
     from .api import api as api_blueprint
     app.register_blueprint(api_blueprint, url_prefix='/api')
+
     return app

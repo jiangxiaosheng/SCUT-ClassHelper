@@ -336,11 +336,20 @@ class Post(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=localtime) #动态发布的时间戳
     author_id = db.Column(db.Integer, db.ForeignKey('users.id')) #作者id
     comments = db.relationship('Comment', backref='post', lazy='dynamic') #该动态对应的评论
+    #注意这里的取名有一点迷惑性，实际上需要通过判断like字段才能确定是否点过赞
     like_people = db.relationship('PostLike',
                                   foreign_keys=[PostLike.post_id],
                                   backref=db.backref('post', lazy='joined'),
                                   lazy='dynamic',
                                   cascade='all, delete-orphan')
+    #点赞数目
+    @property
+    def liked_count(self):
+        count = 0
+        for p in self.like_people:
+            if p.like == True:
+                count += 1
+        return count
 
     #每次动态内容更改，相应的body_html也要更改
     @staticmethod
