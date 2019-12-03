@@ -2,38 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dbad704c-a47e-4e4f-91d8-7b88682ee6a6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/static/img/heart.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/js/jquery-1.11.0.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/templates/auth/register_role.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/templates/course/create_course.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/templates/course/publish_announcement.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/auth/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/auth/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/auth/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/auth/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/course/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/course/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/course/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/course/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/resources/201700/1.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/resources/1/1.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/resources/201700/suki.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/resources/1/suki.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/resources/201701/1.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/resources/2/1.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/resources/201701/email.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/resources/2/email.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/resources/201701/suki.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/resources/2/suki.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/resources/201702/1.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/resources/3/1.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/resources/201702/suki.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/resources/3/suki.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/resources/201703/1.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/resources/4/1.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/resources/201703/suki.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/resources/4/suki.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/resources/201704/1.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/resources/5/1.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/resources/201704/suki.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/resources/5/suki.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/auth/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/auth/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/auth/unconfirmed.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/auth/unconfirmed.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/course/chatroom.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/course/chatroom.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/course/courses.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/course/courses.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/course/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/course/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/forum/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/forum/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/course/join_course.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/course/query_course.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/tests/tests_basic.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/tests/tests_basic.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/tests/tests_forum.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/tests/tests_forum.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data-dev.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/data-dev.sqlite" afterDir="false" />
     </list>
@@ -59,42 +35,42 @@
           <entry key="LICENSE" value="2" />
           <entry key="css" value="7" />
           <entry key="gitignore" value="1" />
-          <entry key="html" value="72" />
+          <entry key="html" value="77" />
           <entry key="jpg" value="4" />
           <entry key="js" value="4" />
           <entry key="md" value="1" />
           <entry key="png" value="2" />
-          <entry key="py" value="140" />
+          <entry key="py" value="147" />
           <entry key="sqlite" value="3" />
-          <entry key="txt" value="27" />
+          <entry key="txt" value="29" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CSS" value="7" />
-          <entry key="HTML" value="72" />
+          <entry key="HTML" value="77" />
           <entry key="Image" value="6" />
           <entry key="JavaScript" value="4" />
           <entry key="Markdown" value="1" />
-          <entry key="PLAIN_TEXT" value="33" />
-          <entry key="Python" value="140" />
+          <entry key="PLAIN_TEXT" value="35" />
+          <entry key="Python" value="147" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="css" value="13" />
           <entry key="dummy" value="1" />
-          <entry key="html" value="3271" />
-          <entry key="py" value="16924" />
+          <entry key="html" value="3590" />
+          <entry key="py" value="18064" />
           <entry key="txt" value="370" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="13" />
-          <entry key="HTML" value="3271" />
+          <entry key="HTML" value="3590" />
           <entry key="PLAIN_TEXT" value="371" />
-          <entry key="Python" value="16924" />
+          <entry key="Python" value="18064" />
         </counts>
       </usages-collector>
     </session>
@@ -104,26 +80,74 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/course/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="96" column="20" selection-start-line="96" selection-start-column="20" selection-end-line="96" selection-end-column="20" />
+            <state relative-caret-position="219">
+              <caret line="168" column="38" selection-start-line="168" selection-start-column="38" selection-end-line="168" selection-end-column="38" />
               <folding>
                 <element signature="e#24#117#0" expanded="true" />
-                <marker date="1575376192817" expanded="true" signature="3110:3595" ph="..." />
-                <marker date="1575376192817" expanded="true" signature="3718:4203" ph="..." />
-                <marker date="1575376192817" expanded="true" signature="4314:5082" ph="..." />
-                <marker date="1575376192817" expanded="true" signature="6439:6444" ph="..." />
+                <marker date="1575387481972" expanded="true" signature="1857:2065" ph="..." />
+                <marker date="1575387481972" expanded="true" signature="3514:4163" ph="..." />
+                <marker date="1575387481972" expanded="true" signature="4286:4771" ph="..." />
+                <marker date="1575387481972" expanded="true" signature="4882:5650" ph="..." />
+                <marker date="1575387481972" expanded="true" signature="7506:7511" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/templates/course/chatroom.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="401">
+              <caret line="71" column="93" selection-start-line="71" selection-start-column="93" selection-end-line="71" selection-end-column="93" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#0;n#div#0;n#div#3;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#textarea#0;n#div#3;n#div#1;n#div#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/forum/views.py">
+        <entry file="file://$PROJECT_DIR$/app/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="12" column="82" selection-start-line="12" selection-start-column="82" selection-end-line="12" selection-end-column="82" />
+            <state relative-caret-position="-411">
+              <caret line="72" column="14" selection-start-line="72" selection-start-column="14" selection-end-line="72" selection-end-column="14" />
               <folding>
-                <element signature="e#0#33#0" expanded="true" />
+                <element signature="e#0#9#0" expanded="true" />
+                <marker date="1575386460813" expanded="true" signature="175:180" ph="..." />
+                <marker date="1575386460813" expanded="true" signature="289:290" ph="..." />
+                <marker date="1575386460813" expanded="true" signature="958:2789" ph="..." />
+                <marker date="1575386460813" expanded="true" signature="1639:1800" ph="..." />
+                <marker date="1575386460813" expanded="true" signature="1900:2789" ph="..." />
+                <marker date="1575386460813" expanded="true" signature="2443:2789" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/tests/tests_basic.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="108" column="36" selection-start-line="108" selection-start-column="36" selection-end-line="108" selection-end-column="36" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+                <marker date="1575386729688" expanded="true" signature="1490:1499" ph="..." />
+                <marker date="1575386729688" expanded="true" signature="1990:1999" ph="..." />
+                <marker date="1575386729688" expanded="true" signature="2340:2349" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="273">
+              <caret line="17" column="129" selection-start-line="17" selection-end-line="17" selection-end-column="129" />
+              <folding>
+                <element signature="e#24#47#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -139,18 +163,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/decorators.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-75">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
-              <folding>
-                <element signature="e#24#51#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/forum/index.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="140">
@@ -159,40 +171,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/static/css/style.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="9" column="21" lean-forward="true" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/base.html">
+        <entry file="file://$PROJECT_DIR$/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="584">
-              <caret line="37" column="48" selection-start-line="37" selection-start-column="48" selection-end-line="37" selection-end-column="48" />
-              <folding>
-                <element signature="e#1528#1534#0" expanded="true" />
-                <element signature="e#1920#1926#0" expanded="true" />
-                <element signature="e#1920#1926#1" expanded="true" />
-                <element signature="e#2048#2054#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-8802">
-              <caret line="54" selection-start-line="54" selection-end-line="54" />
-              <folding>
-                <element signature="e#24#37#0" expanded="true" />
-                <marker date="1575376164599" expanded="true" signature="7692:7965" ph="..." />
-                <marker date="1575376164599" expanded="true" signature="11939:11951" ph="..." />
-              </folding>
+            <state relative-caret-position="817">
+              <caret line="49" column="35" lean-forward="true" selection-start-line="49" selection-start-column="35" selection-end-line="49" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -220,6 +203,7 @@
       <find>self.server</find>
       <find>is_an</find>
       <find>heart</find>
+      <find>join-</find>
     </findStrings>
     <replaceStrings>
       <replace>{{ each[3] }}</replace>
@@ -248,7 +232,6 @@
         <option value="$PROJECT_DIR$/app/course/chatroom.py" />
         <option value="$PROJECT_DIR$/tessmysql.py" />
         <option value="$PROJECT_DIR$/app/__init__.py" />
-        <option value="$PROJECT_DIR$/app/utils.py" />
         <option value="$PROJECT_DIR$/flasky.py" />
         <option value="$PROJECT_DIR$/app/forum/views.py" />
         <option value="$PROJECT_DIR$/app/api/forum.py" />
@@ -261,19 +244,21 @@
         <option value="$PROJECT_DIR$/app/auth/forms.py" />
         <option value="$PROJECT_DIR$/app/templates/auth/register_role.html" />
         <option value="$PROJECT_DIR$/app/auth/views.py" />
-        <option value="$PROJECT_DIR$/app/tests/tests_basic.py" />
-        <option value="$PROJECT_DIR$/app/templates/course/courses.html" />
         <option value="$PROJECT_DIR$/app/templates/course/publish_announcement.html" />
-        <option value="$PROJECT_DIR$/app/templates/course/chatroom.html" />
         <option value="$PROJECT_DIR$/app/templates/course/create_course.html" />
         <option value="$PROJECT_DIR$/app/course/forms.py" />
-        <option value="$PROJECT_DIR$/app/templates/base.html" />
         <option value="$PROJECT_DIR$/app/models.py" />
-        <option value="$PROJECT_DIR$/app/course/views.py" />
-        <option value="$PROJECT_DIR$/app/templates/course/index.html" />
         <option value="$PROJECT_DIR$/app/static/style.css" />
         <option value="$PROJECT_DIR$/app/templates/forum/index.html" />
         <option value="$PROJECT_DIR$/app/static/css/style.css" />
+        <option value="$PROJECT_DIR$/app/templates/course/index.html" />
+        <option value="$PROJECT_DIR$/app/templates/base.html" />
+        <option value="$PROJECT_DIR$/app/templates/course/courses.html" />
+        <option value="$PROJECT_DIR$/app/tests/tests_forum.py" />
+        <option value="$PROJECT_DIR$/app/utils.py" />
+        <option value="$PROJECT_DIR$/app/tests/tests_basic.py" />
+        <option value="$PROJECT_DIR$/app/course/views.py" />
+        <option value="$PROJECT_DIR$/app/templates/course/chatroom.html" />
       </list>
     </option>
   </component>
@@ -346,7 +331,27 @@
               <item name="SCUT-ClassHelper" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="headicon" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SCUT-ClassHelper" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SCUT-ClassHelper" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
               <item name="img" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SCUT-ClassHelper" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SCUT-ClassHelper" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SCUT-ClassHelper" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SCUT-ClassHelper" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="course" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="SCUT-ClassHelper" type="b2602c69:ProjectViewProjectNode" />
@@ -412,7 +417,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for app.tests.tests_basic.BasicsTestCase.test_form" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="utils" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="ClassHelper" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app/utils.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for app.tests.tests_basic.BasicsTestCase.test_chat_history" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="ClassHelper" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -422,7 +448,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;app.tests.tests_basic.BasicsTestCase.test_form&quot;" />
+      <option name="_new_target" value="&quot;app.tests.tests_basic.BasicsTestCase.test_chat_history&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -437,20 +463,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;app.tests.tests_basic.BasicsTestCase.test_re&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Unittests for app.tests.tests_basic.BasicsTestCase.test_send_email" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
-      <module name="ClassHelper" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;app.tests.tests_basic.BasicsTestCase.test_send_email&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -470,18 +482,18 @@
     </configuration>
     <list>
       <item itemvalue="Python.flasky" />
-      <item itemvalue="Python tests.Unittests for app.tests.tests_basic.BasicsTestCase.test_send_email" />
-      <item itemvalue="Python tests.Unittests for app.tests.tests_basic.BasicsTestCase.test_form" />
       <item itemvalue="Python tests.Unittests for app.tests.tests_basic.BasicsTestCase.test_valid_confirmation_token" />
       <item itemvalue="Python tests.Unittests for app.tests.tests_basic.BasicsTestCase.test_re" />
+      <item itemvalue="Python.utils" />
+      <item itemvalue="Python tests.Unittests for app.tests.tests_basic.BasicsTestCase.test_chat_history" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.flasky" />
+        <item itemvalue="Python tests.Unittests for app.tests.tests_basic.BasicsTestCase.test_chat_history" />
+        <item itemvalue="Python.utils" />
         <item itemvalue="Python tests.Unittests for app.tests.tests_basic.BasicsTestCase.test_re" />
         <item itemvalue="Python tests.Unittests for app.tests.tests_basic.BasicsTestCase.test_valid_confirmation_token" />
-        <item itemvalue="Python tests.Unittests for app.tests.tests_basic.BasicsTestCase.test_form" />
-        <item itemvalue="Python tests.Unittests for app.tests.tests_basic.BasicsTestCase.test_send_email" />
       </list>
     </recent_temporary>
   </component>
@@ -657,19 +669,17 @@
       <option name="project" value="LOCAL" />
       <updated>1575342046065</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="2019-12-2&#10;添加了聊天室功能（还在完善），使用flask_socketio库，通过websocket通信，服务器端部署使用gevent&#10;聊天室：实现了广播功能（用户打开聊天室时所有人都可以接收到）&#10;还需要加入发送图片的功能&#10;接入了mysql数据库，因为flask_sqlalchemy提供的功能不足以提供动态数据库操作，而且在线聊天需要频繁写入数据库，sqlite效率比较低，所以在Mysql中存放聊天记录，在utils.py中封装了相关数据库操作函数（使用pymysql）">
+      <created>1575380821771</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1575380821771</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_for_app_tests_tests_basic_BasicsTestCase_test_valid_confirmation_token - 2019.12.03 at 17h 21m 54s.xml">
-      <configuration name="Unittests for app.tests.tests_basic.BasicsTestCase.test_valid_confirmation_token" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_for_app_tests_tests_basic_BasicsTestCase_test_valid_confirmation_token - 2019.12.03 at 17h 22m 29s.xml">
-      <configuration name="Unittests for app.tests.tests_basic.BasicsTestCase.test_valid_confirmation_token" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_for_app_tests_tests_basic_BasicsTestCase_test_valid_confirmation_token - 2019.12.03 at 17h 22m 42s.xml">
-      <configuration name="Unittests for app.tests.tests_basic.BasicsTestCase.test_valid_confirmation_token" configurationId="tests" />
-    </history-entry>
     <history-entry file="Unittests_for_app_tests_tests_basic_BasicsTestCase_test_re - 2019.12.03 at 19h 24m 52s.xml">
       <configuration name="Unittests for app.tests.tests_basic.BasicsTestCase.test_re" configurationId="tests" />
     </history-entry>
@@ -691,6 +701,15 @@
     <history-entry file="Unittests_for_app_tests_tests_basic_BasicsTestCase_test_re - 2019.12.03 at 19h 26m 46s.xml">
       <configuration name="Unittests for app.tests.tests_basic.BasicsTestCase.test_re" configurationId="tests" />
     </history-entry>
+    <history-entry file="Unittests_for_app_tests_tests_basic_BasicsTestCase_test_chat_history - 2019.12.03 at 23h 04m 32s.xml">
+      <configuration name="Unittests for app.tests.tests_basic.BasicsTestCase.test_chat_history" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_app_tests_tests_basic_BasicsTestCase_test_chat_history - 2019.12.03 at 23h 04m 45s.xml">
+      <configuration name="Unittests for app.tests.tests_basic.BasicsTestCase.test_chat_history" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_app_tests_tests_basic_BasicsTestCase_test_chat_history - 2019.12.03 at 23h 25m 31s.xml">
+      <configuration name="Unittests for app.tests.tests_basic.BasicsTestCase.test_chat_history" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -701,7 +720,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4993395" weight="0.40651557" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4993395" weight="0.3753541" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39943343" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -759,16 +778,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="2019-12-2&#10;添加了聊天室功能（还在完善），使用flask_socketio库，通过websocket通信，服务器端部署使用gevent&#10;聊天室：实现了广播功能（用户打开聊天室时所有人都可以接收到）&#10;还需要加入发送图片的功能&#10;接入了mysql数据库，因为flask_sqlalchemy提供的功能不足以提供动态数据库操作，而且在线聊天需要频繁写入数据库，sqlite效率比较低，所以在Mysql中存放聊天记录，在utils.py中封装了相关数据库操作函数（使用pymysql）" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/main/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="621">
-          <caret line="26" column="29" selection-start-line="26" selection-start-column="29" selection-end-line="26" selection-end-column="29" />
-          <folding>
-            <element signature="e#24#43#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/course/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -801,16 +810,6 @@
           <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
           <folding>
             <element signature="e#24#62#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-          <folding>
-            <element signature="e#24#47#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -902,13 +901,6 @@
     <entry file="file://$PROJECT_DIR$/app/templates/auth/email/confirm.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="1" lean-forward="true" selection-start-column="6" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/auth/reset_password.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -966,33 +958,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/tests/tests_basic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="102" column="22" lean-forward="true" selection-start-line="102" selection-start-column="22" selection-end-line="102" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <marker date="1575372616940" expanded="true" signature="1490:1499" ph="..." />
-            <marker date="1575372616940" expanded="true" signature="1990:1999" ph="..." />
-            <marker date="1575372616940" expanded="true" signature="2340:2349" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="65">
-          <caret line="79" selection-start-line="79" selection-end-line="79" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-            <marker date="1575372616997" expanded="true" signature="175:180" ph="..." />
-            <marker date="1575372616997" expanded="true" signature="289:290" ph="..." />
-            <marker date="1575372616997" expanded="true" signature="958:2057" ph="..." />
-            <marker date="1575372616997" expanded="true" signature="1690:2057" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/course/publish_announcement.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
@@ -1000,19 +965,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/course/chatroom.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="81" column="119" selection-start-line="81" selection-start-column="119" selection-end-line="81" selection-end-column="119" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#div#0;n#div#3;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#textarea#0;n#div#3;n#div#1;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/course/join_course.html">
+    <entry file="file://$PROJECT_DIR$/app/templates/course/query_course.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="224">
           <caret line="8" column="6" lean-forward="true" selection-end-line="9" selection-end-column="14" />
@@ -1044,37 +997,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/decorators.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-75">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-          <folding>
-            <element signature="e#24#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/course/courses.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="14" column="64" lean-forward="true" selection-start-line="14" selection-start-column="64" selection-end-line="14" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/course/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="13" column="146" selection-start-line="13" selection-start-column="146" selection-end-line="13" selection-end-column="146" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="45" column="39" lean-forward="true" selection-start-line="45" selection-start-column="39" selection-end-line="45" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-8802">
@@ -1083,20 +1005,6 @@
             <element signature="e#24#37#0" expanded="true" />
             <marker date="1575376164599" expanded="true" signature="7692:7965" ph="..." />
             <marker date="1575376164599" expanded="true" signature="11939:11951" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/course/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="96" column="20" selection-start-line="96" selection-start-column="20" selection-end-line="96" selection-end-column="20" />
-          <folding>
-            <element signature="e#24#117#0" expanded="true" />
-            <marker date="1575376192817" expanded="true" signature="3110:3595" ph="..." />
-            <marker date="1575376192817" expanded="true" signature="3718:4203" ph="..." />
-            <marker date="1575376192817" expanded="true" signature="4314:5082" ph="..." />
-            <marker date="1575376192817" expanded="true" signature="6439:6444" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1124,19 +1032,6 @@
     <entry file="file://$PROJECT_DIR$/app/static/img/heart.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="584">
-          <caret line="37" column="48" selection-start-line="37" selection-start-column="48" selection-end-line="37" selection-end-column="48" />
-          <folding>
-            <element signature="e#1528#1534#0" expanded="true" />
-            <element signature="e#1920#1926#0" expanded="true" />
-            <element signature="e#1920#1926#1" expanded="true" />
-            <element signature="e#2048#2054#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/static/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="112">
@@ -1151,10 +1046,134 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="817">
+          <caret line="49" column="35" lean-forward="true" selection-start-line="49" selection-start-column="35" selection-end-line="49" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/static/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
           <caret line="9" column="21" lean-forward="true" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="34" column="53" selection-start-line="34" selection-start-column="53" selection-end-line="34" selection-end-column="53" />
+          <folding>
+            <element signature="e#1528#1534#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/course/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="17" column="56" lean-forward="true" selection-start-line="17" selection-start-column="56" selection-end-line="17" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/decorators.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="13" column="16" lean-forward="true" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="26" />
+          <folding>
+            <element signature="e#24#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="17" column="129" selection-start-line="17" selection-end-line="17" selection-end-column="129" />
+          <folding>
+            <element signature="e#24#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/tests/tests_forum.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="541">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/course/courses.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="359">
+          <caret line="17" column="151" selection-start-line="17" selection-start-column="151" selection-end-line="17" selection-end-column="151" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/tests/tests_basic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="108" column="36" selection-start-line="108" selection-start-column="36" selection-end-line="108" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <marker date="1575386729688" expanded="true" signature="1490:1499" ph="..." />
+            <marker date="1575386729688" expanded="true" signature="1990:1999" ph="..." />
+            <marker date="1575386729688" expanded="true" signature="2340:2349" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="170" lean-forward="true" selection-start-column="170" selection-end-column="170" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-411">
+          <caret line="72" column="14" selection-start-line="72" selection-start-column="14" selection-end-line="72" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+            <marker date="1575386460813" expanded="true" signature="175:180" ph="..." />
+            <marker date="1575386460813" expanded="true" signature="289:290" ph="..." />
+            <marker date="1575386460813" expanded="true" signature="958:2789" ph="..." />
+            <marker date="1575386460813" expanded="true" signature="1639:1800" ph="..." />
+            <marker date="1575386460813" expanded="true" signature="1900:2789" ph="..." />
+            <marker date="1575386460813" expanded="true" signature="2443:2789" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/course/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="168" column="38" selection-start-line="168" selection-start-column="38" selection-end-line="168" selection-end-column="38" />
+          <folding>
+            <element signature="e#24#117#0" expanded="true" />
+            <marker date="1575387481972" expanded="true" signature="1857:2065" ph="..." />
+            <marker date="1575387481972" expanded="true" signature="3514:4163" ph="..." />
+            <marker date="1575387481972" expanded="true" signature="4286:4771" ph="..." />
+            <marker date="1575387481972" expanded="true" signature="4882:5650" ph="..." />
+            <marker date="1575387481972" expanded="true" signature="7506:7511" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/course/chatroom.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="71" column="93" selection-start-line="71" selection-start-column="93" selection-end-line="71" selection-end-column="93" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#div#0;n#div#3;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#textarea#0;n#div#3;n#div#1;n#div#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

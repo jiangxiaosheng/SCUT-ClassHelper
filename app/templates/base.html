@@ -32,11 +32,9 @@
             <ul class="nav navbar-nav">
                 <li><a href="{{ url_for('course.index') }}"><span class="glyphicon glyphicon-home"></span>&nbsp;{% if current_user.role.name == 'Student' %}我的课程{% else %}我开的课{% endif %}</a></li>
                 <li><a href="{{ url_for('forum.index') }}"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;广场</a></li>
+                <li><a href="{{ url_for('course.query_course') }}"><span class="glyphicon glyphicon-search"></span>&nbsp;查询课程</a></li>
                 {% if current_user.role.name == 'Teacher' %}
-                <li><a href="{{ url_for('course.join_course') }}"><span class="glyphicon glyphicon-search"></span>&nbsp;查询课程</a></li>
                 <li><a href="{{ url_for('course.create_course') }}"><span class="glyphicon glyphicon-plus"></span>&nbsp;创建课程</a></li>
-                {% elif current_user.role.name == 'Student' %}
-                <li><a href="{{ url_for('course.join_course') }}"><span class="glyphicon glyphicon-plus"></span>&nbsp;加入课程</a></li>
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right ">

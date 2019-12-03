@@ -2,6 +2,7 @@ import unittest
 from ..api.forum import get_comments
 from app import create_app, db
 from ..fake import *
+from ..utils import *
 
 
 class ForumTestCase(unittest.TestCase):
@@ -24,3 +25,6 @@ class ForumTestCase(unittest.TestCase):
         comments = get_comments(1)
         for c in comments:
             print(c)
+
+
+

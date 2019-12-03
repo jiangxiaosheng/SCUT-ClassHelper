@@ -46,32 +46,40 @@
             <!--chat list-->
             <div style="overflow-y:auto;background-color:#EEEEEE;height:70%;width:60%;float:left;">
                 <br />
+                {% for each in chat_history %}
+                {% if each[0] != current_user.id %}
                 <!--other chat list-->
                 <div>
                     <div style="width:7%;float:left">
-                        <a href="#"><img src="{{ url_for('static', filename='img/suki.jpg') }}" style="width:100%"></a>
+                        <a href="#"><img src="{{ url_for('static', filename='headicon/'+each[2]) }}" style="width:100%"></a>
                     </div>
                     <div style="float:left;width:90%">
                         <div style="border-radius:15px;float:left;width:40%;background-color:#00dcf2">
-                            <h4>name (2019.11.24/13:46)</h4>
-                            <p style="padding:0 5% 0 5%;word-wrap:break-word">neirodafasssssasdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddssssssdassssssaddddddddddddddddddddddddddddddddddddddddsssssssssssssssssssssswwwwwwswadasdassn</p>
+                            <h4>{{ each[1] }} ({{ each[4] }})</h4>
+                            <p style="padding:0 5% 0 5%;word-wrap:break-word">{{ each[3] }}</p>
                         </div>
                     </div>
                 </div>
 
+                {% else %}
                 <!--self chat list-->
                 <div>
                     <div style="width:7%;float:right">
-                        <a href="#"><img src="{{ url_for('static', filename='img/suki.jpg') }}" style="width:100%"></a>
+                        <a href="#"><img src="{{ url_for('static', filename='headicon/'+each[2]) }}" style="width:100%"></a>
                     </div>
                     <div style="float:right;width:90%">
                         <div style="float:right;width:40%;border-radius:15px;background-color:#23ddaf">
-                            <h4 style="padding-left:35%;float:right">name (2019.11.24/13:46)</h4>
-                            <p style="padding:0 5% 0 5%; word-wrap:break-word;">neirodafasasdasdasdssssasdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddssssssdassssssaddddddddddddddddddddddddddddddddddddddddsssssssssssssssssssssswwwwwwswadasdassn</p>
+                            <h4 style="padding-left:35%;float:right">{{ each[1] }} ({{ each[4] }})</h4>
+                            <p style="padding:0 5% 0 5%; word-wrap:break-word;">{{ each[3] }}</p>
                         </div>
                     </div>
                 </div>
+                {% endif %}
+
+                {% endfor %}
             </div>
+
+
             <div id="footer" style="height:30%;width:60%;float:left;">
                 <!-- button -->
                 <div class="btn-group btn-group-sm">

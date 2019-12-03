@@ -70,6 +70,15 @@ def create_message_table(course_id):
 
     cursor.execute(sql)
 
+#删除某个课程的mysql表
+def drop_messsage_table(course_id):
+    table_name = 'course' + str(course_id) + '_message'
+    cursor = message_db.cursor()
+
+    sql = """DROP TABLE %s""" % table_name
+
+    cursor.execute(sql)
+
 
 #添加数据库记录
 #message为json格式，有content和user_id字段
@@ -79,7 +88,7 @@ def insert_message(course_id, message):
     cursor = message_db.cursor()
 
     sql = """INSERT INTO %s(user_id, body, timestamp)
-        VALUES 
+        VALUES
         (%s, '%s', '%s')""" % (table_name, message['user_id'], message['content'], localtime())
 
     try:
@@ -89,6 +98,23 @@ def insert_message(course_id, message):
         message_db.rollback()
 
 
+def get_chat_history(course_id, count=100):
+    #message_db = pymysql.connect("localhost", DevelopmentConfig.MYSQL_USERNAME, DevelopmentConfig.MYSQL_PASSWORD,'SCUT_ClassHelper')
+    table_name = 'course' + str(course_id) + '_message'
+    cursor = message_db.cursor()
+
+    sql = """SELECT user_id,body,timestamp
+    from %s
+    order by `timestamp` desc""" % str(table_name)
+
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    if len(result) < count:
+        return result
+    else:
+        return result[: count]
+
+
 if __name__ == '__main__':
     #create_message_table(2)
-    localtime()
+    get_chat_history(1)

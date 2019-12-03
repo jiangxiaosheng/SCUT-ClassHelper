@@ -31,14 +31,28 @@ def index():
 
 
 #TODO:加入课程
-@course.route('/join-course', methods=['GET', 'POST'])
+@course.route('/query-course', methods=['GET', 'POST'])
 @login_required
-def join_course():
+def query_course():
     form = JoinCourseForm()
     if form.validate_on_submit():
         session['course_id_or_name'] = form.id_or_name.data #存到session里
         return redirect(url_for('.courses')) #重定向到courses路由，交给courses函数处理
-    return render_template('course/join_course.html', form=form)
+    return render_template('course/query_course.html', form=form)
+
+
+@course.route('/join-course/<int:course_id>')
+@login_required
+@permission_required(Permission.JOINCOURSE)
+def join_course(course_id):
+    record = StudentCourse(
+        student_id=current_user.student.student_id,
+        course_id=course_id
+    )
+    db.session.add(record)
+    db.session.commit()
+    return redirect(url_for('.index'))
+
 
 
 #显示查询出的所有课程
@@ -69,6 +83,7 @@ def drop_course():
             record = Course.query.filter_by(course_id=course_id).first()
             db.session.delete(record)
             db.session.commit()
+            drop_messsage_table(course_id) #解散的时候要在mysql中删表
         return redirect(url_for('.index'))
     else:
         return render_template('500.html')
@@ -89,6 +104,9 @@ def create_course():
         )
         db.session.add(course)
         db.session.commit()
+        c = Course.query.offset(Course.query.count() - 1).first() #这里要从数据库中拿，因为course_id只有插入到数据库中才能确定
+        create_message_table(c.course_id) #创建课程的时候要在mysql中建表
+
         return redirect(url_for('course.index'))
     return render_template('course/create_course.html', form=form)
 
@@ -142,14 +160,26 @@ def tests():
 @course.route('/chatroom/<int:course_id>')
 @login_required
 def chatroom(course_id):
+    course = Course.query.filter_by(course_id=course_id).first()
+    res = get_chat_history(course_id)
+    chat_history = []
+    for c in res:
+        user = User.query.filter_by(id=c[0]).first()
+        #昵称，头像，消息内容，时间戳
+        chat_history.append((user.id, user.nickname, user.headicon_url, c[1], c[2]))
+
+
+    open('test.txt', 'w').write(str(chat_history))
     if current_user.role.name == 'Student':
         courses = StudentCourse.query.filter_by(student_id=current_user.student.student_id).all()
+        return render_template('course/chatroom.html', courses=[c.course for c in courses], course=course, chat_history=chat_history)
     elif current_user.role.name == 'Teacher':
         courses = current_user.teacher.courses
+        return render_template('course/chatroom.html', courses=courses, course=course)
     else:
         courses = Course.query.all()
-    course = Course.query.filter_by(course_id=course_id).first()
-    return render_template('course/chatroom.html', courses=[c.course for c in courses], course=course)
+        return render_template('course/chatroom.html', courses=courses, course=course)
+
 
 
 #公告

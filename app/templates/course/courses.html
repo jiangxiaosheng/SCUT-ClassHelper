@@ -15,7 +15,7 @@
                 <a href="{{ url_for('main.user', email=each.teacher.user.email) }}"><p>授课老师:{{ each.teacher.user.name }}</p></a>
                 <p>人数:{{ each.students.count() }}</p>
                 <p>课程介绍:{{ each.about_course }}</p>
-                <button id="{{ each.course_id }}" type="button" class="btn btn-default btn-lg">加入</button>
+                <a id="{{ each.course_id }}" type="button" class="btn btn-default btn-lg" href="{{ url_for('course.join_course', course_id=each.course_id) }}">加入</a>
             </div>
         </div>
         {% endfor %}

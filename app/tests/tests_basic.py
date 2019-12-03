@@ -105,3 +105,6 @@ class BasicsTestCase(unittest.TestCase):
         else:
             print(False)
 
+    def test_chat_history(self):
+        print(len(get_chat_history(3)))
+
