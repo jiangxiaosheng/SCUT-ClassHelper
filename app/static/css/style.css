@@ -1,0 +1,13 @@
+    .heart{
+	    background: url(../img/heart.png);
+	    height:50px;
+	    width: 50px;
+                    position:absolute;
+       	    background-size:2900%;
+     	    margin-left:49%;
+    }
+
+    .heartAnimation {
+    background-position: right;
+    }
+    .likeCount{ color: #999999}

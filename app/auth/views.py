@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 from app.email import send_email
 from . import auth
-from .forms import LoginForm, ChangePasswordForm, PasswordResetRequestForm, PasswordResetForm, ChangeEmailForm, \
-    RegistrationForm
-from ..models import User, Role, Student
+from .forms import *
+from ..models import User, Role, Student, Teacher
 from .. import db
 from flask_login import login_user, current_user, logout_user, login_required
-from flask import request, url_for, redirect, render_template, flash
+from flask import request, url_for, redirect, render_template, flash, session
+
 
 #登录路由
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data.lower()).first()
+        user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user, form.remember_me.data)
             return redirect(url_for('course.index'))
@@ -29,30 +29,65 @@ def logout():
     flash('你已经登出！')
     return redirect(url_for('main.index'))
 
-
+#TODO
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        if form.is_teacher.data == True:
-            role = Role.query.filter_by(name='Teacher').first()
-        else:
-            role = Role.query.filter_by(name='Student').first()
-        user = User(email=form.email.data,
-                    name=form.name.data,
-                    nickname=form.nickname.data,
-                    password=form.password.data,
-                    role=role)
-        if user.role.name == 'Student':
-            student = Student(
-                user_id=user.id,
+    return render_template('auth/register_role.html', form=form)
 
-            )
-        elif user.role.name == 'Teacher':
-            pass
+
+#TODO
+@auth.route('register/teacher', methods=['POST', 'GET'])
+def teacher_register():
+    form = TeacherRegistrationForm()
+    if form.validate_on_submit():
+        user = User(
+            id=User.query.count(),
+            email=form.email.data,
+            name=form.name.data,
+            nickname=form.nickname.data,
+            password=form.password.data,
+            role_id=2
+        )
+        teacher = Teacher(
+            user_id=user.id,
+            college=TeacherRegistrationForm.get_college(form.college.data),
+            position=TeacherRegistrationForm.get_position(form.position.data)
+        )
         db.session.add(user)
+        db.session.add(teacher)
         db.session.commit()
         token = user.generate_confirmation_token()
+        send_email(user.email, '确认您的账户',
+                   'auth/email/confirm', user=user, token=token)
+        flash('一份确认邮件已经发送到你的电子邮箱')
+        return redirect(url_for('auth.login'))
+    return render_template('auth/register.html', form=form)
+
+
+#TODO
+@auth.route('register/student', methods=['POST', 'GET'])
+def student_register():
+    form = StudentRegistrationForm()
+    if form.validate_on_submit():
+        user = User(
+            id=User.query.count(),
+            email=form.email.data,
+            name=form.name.data,
+            nickname=form.nickname.data,
+            password=form.password.data,
+            role_id=1
+        )
+        student = Student(
+            user_id=user.id,
+            college=StudentRegistrationForm.get_college(form.college.data),
+            major=form.major.data,
+            grade=StudentRegistrationForm.get_grade(form.grade.data)
+        )
+        db.session.add(user)
+        db.session.add(student)
+        db.session.commit()
+        token = user.generate_confirmation_token()
+        open('test.txt', 'a+').write(str(token) + '\n')
         send_email(user.email, '确认您的账户',
                    'auth/email/confirm', user=user, token=token)
         flash('一份确认邮件已经发送到你的电子邮箱')

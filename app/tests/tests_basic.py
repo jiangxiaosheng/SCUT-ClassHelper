@@ -6,6 +6,7 @@ from app.email import send_email
 from app.utils import *
 from flask_mail import *
 from .. import mail
+from ..auth.forms import *
 
 class BasicsTestCase(unittest.TestCase):
     def setUp(self):
@@ -68,10 +69,10 @@ class BasicsTestCase(unittest.TestCase):
     def test_mysql(self):
         for i in range(201700, 201720):
             create_message_table(i)
-        # insert_message(201701, {
+        # insert_message(2, {
         #     'content': 'asd1',
         #     'user_id': '201',
-        #     'course_id': '201701'
+        #     'course_id': '2'
         # })
 
 
@@ -82,4 +83,25 @@ class BasicsTestCase(unittest.TestCase):
     def test_confirm_token(self):
         u = User.query.first()
         print(u.name)
-        #print(u.generate_confirmation_token())
+
+
+    def test_form(self):
+        form = StudentRegistrationForm()
+        # print(StudentRegistrationForm.get_college_choices())
+        print(form.major)
+
+    def test_valid_confirmation_token(self):
+        u = User(password='cat')
+        # db.session.add(u)
+        # db.session.commit()
+        # token = u.generate_confirmation_token()
+        # self.assertTrue(u.confirm(token))
+        print(u.generate_confirmation_token())
+        print(u.confirm('eyJhbGciOiJIUzUxMiIsImlhdCI6MTU3NTM2NDkxNCwiZXhwIjoxNTc1MzY4NTE0fQ.eyJjb25maXJtIjpudWxsfQ.T8v49ovjtT7hKGdru6qYCC18lfwyXBsz5UfIF3Qvhk7DDtpKGZLvLqbP9znzVolkNkbu9TOdDhqwpFLdIlRphA'))
+
+    def test_re(self):
+        if re.match(r'^[0-9]*$', '1'):
+            print(True)
+        else:
+            print(False)
+

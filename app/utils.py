@@ -90,5 +90,5 @@ def insert_message(course_id, message):
 
 
 if __name__ == '__main__':
-    #create_message_table(201701)
+    #create_message_table(2)
     localtime()

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import bleach
 from flask import current_app, request, url_for
-from flask_login import UserMixin
+from flask_login import UserMixin, AnonymousUserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from markdown import markdown
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -14,8 +14,8 @@ class Permission:
     FOLLOW = 1  # 关注
     COMMENT = 2  # 评论
     WRITE = 4  # 发布
-    JOINCLASS = 8   #加入课程
-    CREATECLASS = 16    #创建课程
+    JOINCOURSE = 8   #加入课程
+    CREATECOURSE = 16    #创建课程
     MODERATE = 32  # 修改
     ADMIN = 64  # 管理员
 
@@ -57,8 +57,8 @@ class Role(db.Model):
     @staticmethod
     def insert_roles():
         roles = {
-            'Student': [Permission.FOLLOW, Permission.WRITE, Permission.COMMENT, Permission.JOINCLASS],
-            'Teacher': [Permission.FOLLOW, Permission.WRITE, Permission.COMMENT, Permission.CREATECLASS],
+            'Student': [Permission.FOLLOW, Permission.WRITE, Permission.COMMENT, Permission.JOINCOURSE],
+            'Teacher': [Permission.FOLLOW, Permission.WRITE, Permission.COMMENT, Permission.CREATECOURSE],
             'Administrator': [Permission.COMMENT, Permission.FOLLOW, Permission.WRITE, Permission.MODERATE, Permission.ADMIN],
         }
         default_role = 'Student' #默认角色是学生
@@ -193,6 +193,31 @@ class User(UserMixin, db.Model):
         #自己关注自己，这是为了后续逻辑处理的方便
         #self.follow(self)
 
+
+    def to_json(self):
+        json_user = {
+            'nickname': self.nickname,
+            'email': self.email,
+            'id': self.id,
+            'name': self.name,
+            'password_hash': self.password_hash,
+            'role_id': self.role_id
+        }
+        return json_user
+
+    @staticmethod
+    def from_json(json):
+        user = User(
+            id=json['id'],
+            email=json['email'],
+            nickname=json['nickname'],
+            password_hash=json['password_hash'],
+            role_id=json['role_id'],
+            name=json['name']
+        )
+        return user
+
+
     #遍历一次所有的用户，每个用户都要关注自己
     @staticmethod
     def add_self_follows():
@@ -326,6 +351,13 @@ class User(UserMixin, db.Model):
         db.session.add(self)
         db.session.commit()
 
+
+class AnonymousUser(AnonymousUserMixin):
+    pass
+
+
+#匿名用户
+login_manager.anonymous_user = AnonymousUser
 
 
 #动态

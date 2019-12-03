@@ -4,10 +4,11 @@ from .. import db
 from app.models import Teacher, User, Course, StudentCourse, Announcement
 from . import course
 from flask_login import login_required, current_user
-from .forms import JoinCourseForm
+from .forms import *
 from config import basedir, resources_base_dir
 from ..utils import *
 import re
+from ..decorators import *
 
 #TODO:显示所有课程，学生显示选课，老师显示开设的课
 @course.route('/')
@@ -45,7 +46,7 @@ def join_course():
 @login_required
 def courses():
     id_or_name = session['course_id_or_name']
-    if re.match(r'^\d\d*\d$', id_or_name):
+    if re.match(r'^[0-9]*$', id_or_name):
         courses = Course.query.filter_by(course_id=id_or_name).all()
     else:
         courses = Course.query.filter_by(name=id_or_name).all()
@@ -57,13 +58,13 @@ def courses():
 @login_required
 def drop_course():
     if current_user.role.name is not None:
-        if current_user.role.name == 'Student':
+        if current_user.role.name == 'Student': #如果是学生就退出班级，在StudentCourse表中删掉一条记录
             course_id = request.values.get('course_id')
             record = StudentCourse.query.filter_by(course_id=course_id, student_id=current_user.student.student_id).first()
             db.session.delete(record)
             db.session.commit()
         #TODO
-        else:
+        else: #如果是老师或者管理员，就直接解散，删掉Course表中的一条记录
             course_id = request.values.get('course_id')
             record = Course.query.filter_by(course_id=course_id).first()
             db.session.delete(record)
@@ -71,6 +72,26 @@ def drop_course():
         return redirect(url_for('.index'))
     else:
         return render_template('500.html')
+
+
+#老师创建课程视图
+@course.route('/create-course', methods=['GET', 'POST'])
+@permission_required(Permission.CREATECOURSE)
+def create_course():
+    form = CreateCourseForm()
+    if form.validate_on_submit():
+        course = Course(
+            name=form.name.data,
+            teacher_id=current_user.teacher.teacher_id,
+            about_course=form.about_course.data,
+            college=form.college.data,
+            since=localtime()
+        )
+        db.session.add(course)
+        db.session.commit()
+        return redirect(url_for('course.index'))
+    return render_template('course/create_course.html', form=form)
+
 
 
 #TODO：课程资源,还没有实现分页功能
@@ -117,10 +138,16 @@ def tests():
 
 
 #TODO:聊天室
+#TODO：目前还不能防止用户进入自己课程之外的聊天室
 @course.route('/chatroom/<int:course_id>')
 @login_required
 def chatroom(course_id):
-    courses = StudentCourse.query.filter_by(student_id=current_user.student.student_id).all()
+    if current_user.role.name == 'Student':
+        courses = StudentCourse.query.filter_by(student_id=current_user.student.student_id).all()
+    elif current_user.role.name == 'Teacher':
+        courses = current_user.teacher.courses
+    else:
+        courses = Course.query.all()
     course = Course.query.filter_by(course_id=course_id).first()
     return render_template('course/chatroom.html', courses=[c.course for c in courses], course=course)
 
@@ -136,3 +163,21 @@ def announcement(course_id):
     announcements = [item for item in pagination.items]
     return render_template('course/announcement.html', announcements=announcements, pagination=pagination,
                            course_id=course_id)
+
+#老师发布公告
+@course.route('/publish-announcement/<int:course_id>', methods=['GET', 'POST'])
+@login_required
+def publish_announcement(course_id):
+    form = AnnouncementForm()
+    if form.validate_on_submit():
+        announcement = Announcement(
+            course_id=course_id,
+            timestamp=localtime(),
+            title=form.title.data,
+            body=form.content.data,
+        )
+        db.session.add(announcement)
+        db.session.commit()
+        return redirect(url_for('course.announcement', course_id=course_id))
+    return render_template('course/publish_announcement.html', form=form)
+

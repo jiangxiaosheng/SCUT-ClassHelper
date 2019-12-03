@@ -1,0 +1,10 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}注册{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <a class="btn btn-default" href="{{ url_for('auth.student_register') }}">学生</a>
+    <a class="btn btn-default" href="{{ url_for('auth.teacher_register') }}">教师</a>
+</div>
+{% endblock %}

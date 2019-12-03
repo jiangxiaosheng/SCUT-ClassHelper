@@ -11,7 +11,7 @@
                 <a href="#"><img src="{{ url_for('static', filename='img/suki.jpg') }}" class="media-object" style="width:150px"></a>
             </div>
             <div class="media-body">
-                <a href="{{ url_for('course.chatroom', course_id=each.course_id) }}"><h4 class="media-heading">{{ loop.index }}:{{ each.name }}({{ each.course_id }})</h4></a>
+                <a href="{{ url_for('course.chatroom', course_id=each.course_id) }}"><h4 class="media-heading">{{ loop.index }}:{{ each.name }}(课程id: {{ each.course_id }})</h4></a>
                 <a href="{{ url_for('main.user', email=each.teacher.user.email) }}"><p>授课老师:{{ each.teacher.user.name }}</p></a>
                 <p>人数:{{ each.students.count() }}</p>
                 <p>课程介绍:{{ each.about_course }}</p>

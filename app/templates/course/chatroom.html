@@ -78,6 +78,9 @@
                     <button type="button" class="btn btn-default" onclick="javascrtpt:window.location.href='../announcement/{{ course.course_id }}'" style="height:50%;">公告</button>
                     <button type="button" class="btn btn-default" onclick="javascrtpt:window.location.href='../resources/{{ course.course_id }}'">课程资源</button>
                     <button type="button" class="btn btn-default">在线考试</button>
+                    {% if current_user.role.name == 'Teacher' %}
+                    <button type="button" class="btn btn-default" onclick="javascrtpt:window.location.href='../publish-announcement/{{ course.course_id }}'">发布公告</button>
+                    {% endif %}
                 </div>
                 <div class="btn-group btn-group-sm " style="float:right;">
                     <button type="button" class="btn btn-default">历史记录</button>
