@@ -4,6 +4,8 @@ from app import create_app, db
 from app.models import User, Role
 from app.email import send_email
 from app.utils import *
+from flask_mail import *
+from .. import mail
 
 class BasicsTestCase(unittest.TestCase):
     def setUp(self):
@@ -49,8 +51,10 @@ class BasicsTestCase(unittest.TestCase):
         self.assertTrue(u.password_hash != u2.password_hash)
 
     def test_send_email(self):
-        user = User.query.filter_by(username='memeshe').first()
-        send_email('3422290299@qq.com', 'Confirm your account', 'auth/email/confirm', user=user)
+        #send_email('437822838@qq.com', 'hello', 'auth/email/testemail')
+        msg = Message('hello', sender='123', recipients=['437822838@qq.com'])
+        with self.app.app_context():
+            mail.send(msg)
 
     def test_common(self):
         colleges_majors = {
@@ -73,3 +77,9 @@ class BasicsTestCase(unittest.TestCase):
 
     def test_localtime(self):
         print(localtime())
+
+
+    def test_confirm_token(self):
+        u = User.query.first()
+        print(u.name)
+        #print(u.generate_confirmation_token())

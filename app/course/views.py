@@ -136,4 +136,3 @@ def announcement(course_id):
     announcements = [item for item in pagination.items]
     return render_template('course/announcement.html', announcements=announcements, pagination=pagination,
                            course_id=course_id)
-

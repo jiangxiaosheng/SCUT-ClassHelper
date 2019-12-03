@@ -2,7 +2,7 @@
 import bleach
 from flask import current_app, request, url_for
 from flask_login import UserMixin
-from itsdangerous import Serializer
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from markdown import markdown
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -87,7 +87,7 @@ class PostLike(db.Model):
 #评论
 class Comment(db.Model):
     __tablename__ = 'comments'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     body = db.Column(db.Text) #评论的原内容
     body_html = db.Column(db.Text) #经过富文本处理的评论内容，保存为HTML格式
     timestamp = db.Column(db.DateTime, index=True, default=localtime) #发表评论的时间戳
@@ -134,9 +134,10 @@ class Follow(db.Model):
     followed_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True) #被关注者id
     timestamp = db.Column(db.DateTime, default=localtime) #时间戳
 
+
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(64)) #真实姓名(不同于用户名)
     location = db.Column(db.String(64)) #位置
     about_me = db.Column(db.Text()) #个人介绍
@@ -190,7 +191,7 @@ class User(UserMixin, db.Model):
         if self.headicon_url is None:
             self.headicon_url = 'default.jpg'
         #自己关注自己，这是为了后续逻辑处理的方便
-        self.follow(self)
+        #self.follow(self)
 
     #遍历一次所有的用户，每个用户都要关注自己
     @staticmethod
@@ -330,7 +331,7 @@ class User(UserMixin, db.Model):
 #动态
 class Post(db.Model):
     __tablename__ = 'posts'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     body = db.Column(db.Text) #动态内容
     body_html = db.Column(db.Text) #内容的html富文本形式
     timestamp = db.Column(db.DateTime, index=True, default=localtime) #动态发布的时间戳
@@ -409,7 +410,7 @@ db.event.listen(Announcement.body, 'set', Announcement.on_changed_body)
 #课程表
 class Course(db.Model):
     __tablename__ = 'courses'
-    course_id = db.Column(db.String, primary_key=True) #课程id
+    course_id = db.Column(db.Integer, primary_key=True, autoincrement=True) #课程id
     name = db.Column(db.String) #课程名
     teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.teacher_id')) #该课程对应的老师
     since = db.Column(db.DateTime, default=localtime) #开课时间
@@ -430,8 +431,8 @@ class Course(db.Model):
 #学生表
 class Student(db.Model):
     __tablename__ = 'students'
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True) #用户id
-    student_id = db.Column(db.String, unique=True, index=True) #学号
+    student_id = db.Column(db.Integer, primary_key=True, autoincrement=True) #学号
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id')) #用户id
     college = db.Column(db.String) #学生所在学院
     major = db.Column(db.String) #学生专业
     grade = db.Column(db.String) #学生年级
@@ -448,8 +449,8 @@ class Student(db.Model):
 #老师表
 class Teacher(db.Model):
     __tablename__ = 'teachers'
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True) #用户id
-    teacher_id = db.Column(db.String, unique=True, index=True) #教师编号
+    teacher_id = db.Column(db.Integer, primary_key=True, autoincrement=True) #教师编号
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id')) #用户id
     college = db.Column(db.String) #老师所在学院
     position = db.Column(db.String) #老师职务
     courses = db.relationship('Course', backref='teacher', lazy='dynamic') #通过Course的teacher字段拿到teacher信息

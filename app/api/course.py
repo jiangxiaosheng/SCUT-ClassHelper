@@ -13,3 +13,9 @@ def drop_course():
     ptr = {"f": "d"}
     return jsonify(ptr)
 
+
+@api.route('/chat-history', methods=['GET', 'POST'])
+@login_required
+def chat_history():
+    course_id = request.values.get('course_id')
+

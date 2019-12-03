@@ -11,9 +11,9 @@ class Config():
     MAIL_PORT = 587 #qq邮箱的端口
     MAIL_USE_TLS = True #安全加密传输
     MAIL_USERNAME = '437822838@qq.com' #发送者的邮箱
-    MAIL_PASSWORD = 'vofqflldbcnrcbaf' #qq邮箱的smtp服务的口令
-    FLASKY_MAIL_SUBJECT_PREFIX = '[Flasky]' #邮件主题
-    FLASKY_MAIL_SENDER = 'Flasky Admin <flasky@example.com>'
+    MAIL_PASSWORD = 'gjqtpbnbyvuabidg' #qq邮箱的smtp服务的口令
+    FLASKY_MAIL_SUBJECT_PREFIX = '[SCUT-ClassHelper]' #邮件主题
+    FLASKY_MAIL_SENDER = 'SCUT-ClassHelper Admin <437822838@qq.com>'
     FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     FLASKY_COURSE_PER_PAGE = 9

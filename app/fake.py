@@ -11,13 +11,11 @@ def generate():
     users()
     posts()
     comments()
-    students()
-    teachers()
     courses()
     studentcourses()
     announcements()
     post_like()
-    memeshe()
+    #emeshe()
 
 
 #测试用户
@@ -25,6 +23,7 @@ def memeshe():
     fake = Faker()
     user = User(
         email='437822838@qq.com',
+        id=201,
         nickname='memeshe',
         password='yoga',
         confirmed=True,
@@ -72,16 +71,45 @@ def memeshe():
 def users(count=200):
     fake = Faker()
     i = 0
+    roles = [1, 1, 1, 2]
+    colleges = ['计算机学院', '软件学院', '数学学院', '物理学院']
+    positions = ['教授', '副教授', '讲师']
+    colleges_majors = {
+        '计算机学院': '信息安全',
+        '软件学院': '软件工程',
+        '数学学院': '应用数学',
+        '物理学院': '理论物理'
+    }
+    grades = ['2017', '2018', '2019']
+    keys = list(colleges_majors.keys())
     while i < count:
         u = User(email=fake.email(),
+                 id=str(i),
                  nickname=fake.user_name(),
                  password='password',
                  confirmed=True,
                  name=fake.name(),
                  location=fake.city(),
                  about_me=fake.text(),
-                 member_since=fake.past_date())
+                 member_since=fake.past_date(),
+                 role_id=roles[randint(0, len(roles) - 1)])
         db.session.add(u)
+        if u.role_id == 1:
+            index = randint(0, len(keys) - 1)
+            s = Student(
+                user_id=u.id,
+                college=keys[index],
+                major=colleges_majors[keys[index]],
+                grade=grades[randint(0, len(grades) - 1)]
+            )
+            db.session.add(s)
+        elif u.role_id == 2:
+            t = Teacher(
+                user_id=u.id,
+                college=colleges[randint(0, len(colleges) - 1)],
+                position=positions[randint(0, len(positions) - 1)]
+            )
+            db.session.add(t)
         try:
             db.session.commit()
             i += 1
@@ -121,6 +149,7 @@ def comments(count=100):
         except IntegrityError:
             db.session.rollback()
 
+'''
 def teachers(count=20):
     colleges = ['计算机学院', '软件学院', '数学学院', '物理学院']
     positions = ['教授', '副教授', '讲师']
@@ -132,7 +161,6 @@ def teachers(count=20):
             user.role = Role.query.filter_by(name='Teacher').first()
             teacher = Teacher(
                 user_id=user.id,
-                teacher_id=str(1000 + i),
                 college=colleges[randint(0, len(colleges) - 1)],
                 position=positions[randint(0, len(positions) - 1)]
             )
@@ -162,7 +190,6 @@ def students(count=30):
             index = randint(0, len(keys) - 1)
             student = Student(
                 user_id=user.id,
-                student_id=str(i).rjust(3, '0'),
                 college=keys[index],
                 major=colleges_majors[keys[index]],
                 grade=grades[randint(0, len(grades) - 1)]
@@ -173,6 +200,7 @@ def students(count=30):
                 i += 1
             except IntegrityError:
                 db.session.rollback()
+                '''
 
 def studentcourses(count=50):
     i = 0
@@ -199,7 +227,6 @@ def courses(count=20):
     while i < count:
         t = Teacher.query.offset(randint(0, teacher_count - 1)).first()
         c = Course(
-            course_id=str(201700 + i),
             name=names[randint(0, len(names) - 1)],
             teacher_id=t.teacher_id,
             about_course=fake.text()

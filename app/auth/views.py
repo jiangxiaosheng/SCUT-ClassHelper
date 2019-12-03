@@ -3,7 +3,7 @@ from app.email import send_email
 from . import auth
 from .forms import LoginForm, ChangePasswordForm, PasswordResetRequestForm, PasswordResetForm, ChangeEmailForm, \
     RegistrationForm
-from ..models import User
+from ..models import User, Role, Student
 from .. import db
 from flask_login import login_user, current_user, logout_user, login_required
 from flask import request, url_for, redirect, render_template, flash
@@ -34,13 +34,26 @@ def logout():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(email=form.email.data.lower(),
+        if form.is_teacher.data == True:
+            role = Role.query.filter_by(name='Teacher').first()
+        else:
+            role = Role.query.filter_by(name='Student').first()
+        user = User(email=form.email.data,
+                    name=form.name.data,
                     nickname=form.nickname.data,
-                    password=form.password.data)
+                    password=form.password.data,
+                    role=role)
+        if user.role.name == 'Student':
+            student = Student(
+                user_id=user.id,
+
+            )
+        elif user.role.name == 'Teacher':
+            pass
         db.session.add(user)
         db.session.commit()
         token = user.generate_confirmation_token()
-        send_email(user.email, 'Confirm Your Account',
+        send_email(user.email, '确认您的账户',
                    'auth/email/confirm', user=user, token=token)
         flash('一份确认邮件已经发送到你的电子邮箱')
         return redirect(url_for('auth.login'))
@@ -57,6 +70,21 @@ def before_request():
                 and request.blueprint != 'auth' \
                 and request.endpoint != 'static':
             return redirect(url_for('auth.unconfirmed'))
+
+
+#用户点击邮件中的url应该路由到这个函数
+@auth.route('/confirm/<token>')
+@login_required
+def confirm(token):
+    if current_user.confirmed:
+        return redirect(url_for('main.index'))
+    if current_user.confirm(token):
+        db.session.commit()
+        flash('您的邮箱已经认证成功')
+    else:
+        flash('该URL是非法的或者已经失效')
+    return redirect(url_for('main.index'))
+
 
 #“未验证”路由
 #如果用户不是匿名用户，且没有验证邮箱，则显示unconfirmed.html页面，否则重定向到主页
