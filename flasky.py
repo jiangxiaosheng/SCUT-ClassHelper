@@ -19,13 +19,22 @@ async_mode = 'gevent'
 socketio = SocketIO(app=app, async_mode=async_mode)
 '''
 
-#客户端发送消息
+#客户端发送消息,room和课程id一样
 @socketio.on('send_message')
 def send_message(msg):
+    course_id = msg['course_id']
+    room = course_id
+    user = User.query.filter_by(id=msg['user_id']).first()
     try:
-        course_id = msg['course_id']
         insert_message(course_id, msg)
-        emit('update_message', {'data': 'success'})
+        emit('update_message', {
+            'flag': 'success', #标志位，表明是否发送成功，一般都是成功的
+            'nickname': user.nickname,
+            'user_id': user.id,
+            'headicon_url': user.headicon_url,
+            'content': msg['content'],
+            'timestamp': str(localtime()),
+        }, room=room)
     except:
         emit('update_message', {'data': 'failed'})
 
@@ -41,7 +50,14 @@ def connected(msg):
     open('YES.txt', 'w').write(','.join(rooms()))
 
 
-
+@socketio.on('disconnected')
+def disconnected(msg):
+    room = msg['room']
+    leave_room(room)
+    emit('accept_disconnection', {
+        'user_id': msg['user_id']
+    }, room=room)
+    open('YES.txt', 'w').write(','.join(rooms()))
 
 
 @app.shell_context_processor

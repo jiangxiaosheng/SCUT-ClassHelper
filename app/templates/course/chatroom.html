@@ -4,11 +4,11 @@
 
 {% block page_content %}
     <div class="navbar-default" style="height:100%;padding-top:30px;">
-        <div id="header"  style="padding-left:10%">
+        <div id="header"  style="padding-left:47%;padding-top:10px">
             <h1>{{ course.name }}</h1>
         </div>
-        <div style="width: 100%; position: absolute; top:90px ; left: 0 ; bottom: 0; ">
-            <div id="classes_menu" style="overflow-y:auto;background-color:#d1f1ef;height:100%;width:20%;float:left;">
+        <div style="width: 100%; position: absolute; top:100px ; left: 0 ; bottom: 0; ">
+            <div id="classes_menu" style="overflow-y:auto;background-color:#d1f1ef;height:100%;width:18%;float:left;">
                 <!--classes list-->
                 {% for course in courses %}
                 <a href="{{ url_for('course.chatroom', course_id=course.course_id) }}">
@@ -18,25 +18,24 @@
                         </div>
                         <div class="media-body">
                             <p class="media-heading">{{ course.name }}</p>
-                            <p>{{ course.course_id }}</p>
-                            <p>{{ course.teacher.user.name }}</p>
+                            <p>课程id: {{ course.course_id }}</p>
+                            <p>授课老师: {{ course.teacher.user.name }}</p>
                         </div>
                     </button>
                 </a>
                 {% endfor %}
             </div>
 
-            <div id="users_menu" style="overflow-y:auto;background-color:#a3fef8;height:100%;width:20%;float:left;">
+            <div id="users_menu" style="overflow-y:auto;background-color:#a3fef8;height:100%;width:15%;float:left;">
                 <!--users list-->
                 {% for student in course.students %}
                 <a href="{{ url_for('main.user', email=student.student.user.email) }}">
                     <button type="button" class="btn btn-default dropdown-toggle">
                         <div class="media-left">
-                            <img src="{{ url_for('static', filename='img/suki.jpg') }}" class="media-object" style="width:80px">
+                            <img src="{{ url_for('static', filename='img/suki.jpg') }}" class="media-object" style="width:50px">
                         </div>
                         <div class="media-body">
-                            <p class="media-heading">{{ student.student.user.nickname }}</p>
-                            <p>{{ student.student.student_id }}</p>
+                            <p class="media-body" style="padding-top:17px">{{ student.student.user.nickname }}</p>
                         </div>
                     </button>
                 </a>
@@ -44,7 +43,7 @@
             </div>
 
             <!--chat list-->
-            <div style="overflow-y:auto;background-color:#EEEEEE;height:70%;width:60%;float:left;">
+            <div id="chat" style="overflow:auto;background-color:#EEEEEE;height:70%;width:67%;float:left;">
                 <br />
                 {% for each in chat_history %}
                 {% if each[0] != current_user.id %}
@@ -55,9 +54,12 @@
                     </div>
                     <div style="float:left;width:90%">
                         <div style="border-radius:15px;float:left;width:40%;background-color:#00dcf2">
-                            <h4>{{ each[1] }} ({{ each[4] }})</h4>
+                            <h4>{{ each[1] }} <span style="font-size: 12px">({{ each[4] }})</span></h4>
                             <p style="padding:0 5% 0 5%;word-wrap:break-word">{{ each[3] }}</p>
                         </div>
+                    </div>
+                    <div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
                 </div>
 
@@ -69,9 +71,12 @@
                     </div>
                     <div style="float:right;width:90%">
                         <div style="float:right;width:40%;border-radius:15px;background-color:#23ddaf">
-                            <h4 style="padding-left:35%;float:right">{{ each[1] }} ({{ each[4] }})</h4>
+                            <h4 style="padding-left:10%;">{{ each[1] }} <span style="font-size: 12px">({{ each[4] }})</span></h4>
                             <p style="padding:0 5% 0 5%; word-wrap:break-word;">{{ each[3] }}</p>
                         </div>
+                    </div>
+                    <div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
                 </div>
                 {% endif %}
@@ -80,7 +85,7 @@
             </div>
 
 
-            <div id="footer" style="height:30%;width:60%;float:left;">
+            <div id="footer" style="height:30%;width:67%;float:left;">
                 <!-- button -->
                 <div class="btn-group btn-group-sm">
                     <button type="button" class="btn btn-default" onclick="javascrtpt:window.location.href='../announcement/{{ course.course_id }}'" style="height:50%;">公告</button>
@@ -88,6 +93,7 @@
                     <button type="button" class="btn btn-default">在线考试</button>
                     {% if current_user.role.name == 'Teacher' %}
                     <button type="button" class="btn btn-default" onclick="javascrtpt:window.location.href='../publish-announcement/{{ course.course_id }}'">发布公告</button>
+                    <button type="button" class="btn btn-default" onclick="javascrtpt:window.location.href='../publish-resource/{{ course.course_id }}'">上传资源</button>
                     {% endif %}
                 </div>
                 <div class="btn-group btn-group-sm " style="float:right;">
@@ -106,12 +112,61 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
 <script>
     $(document).ready(function() {
+        //页面加载时滚动条自动下划到最新位置
+        var chat = document.getElementById('chat');
+        chat.scrollTop = chat.scrollHeight;
 
         socket = io.connect('http://' + document.domain + ':' + location.port);
 
         //接受广播
         socket.on('accept_connection', function (msg) {
-            alert(msg['user_id']);
+            //alert(msg['user_id'] + '进入了聊天室');
+        });
+
+        socket.on('accept_disconnection', function (msg) {
+            //alert(msg['user_id'] + '离开了聊天室');
+        });
+
+        socket.on('update_message', function (msg) {
+            var div;
+            if (msg['user_id'] == {{ current_user.id }}) {
+                div = `<div>
+                    <div style="width:7%;float:right">
+                        <a href="#"><img src=../../static/headicon/` + msg['headicon_url'] +` style="width:100%"></a>
+                    </div>
+                    <div style="float:right;width:90%">
+                        <div style="float:right;width:40%;border-radius:15px;background-color:#23ddaf">
+                            <h4 style="padding-left:10%">` + msg['nickname'] + ` <span style="font-size: 12px">(` + msg['timestamp'] + `)</span></h4>
+                            <p style="padding:0 5% 0 5%; word-wrap:break-word;">` + msg['content'] + `</p>
+                        </div>
+                    </div>
+                    <div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                </div>`;
+            } else {
+                div = `<div>
+                    <div style="width:7%;float:left">
+                        <a href="#"><img src=../../static/headicon/` + msg['headicon_url'] +` style="width:100%"></a>
+                    </div>
+                    <div style="float:left;width:90%">
+                        <div style="border-radius:15px;float:left;width:40%;background-color:#00dcf2">
+                            <h4>` + msg['nickname'] + ` <span style="font-size: 12px">(` + msg['timestamp'] + `)</span></h4>
+                            <p style="padding:0 5% 0 5%;word-wrap:break-word">` + msg['content'] + `</p>
+                        </div>
+                    </div>
+                    <div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                </div>`;
+            }
+
+            $('#chat').append(div);
+            //alert(div);
+
+            //jquery不会操作，先用原生js替代
+            var chat = document.getElementById('chat');
+            chat.scrollTop = chat.scrollHeight;
         });
 
         //打开页面时发送连接请求
@@ -122,12 +177,28 @@
 
         //点击发送按钮，发送消息
         $('button#send_message').click(function() {
+            //消息内容不能为空
+            if ($("#message").val() == '') {
+                alert('内容不能为空');
+                return;
+            }
            socket.emit('send_message', {
                'content': $('textarea#message').val(),
                'user_id': '{{ current_user.id }}',
-               'course_id': '{{ course.course_id }}'
+               'course_id': '{{ course.course_id }}',
            });
+           $("#message").val("");
          });
+
     });
+
+
+    window.onbeforeunload=function(e){
+    　　socket.emit('disconnected', {
+            'user_id': {{ current_user.id }},
+            'room': '{{ course.course_id }}'
+        });
+    }
+
 </script>
 {% endblock %}

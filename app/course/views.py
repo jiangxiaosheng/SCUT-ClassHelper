@@ -106,6 +106,7 @@ def create_course():
         db.session.commit()
         c = Course.query.offset(Course.query.count() - 1).first() #这里要从数据库中拿，因为course_id只有插入到数据库中才能确定
         create_message_table(c.course_id) #创建课程的时候要在mysql中建表
+        create_resource_dir(c.course_id) #创建资源目录
 
         return redirect(url_for('course.index'))
     return render_template('course/create_course.html', form=form)
@@ -175,10 +176,10 @@ def chatroom(course_id):
         return render_template('course/chatroom.html', courses=[c.course for c in courses], course=course, chat_history=chat_history)
     elif current_user.role.name == 'Teacher':
         courses = current_user.teacher.courses
-        return render_template('course/chatroom.html', courses=courses, course=course)
+        return render_template('course/chatroom.html', courses=courses, course=course, chat_history=chat_history)
     else:
         courses = Course.query.all()
-        return render_template('course/chatroom.html', courses=courses, course=course)
+        return render_template('course/chatroom.html', courses=courses, course=course, chat_history=chat_history)
 
 
 
@@ -211,3 +212,14 @@ def publish_announcement(course_id):
         return redirect(url_for('course.announcement', course_id=course_id))
     return render_template('course/publish_announcement.html', form=form)
 
+
+@course.route('/publish-resource/<int:course_id>', methods=['GET', 'POST'])
+@login_required
+def publish_resource(course_id):
+    form = PublishResourceForm()
+    if form.validate_on_submit():
+        file = form.file.data
+        path = os.path.join(resources_base_dir, str(course_id), file.filename)
+        file.save(path)
+        return redirect(url_for('course.resources', course_id=course_id))
+    return render_template('course/publish_resource.html', form=form)

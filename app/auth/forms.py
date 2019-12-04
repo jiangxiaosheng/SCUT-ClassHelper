@@ -60,17 +60,13 @@ class StudentRegistrationForm(FlaskForm):
     password = PasswordField('密码', validators=[DataRequired(), EqualTo('password2', message='两次输入的密码必须一致')])
     password2 = PasswordField('确认密码', validators=[DataRequired()])
 
-    college_major = {
-        '计算机学院': ['信息安全', '网络工程', '计算机联合班', '计算机创新班'],
-        '软件学院': ['软件工程', '软件工程(中澳班)', '软件工程(卓越班)'],
-        '数学学院': ['应用数学', '统计学', '信息与计算科学'],
-        '物理学院': ['应用物理', '核物理', '天体物理'],
-    }
-    keys = list(college_major.keys())
-
-    college_choices = []
-    for i in range(len(keys)):
-        college_choices.append((i + 1, keys[i]))
+    college_choices = [(1, '计算机学院'), (2, '软件学院'), (3, '数学学院'), (4, '物理学院')]
+    major_choices = [
+        (1, '信息安全'), (2, '网络工程'), (3, '计算机联合班'), (4, '计算机创新班'),
+        (5, '软件工程'), (6, '软件工程(中澳班)'), (7, '软件工程(卓越班)'),
+        (8, '应用数学'), (9, '统计学'), (10, '信息与计算科学'),
+        (11, '应用物理'), (12, '核物理'), (13, '天体物理')
+    ]
 
     grade_choices = [(1, '2017'), (2, '2018'), (3, '2019')]
 
@@ -81,14 +77,19 @@ class StudentRegistrationForm(FlaskForm):
         coerce=int
     )
 
+    major = SelectField(
+        label='专业',
+        validators=[DataRequired('请选择专业')],
+        choices=major_choices,
+        coerce=int
+    )
+
     grade = SelectField(
         label='年级',
         validators=[DataRequired('请选择年级')],
         choices=grade_choices,
         coerce=int
     )
-
-    major = StringField("专业", validators=[DataRequired()])
 
     submit = SubmitField("注册")
 
@@ -99,6 +100,10 @@ class StudentRegistrationForm(FlaskForm):
     @staticmethod
     def get_grade(i):
         return StudentRegistrationForm.grade_choices[i - 1][1]
+
+    @staticmethod
+    def get_major(i):
+        return StudentRegistrationForm.major_choices[i - 1][1]
 
     def validate_email(self, field):
         if User.query.filter_by(email=field.data).first():

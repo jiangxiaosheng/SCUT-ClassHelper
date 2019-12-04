@@ -106,5 +106,6 @@ class BasicsTestCase(unittest.TestCase):
             print(False)
 
     def test_chat_history(self):
-        print(len(get_chat_history(3)))
+        #print(len(get_chat_history(3)))
+        create_resource_dir(21)
 

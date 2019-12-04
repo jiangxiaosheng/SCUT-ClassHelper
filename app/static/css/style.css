@@ -1,13 +1,18 @@
-    .heart{
-	    background: url(../img/heart.png);
-	    height:50px;
-	    width: 50px;
-                    position:absolute;
-       	    background-size:2900%;
-     	    margin-left:49%;
-    }
+.heart{
+    background: url(../img/heart.png);
+    height:50px;
+    width: 50px;
+                position:absolute;
+        background-size:2900%;
+        margin-left:49%;
+}
 
-    .heartAnimation {
-    background-position: right;
-    }
-    .likeCount{ color: #999999}
+.heartAnimation {
+background-position: right;
+}
+.likeCount{ color: #999999}
+
+#content {
+    resize:none;
+    height: 150px;
+}

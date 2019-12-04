@@ -1,5 +1,7 @@
 {% extends "/base.html" %}
 {% import "/_macros.html" as macros %}
+{% import "bootstrap/wtf.html" as wtf %}
+
 {% block title %}Forum{% endblock %}
 {% block head %}
 {{ super() }}
@@ -9,8 +11,11 @@
 {% block content %}
 <div class="container navbar-default" style="height:100%;padding-top:30px;">
     <div class="container">
+        <div style="padding-top: 60px">
+        {{ wtf.quick_form(form) }}
+        </div>
         {% for each in posts %}
-        <div style="padding-top:60px;padding-bottom:30px">
+        <div id="block{{ each.id }}" style="padding-top:60px;padding-bottom:30px">
             <div class="media-left">
                 <a href="{{ url_for('main.user', email=each.author.email) }}"><img src="{{ url_for('static', filename=('headicon/'+each.author.headicon_url)) }}" class="media-object" style="width:55px"></a>
             </div>
@@ -20,8 +25,8 @@
                 {{ each.body_html | safe }}
                 {% else %}
                 {{ each.body }}
-                {% endif %}<!--time-->
-                <p>{{ each.timestamp }}</p><!--neirong-->
+                {% endif %}
+                <p>{{ each.timestamp }}</p>
 
             </div>
             <div id="like{{ each.id }}"  type="button" class="heart0 btn btn-default btn-sm col-xs-6" style="outline:none;height:30px">
@@ -32,8 +37,26 @@
                 {% endif %}
                 <div class="likeCount" id="likeCount{{each.id}}">{{each.liked_count}}</div>
             </div>
-            <button id="comments{{ each.id }}" onclick="comments(id)" type="button" class="btn btn-default btn-sm col-xs-6" style="outline:none;">comment</button>
+            <button id="comments{{ each.id }}" onclick="comments(id)" type="button" class="comments btn btn-default btn-sm col-xs-6" style="outline:none;">comment</button>
+            <div id="spread{{ each.id }}"style="display: none;">
+                <!-- comments-->
 
+                <div class="container" style="padding-top:30px">
+                    <div class="media-left">
+                        <a href="{{ url_for('main.user', email=each.author.email) }}"><img src="{{ url_for('static', filename=('headicon/'+each.author.headicon_url)) }}" class="media-object" style="width:55px"></a>
+                    </div>
+                    <div class="media-body">
+                        <a href="{{ url_for('main.user', email=each.author.email) }}"><h5 class="media-heading">{{ each.author.nickname }}</h5></a>
+                        {% if each.body_html %}
+                        {{ each.body_html | safe }}
+                        {% else %}
+                        {{ each.body }}
+                        {% endif %}
+                        <p>{{ each.timestamp }}</p>
+
+                    </div>
+                </div>
+            </div>
         </div>
         {% endfor %}
     </div>
@@ -61,20 +84,23 @@
         var get_id = id.substr(8);
         var value;
         $.ajax({
-            url:"../../api/posts/comments",
-            type:"GET",
-            dataType:"json",
-            data:{"id":get_id, "page":1},
-            success:function(data){
+            url: "../../api/posts/comments",
+            type: "GET",
+            dataType: "json",
+            data: { "id": get_id, "page": 1 },
+            {#success: function (data) {
                 alert(JSON.stringify(data));
                 value = JSON.stringify(data);
                 var obj = JSON.parse(value);
                 alert(obj.count);
-            }
+            }#}
         });
     }
     $(document).ready(function()
     {
+        var textarea=document.getElementById('content');
+        //设置高度
+        textarea.style.height = textarea.scrollHeight + 'px';
 
         $('body').on("click",'.heart0',function()
         {
@@ -99,6 +125,26 @@
                 like("like" + messageID);
 	        }
         });
+
+        $('body').on("click", '.comments', function () {
+            var A = $(this).attr("id");
+            var B = A.split("comments");
+            var messageID = B[1];
+            res = comments("comments"+messageID);
+            var div = `<div class="container" style="padding-top:30px">
+                    <div class="media-left">
+                        <a href="#"></a>
+                    </div>
+                    <div class="media-body">
+                      <p>123321</p>
+                    </div>
+                </div>`;
+            $("#block"+messageID).append(div);
+
+            //$("#spread" + messageID).slideToggle();
+            res = comments("comments"+messageID);
+        });
+
     });
 
     $(document).ready(function ()

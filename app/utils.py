@@ -41,6 +41,11 @@ def fileTime(file):
         time.ctime(os.path.getctime(file)) #修改时间
     )
 
+#创建资源目录
+def create_resource_dir(course_id):
+    path = os.path.join(resources_base_dir, str(course_id))
+    os.mkdir(path)
+
 
 #md5散列
 def md5(data):
@@ -105,7 +110,7 @@ def get_chat_history(course_id, count=100):
 
     sql = """SELECT user_id,body,timestamp
     from %s
-    order by `timestamp` desc""" % str(table_name)
+    order by `timestamp` asc""" % str(table_name)
 
     cursor.execute(sql)
     result = cursor.fetchall()

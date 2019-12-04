@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileRequired, FileAllowed
-from wtforms import StringField, SubmitField, FileField, TextAreaField
+from wtforms import StringField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length
+from flask_wtf.file import FileField, FileRequired
 
 #查询课程表单
 class JoinCourseForm(FlaskForm):
@@ -24,4 +24,10 @@ class CreateCourseForm(FlaskForm):
     college = StringField("学院", validators=[DataRequired(), Length(1, 20)])
     submit = SubmitField("创建")
 
+
+#发布资源表单
+class PublishResourceForm(FlaskForm):
+    name = StringField('资源名', validators=[DataRequired(), Length(1, 50)])
+    file = FileField('资源文件', validators=[FileRequired()])
+    submit = SubmitField('上传')
 

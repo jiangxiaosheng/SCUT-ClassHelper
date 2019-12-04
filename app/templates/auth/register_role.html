@@ -3,8 +3,11 @@
 {% block title %}注册{% endblock %}
 
 {% block content %}
-<div class="page-header">
-    <a class="btn btn-default" href="{{ url_for('auth.student_register') }}">学生</a>
+<img src="{{ url_for('static', filename='headicon/default.jpg')}}" style="width: 200px; margin-left:42%;margin-top:10%">
+<div class="page-header" style="padding-top:0%;">
+
+    <h1 style="padding-left:27%;">选择你要注册的角色：</h1>
+    <a class="btn btn-default" href="{{ url_for('auth.student_register') }}"style="margin-left:45%; ">学生</a>
     <a class="btn btn-default" href="{{ url_for('auth.teacher_register') }}">教师</a>
 </div>
 {% endblock %}
