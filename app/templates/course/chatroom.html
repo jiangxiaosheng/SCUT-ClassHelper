@@ -90,7 +90,7 @@
                 <div class="btn-group btn-group-sm">
                     <button type="button" class="btn btn-default" onclick="javascrtpt:window.location.href='../announcement/{{ course.course_id }}'" style="height:50%;">公告</button>
                     <button type="button" class="btn btn-default" onclick="javascrtpt:window.location.href='../resources/{{ course.course_id }}'">课程资源</button>
-                    <button type="button" class="btn btn-default">在线考试</button>
+                    <button type="button" class="btn btn-default" onclick="javascrtpt:window.location.href='../create-test/{{ course.course_id }}'">在线考试</button>
                     {% if current_user.role.name == 'Teacher' %}
                     <button type="button" class="btn btn-default" onclick="javascrtpt:window.location.href='../publish-announcement/{{ course.course_id }}'">发布公告</button>
                     <button type="button" class="btn btn-default" onclick="javascrtpt:window.location.href='../publish-resource/{{ course.course_id }}'">上传资源</button>
@@ -121,10 +121,18 @@
         //接受广播
         socket.on('accept_connection', function (msg) {
             //alert(msg['user_id'] + '进入了聊天室');
+            var div = `<div class="container col-xs-4 col-xs-offset-5" style="color:#a7a8a8">` + msg['nickname'] + `进入了聊天室</div><br/><br/>`;
+            $('#chat').append(div);
+            var chat = document.getElementById('chat');
+            chat.scrollTop = chat.scrollHeight;
         });
 
         socket.on('accept_disconnection', function (msg) {
             //alert(msg['user_id'] + '离开了聊天室');
+            var div = `<div class="container col-xs-4 col-xs-offset-5" style="color:#a7a8a8">` + msg['nickname'] + `离开了聊天室</div><br/><br/>`;
+            $('#chat').append(div);
+            var chat = document.getElementById('chat');
+            chat.scrollTop = chat.scrollHeight;
         });
 
         socket.on('update_message', function (msg) {
@@ -193,12 +201,15 @@
     });
 
 
-    window.onbeforeunload=function(e){
+    window.onunload=function(e){
     　　socket.emit('disconnected', {
             'user_id': {{ current_user.id }},
             'room': '{{ course.course_id }}'
         });
-    }
+    };
+
+
+
 
 </script>
 {% endblock %}

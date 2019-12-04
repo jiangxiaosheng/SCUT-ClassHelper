@@ -1,0 +1,131 @@
+{% extends "/base.html" %}
+{% block title %} Create Test {% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<div class="container  " style="padding-top:60px">
+    <div id="questions" class="container col-xs-6 col-xs-offset-3" style="padding-top: 30px;">
+        <p id="test_name">考试名称</p>
+        <input class="form-control" id="name" name="name" required type="text" value="">
+        <input type="date" name="date" id="date" value="" />
+    </div>
+</div>
+<button id="add1" class="btn btn-default" style="position:fixed;bottom:30px;right:210px">问答题</button>
+<button id="add2" class="btn btn-default" style="position:fixed;bottom:30px;right:110px">选择题</button>
+<button id="confirm" class="btn btn-default" style="position:fixed;bottom:30px;right:30px">提交</button>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    var number = 0;
+
+    function create_test(course_id, content_json) {
+        // $.ajax({
+        //     url: "../../api/create-test",
+        //     type: "POST",
+        //     dataType: "json",
+        //     data: {"course_id": course_id, "content_json": content_json},
+        //     success: function(data) {
+        //         if (data['flag'] == true) {
+        //             //TODO:显示出来 alert(111);
+        //         }
+        //     }
+        // });
+        var obj = JSON.parse(content_json);
+        alert(obj.questions[0].content.title);
+
+    }
+
+    $(document).ready(function () {
+        $('body').on("click", '#add1', function () {
+            number++;
+            var div;
+            //问答题,label='simple'
+            div = `
+                <div id="id`+ number + `" style="margin-top:20px">
+                   <div id="title`+ number + `" class="col-xs-12" label="simple">` + number +`:</div>
+                   <textarea id="question`+ number +`" class="question col-xs-11" style="margin-top:5px;margin-bottom:25px" placeholder="question"></textarea>
+                   <button id="button`+ number +`" class="button col-xs-1 btn btn-default" style="margin-top:10px">X</button>
+                </div>
+                `;
+            $('#questions').append(div);
+        });
+        $('body').on("click", '#add2', function () {
+            number++;
+            var div;
+            //选择题,label='choice'        
+            div = `
+                <div id="id`+ number + `" style="margin-top:20px">
+                    <div id="title`+ number + `" class="col-xs-12" label="choice">`+number+`:</div>
+                    <textarea id="question`+ number + `" class="question col-xs-11" style="margin-top:5px" placeholder="question"></textarea>
+                    <button id="button`+ number + `" class="button col-xs-1 btn btn-default" style="margin-top:10px">X</button>
+                    <textarea id="A`+ number +`" class="tip" style="width:70%;margin-top:5px" placeholder="A:"></textarea>
+                    <textarea id="B`+ number +`" class="tip" style="width:70%;margin-top:5px" placeholder="B:"></textarea>
+                    <textarea id="C`+ number +`" class="tip" style="width:70%;margin-top:5px" placeholder="C:"></textarea>
+                    <textarea id="D`+ number +`" class="tip" style="width:70%;margin-top:5px" placeholder="D:"></textarea>
+                    </div>
+                `;
+            $('#questions').append(div);
+        });
+        //点击提交按钮
+        $('body').on("click", '#confirm', function () {
+            var test_content = new Object;
+            test_content.name = $("test_name").val();
+            test_content.questions = new Array();
+            for (var i=1; i<=number; i++) {
+                var q = new Object;
+                var element = $('#title'+i);
+                q.type = element.attr('label');
+                q.id = i;
+                q.content = new Object;
+                q.content.title = $('#question'+i).val();
+                if (q.type == 'choice') {
+                    q.content.A = $("#A"+i).val();
+                    q.content.B = $("#B"+i).val();
+                    q.content.C = $("#C"+i).val();
+                    q.content.D = $("#D"+i).val();
+                }
+                test_content.questions[i - 1] = q;
+            }
+            create_test({{ course_id }}, JSON.stringify(test_content));
+        });
+
+        $('body').on("click", '.button', function () {
+            var A = $(this).attr("id");
+            var B=A.split("button");
+            var messageID = B[1];
+            $("#id" + messageID).remove();
+            for (i = Number(messageID)+1; i < number + 1; i++) {
+                if ($("#id" + i).length > 0) {
+                    $("#id" + i).attr("id","id" + (i - 1));
+                }
+                if ($("#title" + i).length > 0) {
+                    $("#title" + i).html((i - 1)+":");
+                    $("#title" + i).attr("id", "title" + (i - 1));
+                }
+                if ($("#question" + i).length > 0) {
+                    $("#question" + i).attr("id","question" + (i - 1));
+                }
+                if ($("#A" + i).length > 0) {
+                    $("#A" + i).attr("id","A" + (i - 1));
+                }
+                if ($("#B" + i).length > 0) {
+                    $("#B" + i).attr("id","B" + (i - 1));
+                }
+                if ($("#C" + i).length > 0) {
+                    $("#C" + i).attr("id","B" + (i - 1));
+                }
+                if ($("#D" + i).length > 0) {
+                    $("#D" + i).attr("id","D" + (i - 1));
+                }
+                if ($("#button" + i).length > 0) {
+                    $("#button" + i).attr("id","button" + (i - 1));
+                }
+            }
+            number--;
+                
+        });
+    });
+</script>
+{% endblock %}

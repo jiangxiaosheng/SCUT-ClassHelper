@@ -18,6 +18,7 @@ class Permission:
     CREATECOURSE = 16    #创建课程
     MODERATE = 32  # 修改
     ADMIN = 64  # 管理员
+    CREATETEST = 128
 
 class Role(db.Model):
     __tablename__ = 'roles'
@@ -58,8 +59,8 @@ class Role(db.Model):
     def insert_roles():
         roles = {
             'Student': [Permission.FOLLOW, Permission.WRITE, Permission.COMMENT, Permission.JOINCOURSE],
-            'Teacher': [Permission.FOLLOW, Permission.WRITE, Permission.COMMENT, Permission.CREATECOURSE],
-            'Administrator': [Permission.COMMENT, Permission.FOLLOW, Permission.WRITE, Permission.MODERATE, Permission.ADMIN],
+            'Teacher': [Permission.FOLLOW, Permission.WRITE, Permission.COMMENT, Permission.CREATECOURSE, Permission.CREATETEST],
+            'Administrator': [Permission.COMMENT, Permission.FOLLOW, Permission.WRITE, Permission.MODERATE, Permission.ADMIN, Permission.CREATETEST],
         }
         default_role = 'Student' #默认角色是学生
         for r in roles:
@@ -108,8 +109,9 @@ class Comment(db.Model):
             'body': self.body,
             'body_html': self.body_html,
             'timestamp': self.timestamp,
-            'author_name': self.author.nickname,
+            'author_nickname': self.author.nickname,
             'author_url': url_for('main.user', email=self.author.email),
+            'headicon_url': self.author.headicon_url
         }
         return json_comment
 
@@ -491,15 +493,12 @@ class Teacher(db.Model):
         return '<Teacher %r,%r>' % (self.teacher_id, self.user.name)
 
 
+#试卷
+class Test(db.Model):
+    __tablename__ = 'tests'
+    name = db.Column(db.String, primary_key=True) #考试名称
+    course_id = db.Column(db.Integer, primary_key=True) #所属课程id
+    start = db.Column(db.DateTime(), default=localtime) #考试开始时间
+    duration = db.Column(db.Integer) #考试持续时间
+    content = db.Column(db.Text()) #考试内容，以json格式存储
 
-'''
-#消息表，用于聊天室使用
-class Message(db.Model):
-    __tablename__ = 'messages'
-'''
-
-'''
-#资源表，用于记录每个课程对应资源的url
-class Resource(db.Model):
-    pass
-'''

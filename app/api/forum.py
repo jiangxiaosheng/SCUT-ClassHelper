@@ -3,6 +3,7 @@ from .. import db
 from . import api
 from ..models import Comment, Post, Permission, PostLike
 from flask import request, current_app, url_for, jsonify, g
+from ..utils import localtime
 
 
 #获取所有评论
@@ -75,6 +76,21 @@ def like_post():
     db.session.commit()
     return jsonify({"count": post.liked_count})
 
+
+@api.route('/comments/publish', methods=['POST'])
+def publish_comment():
+    post_id = request.values.get("post_id")
+    user_id = request.values.get("user_id")
+    content = request.values.get("content")
+    c = Comment(
+        author_id=user_id,
+        post_id=post_id,
+        body=content,
+        timestamp=localtime()
+    )
+    db.session.add(c)
+    db.session.commit()
+    return jsonify({"flag": True})
 
 '''
 @api.route('/posts/<int:id>/comments/', methods=['POST'])

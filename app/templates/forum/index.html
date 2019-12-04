@@ -29,7 +29,7 @@
                 <p>{{ each.timestamp }}</p>
 
             </div>
-            <div id="like{{ each.id }}"  type="button" class="heart0 btn btn-default btn-sm col-xs-6" style="outline:none;height:30px">
+            <div id="like{{ each.id }}"  type="button" class="heart0 btn btn-default btn-sm col-xs-6" style="outline:none;height:30px;">
                 {% if not each.is_liked(current_user) %}
                 <div class="heart " id="icon{{ each.id }}" rel="like" style="margin-top:-16px;"></div>
                 {% else %}
@@ -37,7 +37,7 @@
                 {% endif %}
                 <div class="likeCount" id="likeCount{{each.id}}">{{each.liked_count}}</div>
             </div>
-            <button id="comments{{ each.id }}" onclick="comments(id)" type="button" class="comments btn btn-default btn-sm col-xs-6" style="outline:none;">comment</button>
+            <button id="comments{{ each.id }}"  type="button" class="comments btn btn-default btn-sm col-xs-6" style="outline:none;"><span class="glyphicon glyphicon-chevron-down"></span> 评论</button>
             <div id="spread{{ each.id }}"style="display: none;">
                 <!-- comments-->
 
@@ -70,6 +70,7 @@
 
 <script type="text/javascript">
 
+
     function like(id) {
         var post_id = id.substr(4);
         $.ajax({
@@ -80,7 +81,24 @@
         });
     }
 
+    function publish_comment(post_id, user_id) {
+        if ($('#textarea'+post_id)) {
+            $.ajax({
+                url: "../../api/comments/publish",
+                type: "POST",
+                dataType: "json",
+                data: {"post_id": post_id, "user_id": user_id, "content": $('#textarea'+post_id).val()},
+                success: function(data) {
+                    if (data['flag'] == true) {
+                       //TODO:显示出来 alert(111);
+                    }
+                }
+            });
+        }
+    }
+
     function comments(id) {
+        
         var get_id = id.substr(8);
         var value;
         $.ajax({
@@ -88,12 +106,37 @@
             type: "GET",
             dataType: "json",
             data: { "id": get_id, "page": 1 },
-            {#success: function (data) {
-                alert(JSON.stringify(data));
-                value = JSON.stringify(data);
-                var obj = JSON.parse(value);
-                alert(obj.count);
-            }#}
+            success: function (data) {
+                var textarea = `
+                                <div class="` + get_id + ` container col-xs-12" style="padding-top:5px">
+                                    <textarea id="textarea` + get_id + `" class="col-xs-12" placeholder="说点什么吧..." style="resize:none;height:70px"></textarea>
+                                    <button id="button`+ get_id + `" class="button col-xs-1 btn btn-default" style="margin-bottom:10px;float:right"` + `onclick="publish_comment(` + get_id + `, {{ current_user.id }})"` + `>确定</button>
+                                </div>
+                                `;
+                var div;
+                for (var i=0; i<data['count']; i++) {
+                    div = `<div class="` + get_id + ` container col-xs-12" style="padding-top:5px">
+                        <div style="border:1px solid #90bdbd">
+                            <div class="media-left">
+                                 <a href="` + data['comments'][i]['author_url'] + `"><img src="`+`../static/headicon/`+ data['comments'][i]['headicon_url']  + `" class="media-object" style="width:30px"></a>
+                            </div>
+                            <div class="media-body">
+                                <a href="` + data['comments'][i]['author_url'] + `"><h5 class="media-heading">` + data['comments'][i]['author_nickname'] + `</h5></a>
+                                <p>` + data['comments'][i]['body'] + `</p>
+                                <p>` + data['comments'][i]['timestamp'] + `</p>
+                            </div>
+                        </div>
+                    </div>`;
+                    $("#block" + get_id).append(div);
+                    if (i == data['count'] - 1) {
+                        $("#block" + get_id).append(textarea);
+                    }
+                }
+                if (data['count'] == 0) {
+                    $("#block" + get_id).append(textarea);
+                }
+
+            }
         });
     }
     $(document).ready(function()
@@ -130,19 +173,18 @@
             var A = $(this).attr("id");
             var B = A.split("comments");
             var messageID = B[1];
-            res = comments("comments"+messageID);
-            var div = `<div class="container" style="padding-top:30px">
-                    <div class="media-left">
-                        <a href="#"></a>
-                    </div>
-                    <div class="media-body">
-                      <p>123321</p>
-                    </div>
-                </div>`;
-            $("#block"+messageID).append(div);
+            if ($(this).html()==`<span class="glyphicon glyphicon-chevron-down"></span> 评论`) {
+                $(this).html(`<span class="glyphicon glyphicon-chevron-up"></span> 评论`);
+                comments("comments"+messageID);
+            }
+            else {
+                $(this).html(`<span class="glyphicon glyphicon-chevron-down"></span> 评论`);
+                $('.'+messageID).remove();
+            }
+            
+            
 
             //$("#spread" + messageID).slideToggle();
-            res = comments("comments"+messageID);
         });
 
     });

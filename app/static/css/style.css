@@ -16,3 +16,7 @@ background-position: right;
     resize:none;
     height: 150px;
 }
+
+textarea {
+    resize:none,
+}

@@ -44,8 +44,9 @@ def send_message(msg):
 def connected(msg):
     room = msg['room']
     join_room(room)
+    user = User.query.filter_by(id=msg['user_id']).first()
     emit('accept_connection', {
-        'user_id': msg['user_id']
+        'nickname': user.nickname
     }, room=room)
     open('YES.txt', 'w').write(','.join(rooms()))
 
@@ -54,8 +55,9 @@ def connected(msg):
 def disconnected(msg):
     room = msg['room']
     leave_room(room)
+    user = User.query.filter_by(id=msg['user_id']).first()
     emit('accept_disconnection', {
-        'user_id': msg['user_id']
+        'nickname': user.nickname
     }, room=room)
     open('YES.txt', 'w').write(','.join(rooms()))
 

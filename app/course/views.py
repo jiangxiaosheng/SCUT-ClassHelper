@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import url_for, render_template, redirect, request, current_app, session, Response
 from .. import db
-from app.models import Teacher, User, Course, StudentCourse, Announcement
+from app.models import Teacher, User, Course, StudentCourse, Announcement, Test
 from . import course
 from flask_login import login_required, current_user
 from .forms import *
@@ -149,11 +149,19 @@ def download_resources(course_id):
     return response
 
 
-#TODO:在线考试
-@course.route('/tests')
+#TODO:显示出该课程所有考试信息
+@course.route('/tests/<course_id>')
 @login_required
-def tests():
-    pass
+def tests(course_id):
+    all_tests = Test.query.filter(course_id=course_id).all()
+    return render_template('course/test.html', all_tests)
+
+
+#TODO:发布考试
+@course.route('/create-test/<int:course_id>', methods=['GET', 'POST'])
+@permission_required(Permission.CREATETEST)
+def create_test(course_id):
+    return render_template('course/create_test.html', course_id=course_id)
 
 
 #TODO:聊天室
@@ -223,3 +231,4 @@ def publish_resource(course_id):
         file.save(path)
         return redirect(url_for('course.resources', course_id=course_id))
     return render_template('course/publish_resource.html', form=form)
+
