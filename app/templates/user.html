@@ -3,7 +3,7 @@
 {% block title %} User {% endblock %}
 
 {% block page_content %}
-<div class="container navbar-default"style="height:100%;padding-top:50px; margin-top:110px; background-color:white">
+<div class="container" style="height:100%;padding-top:50px; margin-top:110px; background-color:white">
     <div style="margin-left:0%;background-color:#f7ecb5;height:100%;width:200px;float:left;">
         <img src="{{ url_for('static', filename='headicon/'+user.headicon_url) }}" style="width:200px">
         <p align="center" style="height:10px;">
@@ -26,29 +26,5 @@
     {% if user.id == current_user.id %}
     <a href="{{ url_for('main.edit_profile') }}" class="btn btn-default" style="margin-left: 870px;margin-top:10px;padding-left:20px;padding-right:20px;">修改</a>
     {% endif %}
-    <div style="padding-top:200px">
-        {% for each in posts %}
-            <div style="padding-top:60px;padding-bottom:30px;">
-                <div class="media-left">
-                    <a href="#"><img src="{{ url_for('static', filename=('headicon/'+each.author.headicon_url)) }}" class="media-object" style="width:55px"></a>
-                </div>
-                <div class="media-body">
-                    <a href="#"><h5 class="media-heading">{{ each.author.nickname }}</h5></a>
-                    {% if each.body_html %}
-                    {{ each.body_html | safe }}
-                    {% else %}
-                    {{ each.body }}
-                    {% endif %}
-                    <p>{{ each.timestamp }}</p>
-
-                </div>
-                <button type="button" class="btn btn-default btn-sm col-xs-6">like</button>
-                <button type="button" class="btn btn-default btn-sm col-xs-6">comment</button>
-            </div>
-        {% endfor %}
-    </div>
-    <div class="pagination" style="padding-left:45%">
-        {{ macros.pagination_widget(pagination, 'main.user', email=user.email) }}
-    </div>
 </div>
 {% endblock %}

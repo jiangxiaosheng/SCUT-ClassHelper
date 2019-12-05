@@ -12,12 +12,12 @@
             </div>
             {% for each in all_tests %}
             <!-- tests -->
-            <div style="padding-top:40px;padding-bottom:40px;width:100%">
+            <div style="padding-top:40px;padding-bottom:40px;width:100%;text-align: center">
                 <p style="float:left;padding-top:10px">&nbsp;&nbsp;&nbsp;&nbsp;{{ each.name }}&nbsp;&nbsp;&nbsp;&nbsp;  </p>
-                <a href="{{ url_for('course.join_test', course_id=each.course_id, test_name=each.name) }}"  id="{{ each.course_id }}{{ each.name }}"><button class="btn btn-warning" style="float:right;margin-right:5px">进入考试</button></a>
-                <p style="float:right;padding-right:10%;padding-top:10px">{{ each.duration }}分钟</p>
-                <p style="float:right;padding-right:18%;padding-top:10px">{{ each.end }}</p>
-                <p style="float:right;padding-right:18%;padding-top:10px">{{ each.start }}</p>
+                <a href="{{ url_for('course.join_test', course_id=course_id) }}"><button class="btn btn-warning" style="float:right;margin-right:5px">进入考试</button></a>
+                <p style="float:right;padding-top:10px;padding-right: 6%;">{{ each.duration }}分钟</p>
+                <p style="float:right;padding-top:10px;padding-right: 19%;">{{ each.end }}</p>
+                <p style="float:right;padding-top:10px;padding-right: 14%;">{{ each.start }}</p>
             </div>
             {% endfor %}
 
@@ -27,7 +27,38 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
+<script type="text/javascript">
+    function getNowFormatDate() {
+    //获取当前时间
+	var date = new Date();
+	var seperator1 = "-";
+	var seperator2 = ":";
+	var month = date.getMonth() + 1<10? "0"+(date.getMonth() + 1):date.getMonth() + 1;
+	var strDate = date.getDate()<10? "0" + date.getDate():date.getDate();
+	var currentdate = date.getFullYear() + seperator1  + month  + seperator1  + strDate
+			+ " "  + date.getHours()  + seperator2  + date.getMinutes()
+			+ seperator2 + date.getSeconds();
+	return currentdate;
+    }
 
+    function started(start, end) {
+        var now = getNowFormatDate();
+        var starttime = start.substring(0, 10).split('-');
+        var endtime = end.substring(0, 10).split('-');
+        var nowtime = now.substring(0, 10).split('-')
+        var st = starttime[1] + '-' + starttime[2] + '-' + starttime[0] + ' ' + start.substring(10, 19);
+        var ed = endtime[1] + '-' + endtime[2] + '-' + endtime[0] + ' ' + end.substring(10, 19);
+        var nw = nowtime[1] + '-' + nowtime[2] + '-' + nowtime[0] + ' ' + now.substring(10, 19);
+        var fro = (Date.parse(nw) - Date.parse(st)) / 3600 / 1000;
+        var pre = (Date.parse(ed) - Date.parse(nw)) / 3600 / 1000;
+        //alert(fro);
+        //alert(pre);
+        <!--if(fro > 0 && pre > 0){-->
+            <!--alert("可以考试");-->
+        <!--}-->
+        <!--else{-->
+            <!--alert("不可以考试");-->
+        <!--}-->
+    }
 </script>
 {% endblock %}

@@ -103,7 +103,7 @@ def insert_message(course_id, message):
         message_db.rollback()
 
 
-def get_chat_history(course_id, count=100):
+def get_chat_history(course_id, count=100, all=False):
     #message_db = pymysql.connect("localhost", DevelopmentConfig.MYSQL_USERNAME, DevelopmentConfig.MYSQL_PASSWORD,'SCUT_ClassHelper')
     table_name = 'course' + str(course_id) + '_message'
     cursor = message_db.cursor()
@@ -114,10 +114,13 @@ def get_chat_history(course_id, count=100):
 
     cursor.execute(sql)
     result = cursor.fetchall()
-    if len(result) < count:
-        return result
+    if not all:
+        if len(result) < count:
+            return result
+        else:
+            return result[: count]
     else:
-        return result[: count]
+        return result
 
 
 if __name__ == '__main__':

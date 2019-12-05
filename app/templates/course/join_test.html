@@ -1,0 +1,57 @@
+{% extends "/base.html" %}
+{% block title %} xx Test {% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="container  " style="padding-top:60px;">
+    <div id="questions" class="container col-xs-4 col-xs-offset-4" style="padding-top: 30px;">
+        <p>name</p>
+        <h3>xxxx</h3>
+    </div>
+    {% for each in questions %}
+        {% if each[1] == "choice" %}
+            <div id="id{{each[0]}}" label="choice">
+                <h3 class="col-xs-11" style="margin-top:20px">{{each[0]}}:{{each[2]}}</h3>
+                <div class="col-xs-12"><button id="A{{each[0]}}" class="tip{{each[0]}} btn btn-default" style="margin-top:5px;float:left">A</button><p class="col-xs-11">{{each[3]}}</p></div>
+                <div class="col-xs-12"><button id="B{{each[0]}}" class="tip{{each[0]}} btn btn-default" style="margin-top:5px;float:left">B</button><p class="col-xs-11">{{each[4]}}</p></div>
+                <div class="col-xs-12"><button id="C{{each[0]}}" class="tip{{each[0]}} btn btn-default" style="margin-top:5px;float:left">C</button><p class="col-xs-11">{{each[5]}}</p></div>
+                <div class="col-xs-12"><button id="D{{each[0]}}" class="tip{{each[0]}} btn btn-default" style="margin-top:5px;float:left">D</button><p class="col-xs-11">{{each[6]}}</p></div>
+            </div>
+        {% else %}
+            <div id="id{{each[0]}}" label="simple">
+                <h3 class="col-xs-11" style="margin-top:20px">{{each[0]}}:{{each[2]}}</h3>
+                <textarea id="question{{each[0]}}" class="col-xs-11" style="margin-top:5px;margin-bottom:25px" placeholder="question"></textarea>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+<button id="confirm" class="btn btn-default" style="position:fixed;bottom:30px;right:30px">send</button>
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+    $(document).ready(function () {
+
+        $('body').on("click", '.btn', function () {
+            if ($(this).attr("id") != "confirm") {
+                var A = $(this).attr("class");
+                var B = A.split(" btn btn-default");
+                var C = B[0].split("tip");
+                var messageID = C[1];
+                $(".tip" + messageID).removeClass("active");
+                $(this).addClass("active");
+            }
+            else {
+                // if is confirm
+            }
+
+        });
+
+   
+    });
+</script>
+{% endblock %}

@@ -166,6 +166,7 @@ def create_test(course_id):
     return render_template('course/create_test.html', course_id=course_id)
 
 
+#参加考试
 @course.route('/join-test/<int:course_id>')
 def join_test(course_id):
     test_name = request.values.get("test_name")
@@ -196,9 +197,6 @@ def chatroom(course_id):
         user = User.query.filter_by(id=c[0]).first()
         #昵称，头像，消息内容，时间戳
         chat_history.append((user.id, user.nickname, user.headicon_url, c[1], c[2]))
-
-
-    open('test.txt', 'w').write(str(chat_history))
     if current_user.role.name == 'Student':
         courses = StudentCourse.query.filter_by(student_id=current_user.student.student_id).all()
         return render_template('course/chatroom.html', courses=[c.course for c in courses], course=course, chat_history=chat_history)
@@ -250,4 +248,13 @@ def publish_resource(course_id):
         file.save(path)
         return redirect(url_for('course.resources', course_id=course_id))
     return render_template('course/publish_resource.html', form=form)
+
+
+#查看历史记录
+@course.route('/chat-history/<int:course_id>')
+@login_required
+def show_chat_history(course_id):
+    history = get_chat_history(course_id, all=True)
+    course = Course.query.filter_by(course_id=course_id).first()
+    return render_template('course/chat_history.html', history=history, course=course)
 
