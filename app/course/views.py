@@ -3,7 +3,7 @@ import json
 
 from flask import url_for, render_template, redirect, request, current_app, session, Response
 from .. import db
-from app.models import Teacher, User, Course, StudentCourse, Announcement, Test
+from app.models import Teacher, User, Course, StudentCourse, Announcement, Test, Answer, CheckTest, Student
 from . import course
 from flask_login import login_required, current_user
 from .forms import *
@@ -156,7 +156,23 @@ def download_resources(course_id):
 @login_required
 def tests(course_id):
     all_tests = Test.query.filter_by(course_id=str(course_id)).all()
-    return render_template('course/tests.html', all_tests=all_tests, course_id=course_id)
+    allow = []
+    if current_user.role.name == 'Student':
+        for test in all_tests:
+            record = CheckTest.query.filter_by(
+                student_id=current_user.student.student_id,
+                test_id=test.id
+            ).first()
+            if record is None:
+                allow.append(True)
+            else:
+                if record.allow == True:
+                    allow.append(True)
+                else:
+                    allow.append(False)
+    else:
+        allow = [True] * len(all_tests)
+    return render_template('course/tests.html', all_tests=all_tests, course_id=course_id, allow=allow)
 
 
 #TODO:发布考试
@@ -173,7 +189,10 @@ def join_test(course_id):
     test = Test.query.filter_by(course_id=course_id, name=test_name).first()
     content = json.loads(test.content)
     metadata = {
-        "name": content['name']
+        "name": content['name'],
+        "count": len(content['questions']),
+        "course_id": course_id,
+        "test_id": test.id,
     }
     question_count = len(content['questions'])
     questions = []
@@ -185,6 +204,37 @@ def join_test(course_id):
             questions.append((q['id'], q['type'], q['content']['title'], q['content']['A'], q['content']['B'], q['content']['C'], q['content']['D']))
     #open('test.txt', 'w').write(str(questions))
     return render_template('course/join_test.html', questions=questions, metadata=metadata)
+
+
+#老师查看学生答题情况
+@course.route('/show-all-answers/<int:course_id>')
+@permission_required(Permission.CHECKANSWERS)
+def show_all_answers(course_id):
+    test_id = request.values.get("test_id")
+    answers = Answer.query.filter_by(
+        course_id=course_id,
+        test_id=test_id,
+    ).all()
+    students = []
+    for each in answers:
+        student = Student.query.filter_by(
+            student_id=each.student_id,
+        ).first()
+        students.append(student)
+    return render_template('course/show_student_answers.html', students=students, test_id=test_id)
+
+
+#TODO:需要将学生的答案渲染出来
+@course.route('/show-answer')
+@permission_required(Permission.CHECKANSWERS)
+def show_answer():
+    student_id = request.values.get("student_id")
+    test_id = request.values.get("test_id")
+    answer = Answer.query.filter_by(
+        student_id=student_id,
+        test_id=test_id
+    ).first()
+    return render_template('course/answer.html', answer=answer)
 
 
 
@@ -247,6 +297,7 @@ def publish_resource(course_id):
     form = PublishResourceForm()
     if form.validate_on_submit():
         file = form.file.data
+        file.filename = form.name.data
         path = os.path.join(resources_base_dir, str(course_id), file.filename)
         file.save(path)
         return redirect(url_for('course.resources', course_id=course_id))

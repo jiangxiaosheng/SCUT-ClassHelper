@@ -19,6 +19,7 @@ class Permission:
     MODERATE = 32  # 修改
     ADMIN = 64  # 管理员
     CREATETEST = 128
+    CHECKANSWERS = 256
 
 class Role(db.Model):
     __tablename__ = 'roles'
@@ -59,8 +60,8 @@ class Role(db.Model):
     def insert_roles():
         roles = {
             'Student': [Permission.FOLLOW, Permission.WRITE, Permission.COMMENT, Permission.JOINCOURSE],
-            'Teacher': [Permission.FOLLOW, Permission.WRITE, Permission.COMMENT, Permission.CREATECOURSE, Permission.CREATETEST],
-            'Administrator': [Permission.COMMENT, Permission.FOLLOW, Permission.WRITE, Permission.MODERATE, Permission.ADMIN, Permission.CREATETEST],
+            'Teacher': [Permission.FOLLOW, Permission.WRITE, Permission.COMMENT, Permission.CREATECOURSE, Permission.CREATETEST, Permission.CHECKANSWERS],
+            'Administrator': [Permission.COMMENT, Permission.FOLLOW, Permission.WRITE, Permission.MODERATE, Permission.ADMIN, Permission.CREATETEST, Permission.CHECKANSWERS],
         }
         default_role = 'Student' #默认角色是学生
         for r in roles:
@@ -496,8 +497,9 @@ class Teacher(db.Model):
 #试卷
 class Test(db.Model):
     __tablename__ = 'tests'
-    name = db.Column(db.String, primary_key=True) #考试名称
-    course_id = db.Column(db.Integer, primary_key=True) #所属课程id
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String) #考试名称
+    course_id = db.Column(db.Integer) #所属课程id
     start = db.Column(db.DateTime(), default=localtime) #考试开始时间
     duration = db.Column(db.Integer) #考试持续时间，单位是分钟
     end = db.Column(db.DateTime())
@@ -507,7 +509,15 @@ class Test(db.Model):
 
 class Answer(db.Model):
     __tablename__ = 'answers'
-    student_id = db.Column(db.Integer, db.ForeignKey('students.student_id'), primary_key=True) #考生学号
-    course_id = db.Column(db.Integer, db.ForeignKey('courses.course_id'), primary_key=True) #考试所属课程id
-    test_name = db.Column(db.String, db.ForeignKey('tests.name'), primary_key=True) #考试名称
+    student_id = db.Column(db.Integer, primary_key=True) #考生学号
+    course_id = db.Column(db.Integer) #考试所属课程id
+    test_id = db.Column(db.Integer, db.ForeignKey('tests.id'), primary_key=True) #考试id
     answer = db.Column(db.Text) #考生的作答，以json存储
+
+
+class CheckTest(db.Model):
+    __tablename__ = 'checktests'
+    student_id = db.Column(db.Integer, primary_key=True)
+    test_id = db.Column(db.Integer, primary_key=True)
+    allow = db.Column(db.Boolean, default=False) #是否允许考试
+

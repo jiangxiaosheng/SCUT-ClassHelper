@@ -14,20 +14,23 @@
             <!-- tests -->
             <div style="padding-top:40px;padding-bottom:40px;width:100%;text-align: center">
                 <p style="float:left;padding-top:10px">&nbsp;&nbsp;&nbsp;&nbsp;{{ each.name }}&nbsp;&nbsp;&nbsp;&nbsp;  </p>
+                {% if allow[loop.index0] == True %}
                 <button class="btn btn-warning" style="float:right;margin-right:5px" onclick="started('{{each.start}}','{{each.end}}', {{ each.course_id }}, '{{ each.name }}')">进入考试</button>
+                {% else %}
+                <button class="btn btn-warning" disabled="disabled" style="float:right;margin-right:5px" onclick="started('{{each.start}}','{{each.end}}', {{ each.course_id }}, '{{ each.name }}')">进入考试</button>
+                {% endif %}
                 <p style="float:right;padding-top:10px;padding-right: 6%;">{{ each.duration }}分钟</p>
                 <p style="float:right;padding-top:10px;padding-right: 19%;">{{ each.end }}</p>
                 <p style="float:right;padding-top:10px;padding-right: 14%;">{{ each.start }}</p>
             </div>
             {% endfor %}
-
         </div>
-
     </div>
 {% endblock %}
 
 {% block scripts %}
 <script type="text/javascript">
+
     function getNowFormatDate() {//获取当前时间
 	var date = new Date();
 	var seperator1 = "-";
@@ -48,7 +51,7 @@
                 return true;
             }
             else if(a[1] == b[1]){
-                if(a[2] > a[2]){
+                if(a[2] > b[2]){
                     return true;
                 }
                 else if(a[2] == b[2]){
@@ -89,18 +92,23 @@
 
     }
     function started(start, end, course_id, name) {
-        var now = getNowFormatDate();
-        var starttime = start.substring(0, 10).split('-');
-        var endtime = end.substring(0, 10).split('-');
-        var nowtime = now.substring(0, 10).split('-');
-        var st = start.substring(11,19).split(':');
-        var ed = end.substring(11,19).split(':');
-        var nw = now.substring(11,19).split(':');
-        if(compare(nowtime, starttime, nw, st) && compare(endtime, nowtime, ed, nw)){
+        if ('{{ current_user.role.name == 'Teacher' }}' == true) {
             window.location.href='../join-test/' + course_id + '?test_name=' + name;
-        }
-        else{
-            alert("不可以考试");
+        } else {
+            var now = getNowFormatDate();
+            var starttime = start.substring(0, 10).split('-');
+            var endtime = end.substring(0, 10).split('-');
+            var nowtime = now.substring(0, 10).split('-');
+            var st = start.substring(11,19).split(':');
+            var ed = end.substring(11,19).split(':');
+            var nw = now.substring(11,19).split(':');
+            if(compare(nowtime, starttime, nw, st) && compare(endtime, nowtime, ed, nw)){
+                window.location.href='../join-test/' + course_id + '?test_name=' + name;
+            }
+            else{
+                //alert("当前时间不允许进入考试！");
+                window.location.href='../join-test/' + course_id + '?test_name=' + name;
+            }
         }
     }
 </script>

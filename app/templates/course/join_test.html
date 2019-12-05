@@ -14,7 +14,7 @@
     {% for each in questions %}
         {% if each[1] == "choice" %}
             <div id="id{{each[0]}}" label="choice">
-                <h3 class="col-xs-11" style="margin-top:20px">{{each[0]}}:{{each[2]}}</h3>
+                <h3 id="title{{ each[0] }}" class="col-xs-11" style="margin-top:20px"><b>{{each[0]}}.</b>{{each[2]}}</h3>
                 <div class="col-xs-12"><button id="A{{each[0]}}" class="tip{{each[0]}} btn btn-default" style="margin-top:5px;float:left">A</button><p class="col-xs-11">{{each[3]}}</p></div>
                 <div class="col-xs-12"><button id="B{{each[0]}}" class="tip{{each[0]}} btn btn-default" style="margin-top:5px;float:left">B</button><p class="col-xs-11">{{each[4]}}</p></div>
                 <div class="col-xs-12"><button id="C{{each[0]}}" class="tip{{each[0]}} btn btn-default" style="margin-top:5px;float:left">C</button><p class="col-xs-11">{{each[5]}}</p></div>
@@ -22,17 +22,38 @@
             </div>
         {% else %}
             <div id="id{{each[0]}}" label="simple">
-                <h3 class="col-xs-11" style="margin-top:20px">{{each[0]}}:{{each[2]}}</h3>
+                <h3 id="title{{ each[0] }}" class="col-xs-11" style="margin-top:20px"><b>{{each[0]}}.</b>{{each[2]}}</h3>
                 <textarea id="question{{each[0]}}" class="col-xs-11" style="margin-top:5px;margin-bottom:25px" placeholder="question"></textarea>
             </div>
         {% endif %}
     {% endfor %}
 </div>
-<button id="confirm" class="btn btn-default" style="position:fixed;bottom:30px;right:30px">send</button>
+{% if current_user.role.name == 'Student' %}
+<a><button id="confirm" class="btn btn-default" style="position:fixed;bottom:30px;right:30px">提交</button></a>
+{% else %}
+<a href="{{ url_for('course.show_all_answers', course_id=metadata['course_id'], test_id=metadata['test_id']) }}"><button id="show_answers" class="btn btn-default" style="position:fixed;bottom:30px;right:30px">查看考试情况</button></a>
+{% endif %}
 {% endblock %}
 
 {% block scripts %}
 <script>
+    function commit(course_id, test_name, student_id, answer) {
+        $.ajax({
+            url: "../../api/submit-test/" + course_id,
+            type: "POST",
+            dataType: "json",
+            data: {
+                "test_name": test_name,
+                "student_id": student_id,
+                "answer_json": answer,
+                "test_id": {{ metadata['test_id'] }},
+            },
+            success: function(data) {
+                window.location.href = "../tests/{{ metadata['course_id'] }}";
+            }
+        })
+    }
+
 
     $(document).ready(function () {
 
@@ -47,6 +68,35 @@
             }
             else {
                 // if is confirm
+                var number = {{ metadata['count'] }};
+                var answer = new Object;
+                answer.content = new Array();
+                for (var i = 1; i < number + 1; i++) {
+                    answer.content[i - 1] = new Object;
+                    answer.content[i - 1].order = i;
+                    //choice
+                    if ($("#id" + i).attr("label")=="choice") {
+                        answer.content[i - 1].type = "choice";
+                        if ($("#A" + i).attr("class") == "tip"+ i +" btn btn-default active") {
+                            answer.content[i - 1].answer = "A";
+                        }
+                        else if ($("#B" + i).attr("class") == "tip"+ i +" btn btn-default active") {
+                            answer.content[i - 1].answer = "B";
+                        }
+                        else if ($("#C" + i).attr("class") == "tip"+ i +" btn btn-default active") {
+                            answer.content[i - 1].answer = "C";
+                        }
+                        else if ($("#D" + i).attr("class") == "tip"+ i +" btn btn-default active") {
+                            answer.content[i - 1].answer = "D";
+                        }
+                    }
+                    // simple
+                    else {
+                        answer.content[i - 1].type = "simple";
+                        answer.content[i - 1].answer = $("#question" + i).val();
+                    }
+                }
+                commit("{{ metadata['course_id'] }}", "{{ metadata['name'] }}", "{{ current_user.student.student_id }}", JSON.stringify(answer));
             }
 
         });

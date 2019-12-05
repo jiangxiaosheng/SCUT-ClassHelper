@@ -23,7 +23,6 @@
     var number = 0;
 
     function create_test(course_id, content_json) {
-        //alert(content_json);
         $.ajax({
             url: "../../api/create-test",
             type: "POST",
@@ -31,14 +30,11 @@
             data: {"course_id": course_id, "content_json": content_json},
             success: function(data) {
                 //alert(data['data']);
-                if (data['flag'] == true) {
-                    alert(content_json);
-                }
-                
+                window.location.href = "../tests/" + course_id;
             }
         });
-        // var obj = JSON.parse(content_json);
-        // alert(obj.questions[0].content.title);
+        //var obj = JSON.parse(content_json);
+        //alert(obj.questions[0].content.title);
 
     }
 

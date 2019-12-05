@@ -27,7 +27,7 @@ class CreateCourseForm(FlaskForm):
 
 #发布资源表单
 class PublishResourceForm(FlaskForm):
-    name = StringField('资源名', validators=[DataRequired(), Length(1, 50)])
+    name = StringField('资源名 (不能出现中文)', validators=[DataRequired(), Length(1, 50)])
     file = FileField('资源文件', validators=[FileRequired()])
     submit = SubmitField('上传')
 
