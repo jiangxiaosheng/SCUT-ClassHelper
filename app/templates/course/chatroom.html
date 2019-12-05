@@ -90,10 +90,11 @@
                 <div class="btn-group btn-group-sm">
                     <button type="button" class="btn btn-default" onclick="javascrtpt:window.location.href='../announcement/{{ course.course_id }}'" style="height:50%;">公告</button>
                     <button type="button" class="btn btn-default" onclick="javascrtpt:window.location.href='../resources/{{ course.course_id }}'">课程资源</button>
-                    <button type="button" class="btn btn-default" onclick="javascrtpt:window.location.href='../create-test/{{ course.course_id }}'">在线考试</button>
+                    <button type="button" class="btn btn-default" onclick="javascrtpt:window.location.href='../tests/{{ course.course_id }}'">在线考试</button>
                     {% if current_user.role.name == 'Teacher' %}
                     <button type="button" class="btn btn-default" onclick="javascrtpt:window.location.href='../publish-announcement/{{ course.course_id }}'">发布公告</button>
                     <button type="button" class="btn btn-default" onclick="javascrtpt:window.location.href='../publish-resource/{{ course.course_id }}'">上传资源</button>
+                    <button type="button" class="btn btn-default" onclick="javascrtpt:window.location.href='../create-test/{{ course.course_id }}'">创建考试</button>
                     {% endif %}
                 </div>
                 <div class="btn-group btn-group-sm " style="float:right;">

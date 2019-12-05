@@ -68,7 +68,7 @@ def create_message_table(course_id):
     sql = """CREATE TABLE IF NOT EXISTS %s (
             id INT PRIMARY KEY AUTO_INCREMENT,
              user_id  VARCHAR(10) NOT NULL,
-             body TEXT,
+             body TEXT COLLATE gbk_bin,
              type ENUM("text", "image") DEFAULT "text",
              url VARCHAR(25),
              timestamp DATETIME)""" % table_name

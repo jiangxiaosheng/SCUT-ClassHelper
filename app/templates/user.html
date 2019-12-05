@@ -3,10 +3,10 @@
 {% block title %} User {% endblock %}
 
 {% block page_content %}
-<div class="container navbar-default"style="height:100%;padding-top:120px;">
-    <div style="margin-left:30%;background-color:#ff0000;height:100%;width:200px;float:left;">
+<div class="container navbar-default"style="height:100%;padding-top:50px; margin-top:110px; background-color:white">
+    <div style="margin-left:0%;background-color:#f7ecb5;height:100%;width:200px;float:left;">
         <img src="{{ url_for('static', filename='headicon/'+user.headicon_url) }}" style="width:200px">
-        <p align="center">
+        <p align="center" style="height:10px;">
             {% if user.role.name == 'Teacher' %}
             teacher
             {% else %}
@@ -14,18 +14,18 @@
             {% endif %}
         </p>
     </div>
-    <div style="padding-left:5%;background-color:#FFD700;height:100%;width:30%;float:left;">
+    <div style="margin-left:15%;padding-left:5%;padding-right:5%;padding-top:2%;background-color:#dddddd;height:400px;width:50%;float:left;display:table-cell;margin-top:0px;">
         <p>nickname:{{ user.nickname }}</p>
-        <P>Location:{{ user.location }}</P>
-        <P>
+        <P style="margin-top:30px;">Location:{{ user.location }}</P>
+        <P style="margin-top:30px;">
             about_me:{{ user.about_me }}
         </P>
-        <p>email:{{ user.email }}</p>
+        <p style="margin-top:150px;">email:{{ user.email }}</p>
         <!-- 只有自己才能修改 -->
-        {% if user.id == current_user.id %}
-        <a href="{{ url_for('main.edit_profile') }}" class="btn btn-default">修改</a>
-        {% endif %}
     </div>
+    {% if user.id == current_user.id %}
+    <a href="{{ url_for('main.edit_profile') }}" class="btn btn-default" style="margin-left: 870px;margin-top:10px;padding-left:20px;padding-right:20px;">修改</a>
+    {% endif %}
     <div style="padding-top:200px">
         {% for each in posts %}
             <div style="padding-top:60px;padding-bottom:30px;">

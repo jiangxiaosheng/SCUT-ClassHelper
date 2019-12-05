@@ -38,25 +38,7 @@
                 <div class="likeCount" id="likeCount{{each.id}}">{{each.liked_count}}</div>
             </div>
             <button id="comments{{ each.id }}"  type="button" class="comments btn btn-default btn-sm col-xs-6" style="outline:none;"><span class="glyphicon glyphicon-chevron-down"></span> 评论</button>
-            <div id="spread{{ each.id }}"style="display: none;">
-                <!-- comments-->
-
-                <div class="container" style="padding-top:30px">
-                    <div class="media-left">
-                        <a href="{{ url_for('main.user', email=each.author.email) }}"><img src="{{ url_for('static', filename=('headicon/'+each.author.headicon_url)) }}" class="media-object" style="width:55px"></a>
-                    </div>
-                    <div class="media-body">
-                        <a href="{{ url_for('main.user', email=each.author.email) }}"><h5 class="media-heading">{{ each.author.nickname }}</h5></a>
-                        {% if each.body_html %}
-                        {{ each.body_html | safe }}
-                        {% else %}
-                        {{ each.body }}
-                        {% endif %}
-                        <p>{{ each.timestamp }}</p>
-
-                    </div>
-                </div>
-            </div>
+            <!--comments-->
         </div>
         {% endfor %}
     </div>
@@ -65,7 +47,6 @@
     </div>
 </div>
 {% endblock %}
-<script src="../js/jquery-1.11.0.min.js" type="text/javascript"></script>
 {% block scripts %}
 
 <script type="text/javascript">
@@ -82,18 +63,32 @@
     }
 
     function publish_comment(post_id, user_id) {
-        if ($('#textarea'+post_id)) {
+        if ($('#textarea' + post_id)) {
             $.ajax({
                 url: "../../api/comments/publish",
                 type: "POST",
                 dataType: "json",
-                data: {"post_id": post_id, "user_id": user_id, "content": $('#textarea'+post_id).val()},
-                success: function(data) {
+                data: { "post_id": post_id, "user_id": user_id, "content": $('#textarea' + post_id).val() },
+                success: function (data) {
+                    var div = `<div class="` + post_id + ` container col-xs-12" style="padding-top:5px">
+                        <div style="border:1px solid #90bdbd">
+                            <div class="media-left">
+                                 <a href="` + "{{ url_for('main.user', email = current_user.email)}}" + `"><img src="` + `../static/headicon/` + "{{ current_user.headicon_url }}" + `" class="media-object" style="width:30px"></a>
+                            </div>
+                            <div class="media-body">
+                                <a href="` + "{{ url_for('main.user', email = current_user.email) }}" + `"><h5 class="media-heading">` + "{{ current_user.nickname }}" + `</h5></a>
+                                <p>` + $('#textarea' + post_id).val() + `</p>
+                                <p>` + data["timestamp"] + `</p>
+                            </div>
+                        </div>
+                    </div>`;
                     if (data['flag'] == true) {
-                       //TODO:显示出来 alert(111);
+                        //TODO:显示出来 alert(111);
+                        $("#comments" + post_id).after(div);
                     }
                 }
             });
+            $('#button' + post_id).val("");
         }
     }
 
@@ -129,7 +124,7 @@
                     </div>`;
                     $("#block" + get_id).append(div);
                     if (i == data['count'] - 1) {
-                        $("#block" + get_id).append(textarea);
+                        $("#block" + get_id).append(textarea);s
                     }
                 }
                 if (data['count'] == 0) {
@@ -186,6 +181,7 @@
 
             //$("#spread" + messageID).slideToggle();
         });
+
 
     });
 

@@ -1,14 +1,16 @@
 {% extends "/base.html" %}
 {% block title %} Create Test {% endblock %}
+
 {% block head %}
 {{ super() }}
 {% endblock %}
+
 {% block content %}
 <div class="container  " style="padding-top:60px">
     <div id="questions" class="container col-xs-6 col-xs-offset-3" style="padding-top: 30px;">
-        <p id="test_name">考试名称</p>
-        <input class="form-control" id="name" name="name" required type="text" value="">
-        <input type="date" name="date" id="date" value="" />
+        <p>考试名称</p>
+        <input class="form-control"  id="test_name" name="name" required type="text" value="">
+        <input type="datetime-local" name="date" id="date" value="" />
     </div>
 </div>
 <button id="add1" class="btn btn-default" style="position:fixed;bottom:30px;right:210px">问答题</button>
@@ -21,19 +23,22 @@
     var number = 0;
 
     function create_test(course_id, content_json) {
-        // $.ajax({
-        //     url: "../../api/create-test",
-        //     type: "POST",
-        //     dataType: "json",
-        //     data: {"course_id": course_id, "content_json": content_json},
-        //     success: function(data) {
-        //         if (data['flag'] == true) {
-        //             //TODO:显示出来 alert(111);
-        //         }
-        //     }
-        // });
-        var obj = JSON.parse(content_json);
-        alert(obj.questions[0].content.title);
+        //alert(content_json);
+        $.ajax({
+            url: "../../api/create-test",
+            type: "POST",
+            dataType: "json",
+            data: {"course_id": course_id, "content_json": content_json},
+            success: function(data) {
+                //alert(data['data']);
+                if (data['flag'] == true) {
+                    alert("ok");
+                }
+                
+            }
+        });
+        // var obj = JSON.parse(content_json);
+        // alert(obj.questions[0].content.title);
 
     }
 
@@ -54,7 +59,7 @@
         $('body').on("click", '#add2', function () {
             number++;
             var div;
-            //选择题,label='choice'        
+            //选择题,label='choice'
             div = `
                 <div id="id`+ number + `" style="margin-top:20px">
                     <div id="title`+ number + `" class="col-xs-12" label="choice">`+number+`:</div>
@@ -71,7 +76,8 @@
         //点击提交按钮
         $('body').on("click", '#confirm', function () {
             var test_content = new Object;
-            test_content.name = $("test_name").val();
+            test_content.name = $("#test_name").val();
+            //alert($("#test_name").val());
             test_content.questions = new Array();
             for (var i=1; i<=number; i++) {
                 var q = new Object;
@@ -124,7 +130,7 @@
                 }
             }
             number--;
-                
+
         });
     });
 </script>

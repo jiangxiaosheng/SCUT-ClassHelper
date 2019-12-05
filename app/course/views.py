@@ -150,11 +150,11 @@ def download_resources(course_id):
 
 
 #TODO:显示出该课程所有考试信息
-@course.route('/tests/<course_id>')
+@course.route('/tests/<int:course_id>')
 @login_required
 def tests(course_id):
-    all_tests = Test.query.filter(course_id=course_id).all()
-    return render_template('course/test.html', all_tests)
+    all_tests = Test.query.filter_by(course_id=str(course_id)).all()
+    return render_template('course/tests.html', all_tests=all_tests)
 
 
 #TODO:发布考试

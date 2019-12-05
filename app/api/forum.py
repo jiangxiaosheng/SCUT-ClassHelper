@@ -44,7 +44,7 @@ def get_post_comments():
         return internal_error('Please check your url.')
     post = Post.query.get_or_404(id)
     page = request.args.get('page', 1, type=int)
-    pagination = post.comments.order_by(Comment.timestamp.asc()).paginate(
+    pagination = post.comments.order_by(Comment.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASKY_COMMENTS_PER_PAGE'],
         error_out=False)
     comments = pagination.items
@@ -82,15 +82,19 @@ def publish_comment():
     post_id = request.values.get("post_id")
     user_id = request.values.get("user_id")
     content = request.values.get("content")
+    timestamp = localtime()
     c = Comment(
         author_id=user_id,
         post_id=post_id,
         body=content,
-        timestamp=localtime()
+        timestamp=timestamp,
     )
     db.session.add(c)
     db.session.commit()
-    return jsonify({"flag": True})
+    return jsonify({
+        "flag": True,
+        "timestamp": timestamp,
+    })
 
 '''
 @api.route('/posts/<int:id>/comments/', methods=['POST'])
