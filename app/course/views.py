@@ -156,7 +156,7 @@ def download_resources(course_id):
 @login_required
 def tests(course_id):
     all_tests = Test.query.filter_by(course_id=str(course_id)).all()
-    return render_template('course/tests.html', all_tests=all_tests)
+    return render_template('course/tests.html', all_tests=all_tests, course_id=course_id)
 
 
 #TODO:发布考试
@@ -172,6 +172,9 @@ def join_test(course_id):
     test_name = request.values.get("test_name")
     test = Test.query.filter_by(course_id=course_id, name=test_name).first()
     content = json.loads(test.content)
+    metadata = {
+        "name": content['name']
+    }
     question_count = len(content['questions'])
     questions = []
     for i in range(question_count):
@@ -181,7 +184,7 @@ def join_test(course_id):
         else:
             questions.append((q['id'], q['type'], q['content']['title'], q['content']['A'], q['content']['B'], q['content']['C'], q['content']['D']))
     #open('test.txt', 'w').write(str(questions))
-    return render_template('course/join_test.html', questions=questions)
+    return render_template('course/join_test.html', questions=questions, metadata=metadata)
 
 
 
@@ -254,7 +257,12 @@ def publish_resource(course_id):
 @course.route('/chat-history/<int:course_id>')
 @login_required
 def show_chat_history(course_id):
-    history = get_chat_history(course_id, all=True)
+    res = get_chat_history(course_id, all=True)
+    chat_history = []
+    for c in res:
+        user = User.query.filter_by(id=c[0]).first()
+        #昵称，头像，消息内容，时间戳
+        chat_history.append((user.id, user.nickname, user.headicon_url, c[1], c[2]))
     course = Course.query.filter_by(course_id=course_id).first()
-    return render_template('course/chat_history.html', history=history, course=course)
+    return render_template('course/chat_history.html', chat_history=chat_history, course=course)
 

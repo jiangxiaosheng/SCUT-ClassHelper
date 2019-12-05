@@ -503,3 +503,11 @@ class Test(db.Model):
     end = db.Column(db.DateTime())
     content = db.Column(db.Text()) #考试内容，以json格式存储
 
+
+
+class Answer(db.Model):
+    __tablename__ = 'answers'
+    student_id = db.Column(db.Integer, db.ForeignKey('students.student_id'), primary_key=True) #考生学号
+    course_id = db.Column(db.Integer, db.ForeignKey('courses.course_id'), primary_key=True) #考试所属课程id
+    test_name = db.Column(db.String, db.ForeignKey('tests.name'), primary_key=True) #考试名称
+    answer = db.Column(db.Text) #考生的作答，以json存储
