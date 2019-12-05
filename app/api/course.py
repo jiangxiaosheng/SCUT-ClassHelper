@@ -1,3 +1,5 @@
+import datetime
+
 from flask import request, jsonify, redirect, url_for
 from .. import db
 from . import api
@@ -30,17 +32,15 @@ def chat_history():
 def create_test():
     course_id = request.values.get('course_id')
     content_json = request.values.get('content_json')
-    #open('test.txt', 'w').write(content_json)
-
     content = json.loads(content_json)
     name = content['name']
-    #start = content['start']
     start = localtime()
     test = Test(
         name=name,
         course_id=course_id,
         start=start,
-        duration=3600,
+        duration=60,
+        end=start+datetime.timedelta(minutes=60),
         content = content_json,
     )
     db.session.add(test)

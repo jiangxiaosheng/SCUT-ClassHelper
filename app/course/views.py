@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import json
+
 from flask import url_for, render_template, redirect, request, current_app, session, Response
 from .. import db
 from app.models import Teacher, User, Course, StudentCourse, Announcement, Test
@@ -167,8 +169,19 @@ def create_test(course_id):
 @course.route('/join-test/<int:course_id>')
 def join_test(course_id):
     test_name = request.values.get("test_name")
-    test = Test.query.filter_by(course_id=course_id, test_name=test_name).first()
-    open('test.txt', 'w').write('join_test')
+    test = Test.query.filter_by(course_id=course_id, name=test_name).first()
+    content = json.loads(test.content)
+    question_count = len(content['questions'])
+    questions = []
+    for i in range(question_count):
+        q = content['questions'][i]
+        if q['type'] == 'simple':
+            questions.append((q['id'], q['type'], q['content']['title']))
+        else:
+            questions.append((q['id'], q['type'], q['content']['title'], q['content']['A'], q['content']['B'], q['content']['C'], q['content']['D']))
+    #open('test.txt', 'w').write(str(questions))
+    return render_template('course/join_test.html', questions=questions)
+
 
 
 #TODO:聊天室
@@ -195,7 +208,6 @@ def chatroom(course_id):
     else:
         courses = Course.query.all()
         return render_template('course/chatroom.html', courses=courses, course=course, chat_history=chat_history)
-
 
 
 #公告

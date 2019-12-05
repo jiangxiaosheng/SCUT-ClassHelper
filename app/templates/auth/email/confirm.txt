@@ -1,7 +1,7 @@
-Dear {{ user.username }},
-Welcome to Flasky!
-To confirm your account please click on the following link:
+ {{ user.username }} 您好,
+欢迎加入华南理工大学课堂助手
+请点击下面的链接来完成注册的最后一步：
 {{ url_for('auth.confirm', token=token, _external=True) }}
-Sincerely,
-The Flasky Team
-Note: replies to this email address are not monitored.
+来自：
+华南理工大学-2017级-信息安全-江声、杨天文、严钰翔
+提示: 此邮件不需要回复

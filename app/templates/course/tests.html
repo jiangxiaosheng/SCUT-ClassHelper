@@ -14,7 +14,7 @@
             <!-- tests -->
             <div style="padding-top:40px;padding-bottom:40px;width:100%">
                 <p style="float:left;padding-top:10px">&nbsp;&nbsp;&nbsp;&nbsp;{{ each.name }}&nbsp;&nbsp;&nbsp;&nbsp;  </p>
-                <a><button id="{{ each.course_id }}{{ each.name }}" class="btn btn-warning" style="float:right;margin-right:5px">进入考试</button></a>
+                <a href="{{ url_for('course.join_test', course_id=each.course_id, test_name=each.name) }}"  id="{{ each.course_id }}{{ each.name }}"><button class="btn btn-warning" style="float:right;margin-right:5px">进入考试</button></a>
                 <p style="float:right;padding-right:10%;padding-top:10px">{{ each.duration }}分钟</p>
                 <p style="float:right;padding-right:18%;padding-top:10px">{{ each.end }}</p>
                 <p style="float:right;padding-right:18%;padding-top:10px">{{ each.start }}</p>
