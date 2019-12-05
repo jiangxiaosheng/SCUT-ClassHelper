@@ -499,6 +499,7 @@ class Test(db.Model):
     name = db.Column(db.String, primary_key=True) #考试名称
     course_id = db.Column(db.Integer, primary_key=True) #所属课程id
     start = db.Column(db.DateTime(), default=localtime) #考试开始时间
-    duration = db.Column(db.Integer) #考试持续时间
+    duration = db.Column(db.Integer) #考试持续时间，单位是分钟
+    end = db.Column(db.DateTime())
     content = db.Column(db.Text()) #考试内容，以json格式存储
 

@@ -1,6 +1,33 @@
-{% extends "content/base.html" %}
-{% block title %} Create Test {% endblock %}
+{% extends "/base.html" %}
+{% block title %} Test List {% endblock %}
 
 {% block content %}
-{{ all_tests }}
+    <div class="container navbar-default" style="height:100%;padding-top:30px;">
+        <div class="container">
+            <div style="padding-top:30px;padding-bottom:30px;width:100%">
+                <p style="float:left;padding-top:10px">&nbsp;&nbsp;&nbsp;&nbsp;考试名称&nbsp;&nbsp;&nbsp;&nbsp;  </p>
+                <p style="float:right;padding-right:14%;padding-top:10px">持续时间 </p>
+                <p style="float:right;padding-right:18%;padding-top:10px">结束时间</p>
+                <p style="float:right;padding-right:20%;padding-top:10px">开始时间</p>
+            </div>
+            {% for each in all_tests %}
+            <!-- tests -->
+            <div style="padding-top:40px;padding-bottom:40px;width:100%">
+                <p style="float:left;padding-top:10px">&nbsp;&nbsp;&nbsp;&nbsp;{{ each.name }}&nbsp;&nbsp;&nbsp;&nbsp;  </p>
+                <a><button id="{{ each.course_id }}{{ each.name }}" class="btn btn-warning" style="float:right;margin-right:5px">进入考试</button></a>
+                <p style="float:right;padding-right:10%;padding-top:10px">{{ each.duration }}分钟</p>
+                <p style="float:right;padding-right:18%;padding-top:10px">{{ each.end }}</p>
+                <p style="float:right;padding-right:18%;padding-top:10px">{{ each.start }}</p>
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+</script>
 {% endblock %}

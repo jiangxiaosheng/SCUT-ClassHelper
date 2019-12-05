@@ -164,6 +164,13 @@ def create_test(course_id):
     return render_template('course/create_test.html', course_id=course_id)
 
 
+@course.route('/join-test/<int:course_id>')
+def join_test(course_id):
+    test_name = request.values.get("test_name")
+    test = Test.query.filter_by(course_id=course_id, test_name=test_name).first()
+    open('test.txt', 'w').write('join_test')
+
+
 #TODO:聊天室
 #TODO：目前还不能防止用户进入自己课程之外的聊天室
 @course.route('/chatroom/<int:course_id>')
