@@ -211,17 +211,17 @@ def join_test(course_id):
 @permission_required(Permission.CHECKANSWERS)
 def show_all_answers(course_id):
     test_id = request.values.get("test_id")
-    answers = Answer.query.filter_by(
-        course_id=course_id,
-        test_id=test_id,
-    ).all()
-    students = []
-    for each in answers:
-        student = Student.query.filter_by(
-            student_id=each.student_id,
-        ).first()
-        students.append(student)
-    return render_template('course/show_student_answers.html', students=students, test_id=test_id)
+    records = StudentCourse.query.filter_by(course_id=course_id).all()
+    students = [i.student for i in records] #该门课的所有学生
+    has_commit = []
+    url = []
+    for s in students:
+        if Answer.query.filter_by(student_id=s.student_id, test_id=test_id).first(): #如果考过了
+            url.append(url_for('course.show_answer', student_id=s.student_id, test_id=test_id))
+        else:
+            url.append('')
+    return render_template('course/show_student_answers.html', students=students, test_id=test_id,
+                           has_commit=has_commit, url=url)
 
 
 #TODO:需要将学生的答案渲染出来
@@ -233,8 +233,16 @@ def show_answer():
     answer = Answer.query.filter_by(
         student_id=student_id,
         test_id=test_id
-    ).first()
-    return render_template('course/answer.html', answer=answer)
+    ).first().answer
+    test = Test.query.filter_by(
+        test_id=test_id
+    ).first().content
+    answer = json.loads(answer)
+    test = json.loads(test)
+    content = []
+    for i in range(len(test['questions'])):
+        content.append((i + 1, test['questions'][i]['content']['title'], answer['content'][i]['answer']))
+    return render_template('course/answer.html', content=content)
 
 
 
